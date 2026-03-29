@@ -1,0 +1,16 @@
+﻿제목,git,기간,성과,스킬,시연 영상,프로젝트 설명
+CitRush,https://github.com/CITRUSH-Dev/CITRUSH-UE.git,2025/11/11 → 2026/01/17,"✔️ CPU 사용률 약 40% 절감
+✔️서버 장애 시, 지속적 게임 플레이 증명
+✔️AI 활용 JIRA 자동화 API 구현","AI Perception, C++, GAS, Http, Json, Network, StateTree, SteamSever, UMG, Unreal",https://youtu.be/OuRkQmQcT9I,전략형 레이싱 게임
+InfinityFighter,https://github.com/jjonjung/Infinity,2025/09/01 → 2025/09/24,"✔️ AI 활용 모션캡처, 애니메이션, Asset 구현
+✔️ 물리 적용 전투 Skill 구현","BluePrint, C++, Enhanced Input, FSM, Mutiplay, Network, SteamSever, Unreal, listenServer",https://youtu.be/wRN-vNVbVC8?si=RwqurBEoky6E92Ew,버블파이터를 오마주한 마블 히어로 배틀 시뮬레이터
+ThirdMotion,https://github.com/jjonjung/ThirdMotion,2025/10/13 → 2025/11/03,"✔️ Listen Server Actor 동기화 
+✔️ User List·Memo 영속화 구현
+✔️ TwinMotion 모티브 UMG 구현","BluePrint, C++, Mutiplay, Replication, UMG, Unreal, listenServer, 네트워크",https://www.youtube.com/watch?v=SZ7YIKsMOPA,Unreal 3D 에디팅 툴
+"오버워치 | 루시우 볼 ",https://github.com/jjonjung/LucioBall,2025/08/01 → 2025/09/01,"✔️수학적 랜덤성으로 예측 불가능성 AI 움직임 구현
+✔️ Y축 기준 배치를 바탕으로 공격형/수비형 역할을 동적으로 전환","BluePrint, C++, Unreal, 물리 기반 구현",https://youtu.be/EQmRjt3lddk?si=k4JUoMIcOZJ5Tkh-,"LucioBall 모작 | C++ 기반 적 AI, 물리 이동, 낙하지점 예측 구현"
+"검은신화 | 오공 ",https://github.com/jjonjung?tab=repositories,2025/07/01 → 2025/08/01,"✔️ BluePrint 기반으로 전체 구현
+✔️ 플레이어 행동 처리 
+(이동 거리 기반 걷기/달리기, 회전, 카메라 처리 로직을 BP로 직접 구현)","BluePrint, Unreal",https://youtu.be/Srpzo-DOX6k?si=98G9c27C2vAV3BdT,게임 오공의 보스전 중 호선봉 전투를 UE BluePrint 로 구현
+AI NextIdol,https://github.com/jjonjung/AiNextIdol,2025/09/10,"✔️ AI agent 연동 플랫폼 구현
+✔️ 모션 캡쳐","AI Perception, BluePrint, C++, Http, Unreal",https://youtu.be/aDB8leI7EpA?si=ZnM-p8WTT9YpoYu0,AI 에이전트 기반 버추얼 아이돌 공연 퍼포먼스 구현 플랫폼

@@ -1,0 +1,8 @@
+﻿Name,작업 영역,작업기간,프로젝트 내용
+SpaceCollection,"HTTP, Java, Oracle",2023-08-07 ~ 2023-09-08,"  • 공간대여 플랫폼 웹페이지"
+"낙천 막걸리 실시간 대시보드 ","C#, MSSQL, UI, 모니터링",2024.04 ~ 2024.09,"  • 항온항습기 자동제어 및 전력, 온/습도 모니터링"
+"팜스코 ","Android(JAVA), C#, MSSQL, Oracle, SAP",2024.12 ~ 2025.11,"• 실시간 데이터 처리 시스템 안정화
+• SAP–MES 인터페이스
+• MES 솔루션 구축"
+" DB 데이터 이관, 마이그레이션 ","C#, MSSQL, Maria",2023.11 ~ 2024.04,"  • 이기종 DB 마이그레이션 (MS→Maria)"
+NZN Web UI 디자인,"HTTP, PHP, UI",,"  • 고객 대응 WEB Server UI 디자인"
