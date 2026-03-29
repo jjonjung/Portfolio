@@ -1,0 +1,731 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>오버워치 | 루시우 볼 </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="31e6dae7-af2e-81b7-a569-d48f31e9cd07" class="page sans"><header><img class="page-cover-image" src="%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2025-12-16_034935.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/basketball_gray.svg"/></div><h1 class="page-title" dir="auto"><em><strong>오버워치 | 루시우 볼 </strong></em></h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 설명</th><td>LucioBall 모작 | C++ 기반 적 AI, 물리 이동, 낙하지점 예측 구현</td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>스킬</th><td><span class="selected-value select-value-color-brown">BluePrint</span><span class="selected-value select-value-color-green">C++</span><span class="selected-value select-value-color-blue">Unreal</span><span class="selected-value select-value-color-orange">물리 기반 구현</span></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>기간</th><td><time>@2025/08/01 → 2025/09/01</time></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/playback-play-button_gray.svg" style="width:14px;height:14px;display:block"/></span>시연 영상</th><td><a href="https://youtu.be/EQmRjt3lddk?si=k4JUoMIcOZJ5Tkh-" class="url-value">https://youtu.be/EQmRjt3lddk?si=k4JUoMIcOZJ5Tkh-</a></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/link_gray.svg" style="width:14px;height:14px;display:block"/></span>git</th><td><a href="https://github.com/jjonjung/LucioBall" class="url-value">https://github.com/jjonjung/LucioBall</a></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>성과</th><td><mark class="highlight-red"><strong>✔️수학적 랜덤성으로 예측 불가능성 AI 움직임 구현<br/>✔️ </strong></mark><mark class="highlight-default_background">Y축 기준 배치를 바탕으로 </mark><mark class="highlight-default_background"><strong>공격형/수비형 역할</strong></mark><strong>을 동적으로 전환</strong></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><div id="31e6dae7-af2e-8150-8b1e-daef83aad0c5" class="column-list"><div style="display:contents" dir="auto"><div id="31e6dae7-af2e-8148-bb0c-fed88c0eeaa5" style="width:100%" class="column"><div style="display:contents" dir="auto"><h2 id="31e6dae7-af2e-817e-9c11-c5a33a8363c9" class=""><strong>[프로젝트 개요]</strong></h2></div></div></div><div style="display:contents" dir="auto"><div id="31e6dae7-af2e-8112-8ce1-efe8a653d410" style="width:100%" class="column"><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8187-9ac4-d5459366ef77" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><blockquote id="32f6dae7-af2e-8081-8387-c5b5886c687f" class="">오버워치의 LucioBall 모드를 Unreal Engine 5와 C++ 기반으로 재현한 프로젝트입니다.<br/>적 루시우 AI 구현을 담당했으며,<mark class="highlight-yellow_background"><strong> AI FSM 설계, 물리 법칙 기반 이동/점프 구현, 공 낙하지점 예측,<br/>공격/수비 역할 전환 로직</strong></mark>을 중심으로 개발했습니다.<div style="display:contents" dir="auto"><p id="32f6dae7-af2e-80d3-b163-e00033024391" class="">단순 추적형 NPC가 아니라 경기 상황을 해석하고 역할을 바꾸는 FSM 기반 AI를 만드는 데 집중했습니다. 특히 공의 위치와 경기장<mark class="highlight-yellow_background"><strong> Y축 기준 배치를 바탕으로 공격형/수비형 역할</strong></mark>을 동적으로 전환하도록 설계했고, 공의 낙하지점을 예측하여 선점하도록 만들어 전략성을 높였습니다. 또한 캐릭터의 이동과 점프를 단순 애니메이션이 아닌 등가속도·포물선·중력 계산 기반의 C++ 로직으로 구현해 루시우볼 특유의 속도감과 타격감을 살렸습니다.</p></div></blockquote></div><div style="display:contents" dir="ltr"><table id="31e6dae7-af2e-81f7-b5af-db68efa56e82" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="31e6dae7-af2e-81ed-a1f5-ce21b7c934de"><th id="VQcl" class="simple-table-header-color simple-table-header" style="width:142.00000762939453px">제목</th><td id="uPaL" class="" style="width:582px">루시우볼</td></tr></div><div style="display:contents" dir="ltr"><tr id="31e6dae7-af2e-8128-a0cf-e6687d1af79f"><th id="VQcl" class="simple-table-header-color simple-table-header" style="width:142.00000762939453px">한 줄 설명</th><td id="uPaL" class="" style="width:582px">LucioBall은 오버워치의 &quot;루시우 볼&quot; 모드를 언리얼 엔진 5와 C++를 사용하여 재현한 프로젝트</td></tr></div><div style="display:contents" dir="ltr"><tr id="31e6dae7-af2e-81dd-9607-df13f08a8c76"><th id="VQcl" class="simple-table-header-color simple-table-header" style="width:142.00000762939453px">배경 또는 기획 의도</th><td id="uPaL" class="" style="width:582px">플레이어는 루시우 캐릭터를 조작하여 공을 골대에 넣어 득점하며, <br/>AI 플레이어와 상호작용하고 다양한 UI 요소를 통해 게임 상태를 시각적으로 확인할 수 있습니다. <br/>이 프로젝트는 복잡한 게임 로직, AI 구현, 물리 시뮬레이션 개발 능력을 보여줍니다.</td></tr></div><div style="display:contents" dir="ltr"><tr id="31e6dae7-af2e-81a0-96fd-d7efa3e2f81b"><th id="VQcl" class="simple-table-header-color simple-table-header" style="width:142.00000762939453px">참여 인원</th><td id="uPaL" class="" style="width:582px">3명</td></tr></div><div style="display:contents" dir="ltr"><tr id="31e6dae7-af2e-818d-9e12-c8fcb9c10be8"><th id="VQcl" class="simple-table-header-color simple-table-header" style="width:142.00000762939453px">본인 역할</th><td id="uPaL" class="" style="width:582px">Ai(적 루시우)</td></tr></div><div style="display:contents" dir="ltr"><tr id="31e6dae7-af2e-8125-bc1b-e8ec9f119be8"><th id="VQcl" class="simple-table-header-color simple-table-header" style="width:142.00000762939453px">진행 기간</th><td id="uPaL" class="" style="width:582px">2025.08.04 ~ 2025.09.01</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="31e6dae7-af2e-8136-8a33-eb89cf71c028"/></div><div style="display:contents" dir="auto"><h2 id="3216dae7-af2e-806b-acfa-e9d44156ffa9" class=""><strong>[시연 영상]</strong></h2></div><div style="display:contents" dir="ltr"><figure id="3216dae7-af2e-800a-bb5e-f27af41679af"><div class="source"><a href="https://www.youtube.com/watch?v=EQmRjt3lddk">https://www.youtube.com/watch?v=EQmRjt3lddk</a></div></figure></div><div style="display:contents" dir="auto"><h2 id="31e6dae7-af2e-81fc-a8cf-d1f529c896ee" class=""><strong>[기술 스택]</strong></h2></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-802e-a567-ee6ebd282423" class="">왜 Unreal Engine 5를 선택했는가</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8092-83c6-fa6db8d98f31" class="">루시우볼은 빠른 이동, 공과의 상호작용, 스킬 연동, 애니메이션/VFX, AI 판단이 동시에 맞물려야 하는 프로젝트였습니다. Unreal Engine 5는 이러한 요소를 구현하는 데 필요한 <mark class="highlight-yellow_background"><strong>물리 엔진, AI 프레임워크, 컴포넌트 기반 구조, DataAsset 시스템</strong></mark>을 모두 제공하기 때문에 적합했습니다. 특히 최신 그래픽 기능 자체보다, 이 프로젝트에서는 <strong>엄격한 물리 계산과 AI 의사결정 </strong>측면에서 더 큰 강점을 느꼈습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-804c-9233-debc001bd984" class="">왜 Blueprint만이 아니라 C++로 확장했는가</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-806c-81fe-de580eb7008e" class="">초기에는 전체 게임 흐름과 프로토타입 제작에 Blueprint가 효율적이었지만, <br/>AI 상태 관리나 물리 계산처럼 정밀한 제어와 재사용성이 필요한 부분은 C로 구현하는 것이 더 적합했습니다.<br/>그래서 Blueprint로 전체 흐름을 잡고, 이후 핵심 로직은 C로 심화 구현하는 방향을 택했습니다. <br/>이 과정을 통해 빠른 프로토타이핑과 구조적 설계의 장점을 모두 활용할 수 있었습니다.</p></div><div style="display:contents" dir="auto"><hr id="31e6dae7-af2e-8185-87f4-ef259039a4c6"/></div><div style="display:contents" dir="auto"><h2 id="31e6dae7-af2e-815a-a98a-dd5ade0d0dd4" class=""><strong>[핵심 구현 상세]</strong></h2></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-80db-a9c0-d330a9911afa" class="">1. AI FSM 기반 역할 분리 및 상태 전이</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8075-8adf-e2e78c67228a" class="">기존의 단순한 <code>Idle → SeekBall → Attack</code> 수준의 FSM만으로는 게임 플레이가 반복적으로 느껴져 흥미도가 떨어지는 문제가 있었습니다. 이를 해결하기 위해 AI를 공격형과 수비형으로 분리하고, <code>Idle</code>, <code>SeekBall</code>, <code>AttackBall</code>, <code>DefendGoal</code>, <code>ClearBall</code> 상태를 갖는 FSM으로 구체화했습니다.</p></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8014-b46c-c7633b210af4" class="">이 구조를 통해 AI가 같은 공을 보더라도 현재 역할과 경기 흐름에 따라 다른 판단을 내릴 수 있게 되었고, 결과적으로 보다 사람처럼 보이는 전략적 움직임을 구현할 수 있었습니다. </p></div><div style="display:contents" dir="ltr"><figure id="32f6dae7-af2e-805b-a95f-d0dfddf54624" class="image"><a href="image.png"><img style="width:556.9866333007812px" src="image.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="32f6dae7-af2e-8029-8a86-c012855682c9" class="image"><a href="image%201.png"><img style="width:663.984375px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8051-adc4-eb17ad6a7dd5" class="">이 구조의 핵심은 “공의 상태를 해석해 AI의 역할과 행동을 결정한다”는 점입니다.<br/>즉, AI는 단순한 명령 실행자가 아니라 <mark class="highlight-yellow_background"><strong>환경 정보를 기반으로 상태를 전환하고 행동을 선택하는 구조</strong></mark>로 설계되었습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-8088-8520-d8d7113e11a1" class="">2. 물리 기반 움직임 구현</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8054-b89a-f1b02af65d94" class="block-color-yellow_background"><strong>2-1. 등가속 운동을 이용한 점프 포인트에서 점프 구현</strong></p></div><div style="display:contents" dir="auto"><div id="32f6dae7-af2e-804b-96f6-e27a6f8de600" class="column-list"><div style="display:contents" dir="auto"><div id="32f6dae7-af2e-80bc-bd6c-d10674d17f2b" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="32f6dae7-af2e-8065-ada7-e778a4c7f656" class="image"><a href="Video_Project_19.gif"><img style="width:409.9776916503906px" src="Video_Project_19.gif"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="32f6dae7-af2e-80af-a49f-dc6533726316" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="32f6dae7-af2e-8083-a1c9-f26f1b667193" class="image" style="text-align:center"><a href="image%202.png"><img style="width:320.9821472167969px" src="image%202.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f6dae7-af2e-8060-b2d2-e06a45be7f4c" class="code code-wrap"><code class="language-Mermaid" style="white-space:pre-wrap;word-break:break-all">
+flowchart LR
+    Jump --&gt; V[&quot;v0 , θ&quot;] --&gt; Tick --&gt; A --&gt; R
+
+    Tick -.- T1[&quot;v = v + a · Δt
+p = p + v · Δt&quot;]
+    A -.- A1[&quot;a = (0, -g)
+vy = 0&quot;]
+
+    style T1 fill:#f0f4ff,stroke:#aabbcc,color:#333
+    style A1 fill:#f0f4ff,stroke:#aabbcc,color:#333
+</code></pre></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-80a4-ac0b-f25e8422bf6b" class="block-color-yellow_background"><strong>2-2. 넉백</strong></p></div><div style="display:contents" dir="ltr"><figure id="32f6dae7-af2e-80e4-b3ac-e434995a1d3c" class="image"><a href="image%203.png"><img style="width:703.9732055664062px" src="image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="32f6dae7-af2e-8071-ba6e-dc568876fe24" class="block-color-gray_background"><strong>[아키텍처 / 시스템 구조]</strong></h2></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-80c7-bb8b-e4c3125a17d6" class="">시스템 흐름 요약</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f6dae7-af2e-8035-8ba4-c5a649eee04d" class="code code-wrap"><code class="language-Mermaid" style="white-space:pre-wrap;word-break:break-all">%%{init: { &quot;flowchart&quot;: { &quot;curve&quot;: &quot;linear&quot;, &quot;useMaxWidth&quot;: true } }}%%
+flowchart-elk TD
+    A[&quot;공 위치 / 이동 상태 수집&quot;] 
+    --&gt; B[&quot;낙하지점 예측&quot;]
+    B --&gt; C[&quot;AI 역할 판단(공격형/수비형)&quot;]
+    C --&gt; D[&quot;FSM 상태 전이&quot;]
+    D --&gt; E[&quot;이동/슈팅/스킬 실행&quot;]
+    E --&gt; F[&quot;애니메이션 / VFX 연동&quot;]
+    F --&gt; G[&quot;DataAsset 기반 밸런스 조정&quot;]</code></pre></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-807a-8a42-e7645ba7d441" class="">- 공 낙하지점 예측 기반 선제 대응</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-807d-9cfe-fd8c331c7819" class="">반응형 AI는 공을 뒤늦게 추적하기 때문에 플레이 감각이 둔하게 느껴질 수 있습니다. 이를 보완하기 위해 공의 위치와 이동 흐름을 기준으로 <strong>착지 지점을 예측</strong>하고, 해당 위치를 AI의 목표 지점으로 삼도록 설계했습니다.</p></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8056-a759-c92e8b231456" class="">이를 통해 AI는 단순히 공을 따라가는 것이 아니라, <strong>앞으로 공이 떨어질 위치를 선점</strong>할 수 있게 되었고, 플레이어 입장에서 더 위협적이고 자연스러운 상대처럼 느껴지도록 만들었습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-80cc-b30c-e5e63ddcef88" class="">- 물리 공식 기반 캐릭터 이동 구현</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8059-8d3d-d4badfbf121c" class="">캐릭터 움직임의 생동감이 부족했던 문제를 해결하기 위해, 이동 로직에 <strong>등가속도 운동 공식</strong>을 적용했습니다. 단순한 일정 속도 이동이 아니라 가속과 감속을 반영하여 속도감 있는 움직임을 구현했고, 점프는 중력과 초기 속도를 고려한 <strong>포물선 운동</strong> 기반으로 계산했습니다.</p></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8098-ad98-c2f836b5e27c" class="">이 과정에서 충돌, 관성, 마찰 같은 요소도 함께 반영해 보다 자연스럽고 게임다운 움직임을 만들 수 있었습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-80a6-b0af-c5250c2179dd" class="">- DataAsset 기반 밸런스 조정</h3></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-804f-af03-c60feb0480f0" class="">베타 단계에서는 행동 파라미터와 역할 관련 값을 코드에 고정하지 않고 <mark class="highlight-yellow_background"><strong>DataAsset 기반으로 분리</strong></mark>해 밸런스를 조정할 수 있도록 개선했습니다.</p></div><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-80f8-afde-f2ac4146c8e2" class="">이를 통해 AI 행동 패턴이나 속도, 역할 우선순위 같은 요소를 코드 수정 없이도 관리할 수 있었고, 협업 상황에서도 데이터 중심으로 빠르게 조정 가능한 구조를 만들 수 있었습니다.</p></div><div style="display:contents" dir="auto"><hr id="31e6dae7-af2e-814d-b0d8-fe936cc74fe6"/></div><div style="display:contents" dir="auto"><h2 id="32f6dae7-af2e-80b2-9668-fc4b47469a9e" class=""><strong>[트러블슈팅]</strong></h2></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-8077-8aee-ff6b34c5b8ec" class=""><strong>1. AI가 단조롭고 흥미도가 낮았던 문제</strong></h3></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-80ef-a905-fc77809a9bb9" class="bulleted-list"><li style="list-style-type:disc"><strong>문제</strong>: 간략한 FSM만으로는 AI 패턴이 단순해 게임 플레이가 쉽게 읽혔음</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-8041-a9d6-f464d9d8f01c" class="bulleted-list"><li style="list-style-type:disc"><strong>원인</strong>: 공격/수비 상황이 충분히 분리되지 않았고, 상태 수가 적어 행동 다양성이 부족했음</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-8014-98e4-c48b0a809bdd" class="bulleted-list"><li style="list-style-type:disc"><strong>해결</strong>: 공격형/수비형 AI를 분리하고 <code>AttackBall</code>, <code>DefendGoal</code>, <code>ClearBall</code> 등 상태를 세분화</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-8055-9da8-ee99d0b681b4" class="bulleted-list"><li style="list-style-type:disc"><strong>결과</strong>: AI가 상황에 따라 다른 판단을 내리게 되면서 플레이 체감 난이도와 전략성이 향상됨</li></ul></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-8023-bf67-ec84c053cb37" class="">2. 캐릭터 움직임이 생동감 없었던 문제</h3></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-8082-825b-f86b7990a2a6" class="bulleted-list"><li style="list-style-type:disc"><strong>문제</strong>: 이동이 기계적으로 느껴져 루시우볼 특유의 속도감이 부족했음</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-80db-b88b-c39ce9094ae0" class="bulleted-list"><li style="list-style-type:disc"><strong>원인</strong>: 단순 이동 처리만으로는 가속/감속과 점프의 물리적 감각을 표현하기 어려웠음</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-8032-a606-cc2e0090addf" class="bulleted-list"><li style="list-style-type:disc"><strong>해결</strong>: 등가속도 운동과 중력 수식을 적용하고, 점프는 포물선 기반으로 계산</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-80eb-b65e-e05e1101ae80" class="bulleted-list"><li style="list-style-type:disc"><strong>결과</strong>: 이동과 점프가 더 자연스럽고 역동적으로 표현되어 게임의 몰입도가 향상됨 </li></ul></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-8042-84bd-f10f605be637" class="">3. 역할 태그 충돌 문제</h3></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-80d5-a12b-fae7aa1f6a4e" class="bulleted-list"><li style="list-style-type:disc"><strong>문제</strong>: 역할 태그가 충돌하면서 AI의 우선순위 판단이 꼬이는 이슈 발생</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-80c3-b2d3-f06a22b34909" class="bulleted-list"><li style="list-style-type:disc"><strong>해결</strong>: 우선순위를 재정의하고 캐시 키를 분리하여 역할 판단 기준을 명확히 함</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-807e-a60b-fe2d83bcee46" class="bulleted-list"><li style="list-style-type:disc"><strong>결과</strong>: 역할 전환 안정성이 높아지고 상태 전이의 일관성이 개선됨 </li></ul></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-803d-b1a4-d29b45b4b7c1" class="">4. 착지 예측 근거 부족 문제</h3></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-808f-8e00-ddc6d7d51d28" class="bulleted-list"><li style="list-style-type:disc"><strong>문제</strong>: AI가 어디로 이동해야 하는지 판단할 근거가 부족했음</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-8008-a9d8-cba1c5b42f74" class="bulleted-list"><li style="list-style-type:disc"><strong>해결</strong>: 공 오브젝트가 착지 값을 전달하는 방식으로 구조를 조정</li></ul></div><div style="display:contents" dir="auto"><ul id="32f6dae7-af2e-80ff-ae39-cb565d2d1bf5" class="bulleted-list"><li style="list-style-type:disc"><strong>결과</strong>: AI가 예측 기반으로 움직일 수 있게 되어 반응성보다 선제성이 강화됨</li></ul></div><div style="display:contents" dir="auto"><hr id="32f6dae7-af2e-80ae-a774-dd87f39e4611"/></div><div style="display:contents" dir="auto"><h3 id="32f6dae7-af2e-804b-bcc7-e603eabc9d7c" class="">[회고]</h3></div><div style="display:contents" dir="auto"><blockquote id="32f6dae7-af2e-80c8-9783-c716ede03010" class=""><div style="display:contents" dir="auto"><p id="32f6dae7-af2e-8082-a2ee-c67b46318389" class="">이번 프로젝트를 통해 단순히 적 캐릭터를 움직이게 하는 수준을 넘어, 상황을 해석하고 역할을 전환하며 위치를 예측해 자연스럽게 행동하는 AI를 구현하는 데 있어 물리 기반 접근이 얼마나 중요한지 체감할 수 있었습니다.<br/>특히 <mark class="highlight-yellow_background"><strong>물리 기반 게임에서는 움직임의 자연스러움뿐 아니라, </strong></mark>역할 전환의 타이밍과 상태 판단 기준이 <mark class="highlight-yellow_background"><strong>플레이 경험에 직접적인 영향</strong></mark>을 미친다는 점이 인상 깊었습니다. <br/>앞으로는 행동 패턴의 다양성을 확장하고, 멀티플레이 환경에서의 검증 체계를 강화해 보다 완성도 높은 AI 시스템으로 발전시키고자 합니다.</p></div></blockquote></div><div style="display:contents" dir="auto"><hr id="31e6dae7-af2e-814e-afe4-f69169bcda0c"/></div><div style="display:contents" dir="auto"><h3 id="31e6dae7-af2e-81e8-960c-dcfce67cd593" class=""><strong>[프로젝트 결과]</strong></h3></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-81d7-afbe-e9a6e4bbe9ac" class="bulleted-list"><li style="list-style-type:disc">AI 공격형, 수비형으로 구분하여 각 포지션 별 다양한 패턴 움직임 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-8149-8636-fdc043b82a95" class="bulleted-list"><li style="list-style-type:disc">물리 공식(등가속 운동) 기반 움직임 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-8162-8502-c9f8d723dc2a" class="bulleted-list"><li style="list-style-type:disc">player 스킬 대응(player의 공 착지 지점을 예측, 공을 당겨와 선 공격 가능하게 구현)</li></ul></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-8141-b222-c18da75a1f77" class="bulleted-list"><li style="list-style-type:disc">핵심 요소가 안정적으로 동작하는 고난도 AI 구성 완성</li></ul></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-814c-9ab9-c1b8d27b991f" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,889 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>InfinityFighter</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="31e6dae7-af2e-8187-87cc-f6605d94c462" class="page sans"><header><img class="page-cover-image" src="infinity_%EC%8D%B8%EB%84%A4%EC%9D%BC.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/archery_blue.svg"/></div><h1 class="page-title" dir="auto">InfinityFighter</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 설명</th><td>버블파이터를 오마주한 마블 히어로 배틀 시뮬레이터</td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>스킬</th><td><span class="selected-value select-value-color-brown">BluePrint</span><span class="selected-value select-value-color-green">C++</span><span class="selected-value select-value-color-brown">Enhanced Input</span><span class="selected-value select-value-color-green">FSM</span><span class="selected-value select-value-color-pink">Mutiplay</span><span class="selected-value select-value-color-brown">Network</span><span class="selected-value select-value-color-yellow">SteamSever</span><span class="selected-value select-value-color-blue">Unreal</span><span class="selected-value select-value-color-purple">listenServer</span></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>기간</th><td><time>@2025/09/01 → 2025/09/24</time></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/playback-play-button_gray.svg" style="width:14px;height:14px;display:block"/></span>시연 영상</th><td><a href="https://youtu.be/wRN-vNVbVC8?si=RwqurBEoky6E92Ew" class="url-value">https://youtu.be/wRN-vNVbVC8?si=RwqurBEoky6E92Ew</a></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/link_gray.svg" style="width:14px;height:14px;display:block"/></span>git</th><td><a href="https://github.com/jjonjung/Infinity" class="url-value">https://github.com/jjonjung/Infinity</a></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>성과</th><td><mark class="highlight-red"><strong>✔️ AI 활용 모션캡처, 애니메이션, Asset 구현<br/>✔️ 물리 적용 전투 Skill 구현</strong></mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8030-9b5d-c78420cb0852" class="block-color-gray_background"><strong>✔️ </strong>프로젝트 <mark class="highlight-default_background"><strong>소개</strong></mark></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80b2-8b4f-f70c5ab13a02"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8018-b038-e9353cab49ea" class=""><mark class="highlight-default"><mark class="highlight-gray_background"><code><strong>UE5.6 기반 </strong></code></mark></mark><mark class="highlight-default"><code><strong>버블파이터를 오마주한  마블 히어로 배틀 슈팅 시뮬레이터</strong></code></mark></p></div><div style="display:contents" dir="ltr"><table id="3206dae7-af2e-80ab-89a1-d2f5c74dbbf2" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80c1-8b75-e48cb20387bf"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px">항목</th><th id="U=xv" class="simple-table-header-color simple-table-header" style="width:485.98046875px">내용</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8048-8e86-d75b7510b5e5"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px"><strong>장르</strong></th><td id="U=xv" class="" style="width:485.98046875px">3인칭 배틀 시뮬레이터</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8007-9eec-c788520502c7"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px"><strong>기술 스택</strong></th><td id="U=xv" class="" style="width:485.98046875px">- Unreal Engine 5.6 <br/>- C++<br/>- Blueprint<br/>- UMG<br/>- Steam Server</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8098-8fcc-f2ea04858108"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px"><strong>담당 개발 내용</strong></th><td id="U=xv" class="" style="width:485.98046875px">- FSM 기반 AI 시스템 총괄 (움직임, 스킬, 패턴)<br/>- 게임 모드 및 전체 플로우 제어 (스폰, 타이머, 맵 전환)<br/>- 인게임 UI 통합: 타이머, 킬로그, Aim/AimEnemy, 카메라 제어<br/>- 전투 정보 시각화 피드백 및 디버깅 UI </td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-809e-80b2-e5d56dc51cc5" class="block-color-gray_background"><strong>✔️ </strong><mark class="highlight-default_background"><strong>프로젝트 시연 영상</strong></mark><strong> </strong></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-804e-acac-dd3ccd208421"><div style="font-size:1.5em"><span class="icon">📹</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80fc-b090-d7f863c34171" class=""><strong>시연 영상</strong></p></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-80f9-a97c-e0e0a3988e7e"><div class="source"><a href="https://www.youtube.com/watch?v=wRN-vNVbVC8">https://www.youtube.com/watch?v=wRN-vNVbVC8</a></div></figure></div></div></figure></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-8076-a813-cb72df027341" class="column-list"><div style="display:contents" dir="auto"><div id="3206dae7-af2e-8021-8011-de8b4223fdea" style="width:50%" class="column"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8031-90bb-e327c6c1f6fa" class="block-color-gray_background"><strong>✔️ 사용 기술 스택</strong></h2></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8081-86e4-c000d22ee325" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red"><code>Unreal Engine</code></mark><mark class="highlight-red"> ,  </mark><mark class="highlight-red"><code>C++</code></mark><mark class="highlight-red"> ,  </mark><mark class="highlight-red"><code>UMG</code></mark><mark class="highlight-red"> , </mark><code>Game Mathematics</code></li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8031-a0b7-e7e976d11da4" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80aa-bd99-c353e1744313" class="block-color-gray_background"><strong>✔️ 협업 및 도구</strong></h2></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80f9-b0e8-e6814559b011" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-brown"><code>Git</code></mark><mark class="highlight-brown"> </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80d1-af54-f874432c2a8f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><code>Google Drive (Gantt Chart)</code></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802d-a5f3-f35660c8d5bb" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>JIRA</code></mark> </li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80e6-adeb-f363333f1783" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-80ca-845c-dbaeee3957f6" style="width:50.000000000000014%" class="column"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80cf-99e9-eaad364c9680" class="block-color-gray_background"><strong>✔️ 개발 내용</strong></h2></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80db-b793-d95ddcc0da90" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">핵심 기술 역량</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-803d-bb5d-db66ae346b67" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">구현 내용 목차</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3216dae7-af2e-80f4-b285-c8beda8a69cb" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">AI 활용: 캐릭터, 애니메이션 생성</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8014-b588-f4f283138112" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">게임 구조</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80e8-b00d-d277aa5ac332" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">AI 시스템 (FSM &amp; Math)</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8042-9f4d-d5f9d5f8e9a9" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">트러블 슈팅</a></li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8041-b3b0-c779378528ae" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-8081-bee8-f1f995393dce"/></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80c8-bbb2-e5c29c4c7c9c" class="block-color-gray_background"><strong>✔️ 일정 관리</strong></h2></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-8005-aae5-f43bac95f376" class="image"><a href="image.png"><img style="width:642.24609375px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80d1-807f-d71c6c0dcc18" class="">저희 팀은 <strong>소통 문화를 중심으로 한 </strong><mark class="highlight-red"><strong>애자일 프로세스</strong></mark>를 구축했습니다. <br/><strong>간트차트 플래닝</strong>으로 일정을 계획한 후, <strong>개발–스크럼–테스트–빌드</strong> 단계를 반복적으로 진행합니다.</p></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-808d-9ad7-cf6af5601cb8" class="">매일 스크럼 회의를 통해 리스크를 조기에 확인하고, 테스트로 품질을 확보하며, 안정적인 빌드로 이어집니다. 각 단계의 목표와 일정을 명확히 하여 모든 팀원이 동일한 방향성을 갖도록 합니다.</p></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80c0-b929-e31484f8ba2f" class="">무엇보다 저희 팀에게 중요하게 강조한 것은 <strong>절차보다 </strong><mark class="highlight-yellow_background"><strong>팀원 간의 원활한 소통</strong></mark>입니다. <br/>소통을 기반으로 계획부터 빌드까지 전 과정이 매끄럽게 이어지고, <br/>단순 개발을 넘어 개개인에게 가치 있는 게임을 함께 만들 수 있었습니다.</p></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80fe-9cda-e4540d182273" class="block-color-gray_background"><strong>✔️ AI 활용: 캐릭터 Asset, 애니메이션 생성</strong></h2></div><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-8086-a261-fbc2dd3710ef" class=""><strong>🔹AI 기반 모델링 - GPT, Tripo</strong></h3></div><div style="display:contents" dir="ltr"><figure id="3216dae7-af2e-8075-a04f-e564c079ddc5" class="image"><a href="image%201.png"><img style="width:454.98046875px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><ol type="1" id="3216dae7-af2e-802d-804f-d653c92f6c47" class="numbered-list" start="1"><li>Gpt 컨셉 아트 생성</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3216dae7-af2e-808e-8b15-c3c84b570aed" class="numbered-list" start="2"><li>Tripo 3D model 생성</li></ol></div><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-8065-b2cf-ff12bcdf28f4" class=""><strong>🔹AI 기반 애니메이션 - Quickmagic</strong></h3></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-800f-9499-e924ebc2caee" class="image"><a href="image%202.png"><img style="width:642.2265625px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8071-92a2-e73103ae2a5f" class="">사진 번호 순서대로</p></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8020-93db-eedec543e209" class="numbered-list" start="1"><li><strong>애니메이션 촬영 비디오 선택</strong></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8075-a3d5-f9842438c5d9" class="numbered-list" start="2"><li><strong>타겟 마네킹 지정</strong></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-80e0-86d9-c64b947eea75" class="numbered-list" start="3"><li><strong>Next 버튼 클릭 시 완료</strong><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-80a9-926a-ed1766468c41" class="image" style="text-align:center"><a href="ai.gif"><img style="width:425.95703125px" src="ai.gif"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8079-9299-d57a30426606" class="block-color-gray_background"><strong>✔️ 게임 구조 </strong></h2></div><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-80c2-a81b-db30c8469502" class=""><strong>🔹게임 플레이 루프</strong></h3></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-80c8-a355-f6de7ceeff34" class="image"><a href="image%203.png"><img style="width:467.94921875px" src="image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80d5-bde3-f403e5559bc6" class="bulleted-list"><li style="list-style-type:disc"><strong>Lobby</strong>: 캐릭터 확인 및 게임 진입</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-808a-8e9b-f9d286f50f8f" class="bulleted-list"><li style="list-style-type:disc"><strong>Ready (3s)</strong>: 카메라 연출 및 리스폰 보호 활성화</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802e-b35f-ff084d0f6db5" class="bulleted-list"><li style="list-style-type:disc"><strong>Battle (120s)</strong>: FSM AI와의 실시간 전투 및 점수 획득</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-801a-bbda-dca9035b38af" class="bulleted-list"><li style="list-style-type:disc"><strong>Ending</strong>: 매치 결과 출력 및 로비 귀환</li></ul></div><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-80aa-b8f5-f1f3347fcb24" class=""><strong>🔹게임 시나리오</strong></h3></div><div style="display:contents" dir="ltr"><figure id="3216dae7-af2e-800b-836a-f1103d7272c7"><div class="source"><a href="https://youtu.be/JYPS0cP9yng?si=1OUPMAwEZ8h1VUrc">https://youtu.be/JYPS0cP9yng?si=1OUPMAwEZ8h1VUrc</a></div></figure></div><div style="display:contents" dir="auto"><blockquote id="3206dae7-af2e-80be-85ec-d65b1beab35a" class="block-color-gray">마블 히어로들의 능력을 데이터화하여 시뮬레이션하는 가상 전투 공간<mark class="highlight-red"><strong> &quot;Infinity&quot;. </strong></mark><br/>플레이어는 아이언맨, 스파이더맨, 닥터스트레인지가 되어 예측 불가능하게 움직이는 <br/>AI 캐릭터들에 맞서 120초간 생존하고 승리해야 합니다.</blockquote></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80c2-9664-eccb37dbee86" class="block-color-gray_background"><strong>✔️ </strong>핵심 기술 역량 </h2></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-801f-8242-ea2e55865d62"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80c7-a161-d7e2616f0b4f" class="">직무 기술서</h2></div><div style="display:contents" dir="ltr"><table id="3206dae7-af2e-801a-bffb-fb716d9bb075" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80d9-bd84-e2c874936895"><th id="TO=Z" class="simple-table-header-color simple-table-header" style="width:115px"><strong>요구 역량</strong></th><th id="]U}w" class="simple-table-header-color simple-table-header"><strong>구현 사례</strong></th><th id="=`RH" class="simple-table-header-color simple-table-header"><strong>판단 근거</strong></th><th id="bKjN" class="simple-table-header-color simple-table-header"><strong>기술 깊이</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80aa-a7c2-d308e8d8ba2c"><td id="TO=Z" class="" style="width:115px">C++ AI 설계</td><td id="]U}w" class="">FSM 기반 상태 시스템</td><td id="=`RH" class="">결정론적 행동을 탈피한 가중치 기반 <code><strong>확률 선택 구조</strong></code></td><td id="bKjN" class="">가중치 <code><strong>랜덤 선택 알고리즘 구현</strong></code></td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80ed-a421-c4020f681f6b"><td id="TO=Z" class="" style="width:115px">게임 수학 활용</td><td id="]U}w" class="">Sin/Cos 기반 변칙 이동</td><td id="=`RH" class="">직선적인 기계적 움직임이 아닌 부드러운 곡선 경로 생성</td><td id="bKjN" class="">삼각함수 및 시간 변수 기반 좌표 계산</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80b4-9b21-c71cb677b2d2"><td id="TO=Z" class="" style="width:115px">환경 상호작용</td><td id="]U}w" class="">Raycast 엄폐 시스템</td><td id="=`RH" class="">실시간 레이 감지를 통한 엄폐 포인트 탐색</td><td id="bKjN" class="">물리 엔진 기반 충돌 판정 및 위치 분석</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-805b-921d-fec49c301d3f"><td id="TO=Z" class="" style="width:115px">시스템 통합</td><td id="]U}w" class="">매치 사이클 자동화 관리</td><td id="=`RH" class="">로비부터 엔딩까지의 데이터 흐름 및 상태 제어 완결</td><td id="bKjN" class="">Delegate 기반의 느슨한 결합 설계</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8076-9e35-e9475bda21f4" class="bulleted-list"><li style="list-style-type:disc"><strong>Mathematical Intelligence</strong>: 복합 삼각함수(<code>Sin/Cos</code> 혼합)를 활용한 AI 움직임 제어 능력 보유</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8002-8af0-de87d81ab99d" class="bulleted-list"><li style="list-style-type:disc"><strong>Advanced Physics</strong>: 레이캐스트 기반의 동적 환경 분석 시스템 구축</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80d8-b300-cd59fcb9e314" class="bulleted-list"><li style="list-style-type:disc"><strong>Robust Architecture</strong>: Brain-Action-MoveRouter 분리를 통한 확장성 있는 프레임워크 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8079-adb9-eaf0e88566ff" class="bulleted-list"><li style="list-style-type:disc"><strong>User Experience</strong>: 전투 상황(KillLog, Aim)의 직관적 시각화 및 피드백 구현</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8047-b1a9-c47bc7c72665" class="block-color-gray_background"><strong>✔️ 구현 내용 목차  </strong></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80a1-809e-cbbc766605cd"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-803a-b824-f53b67c8c6ab" class="numbered-list" start="1"><li><strong>AI 시스템 총괄</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8058-a22a-c8b36b55f0d6" class="bulleted-list"><li style="list-style-type:disc">[FSM 기반 5상태(Idle/Move/Attack/Damage/Die) 관리]</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8087-8f8e-e3b055153910" class="bulleted-list"><li style="list-style-type:disc">[3가지 행동 패턴: Chaotic, Strafing Jump, Cover+Attack]</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8017-9085-f30f56be1fa2" class="bulleted-list"><li style="list-style-type:disc">[AI 협동 시스템: 특정 스킬 감지 및 연계 공격 트리거]</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-80f7-994d-fc36f2b32e0e" class="numbered-list" start="2"><li><strong>게임 모드 &amp; 플로우</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8076-b4bf-c12d6ad9addf" class="bulleted-list"><li style="list-style-type:disc">[스폰/리스폰 알고리즘 및 보호 로직]</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8083-8a38-d7698de84bd5" class="bulleted-list"><li style="list-style-type:disc">[매치 타이머 및 맵 전환 파이프라인]</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8033-a50b-f1388fb1f951" class="numbered-list" start="3"><li><strong>UI/UX 통합</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-800b-ac3e-c9114496967e" class="bulleted-list"><li style="list-style-type:disc">[실시간 킬로그 및 에임 피드백 시스템]</li></ul></div></li></ol></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-805d-bc5f-e7e4b4463941" class="block-color-gray_background"><strong>✔️ 구현 상세 내용  </strong></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-8026-b80e-f2d5ea9459b5"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8003-884d-f13b9f5a26b3" class=""><strong>AI 시스템 총괄</strong></h2></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80b0-9f90-cbfcba9e16a4" class=""><strong>1-1. 수학적 변칙성을 결합한 FSM AI</strong></p></div><div style="display:contents" dir="auto"><blockquote id="3206dae7-af2e-8069-964e-ea35913acec5" class="">단순한 조건문 기반의 AI를 넘어, 수학적 함수와 확률론을 결합하여 플레이어가 예측하기 어려운 고도화된 적 행동 양식을 구현</blockquote></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8030-b711-fc2241fafc13" class="bulleted-list"><li style="list-style-type:disc">Chaotic Movement<br/>: sin 및 cos 등 복합 수학 함수를 이용해 예측 불가능한 움직임을 생성하고, <br/>거리 기반 로직으로 이동 전략을 통제하는 AI 로직을 구현<br/>• Cover + Attack<br/>: 언리얼 레이캐스트를 활용한 실시간 엄폐 위치 탐색 시스템을 설계, 엄폐 중 Fire와 Skill1을 동시에 난사 패턴을 구현하여 환경 상호작용 로직 구현<br/>• AI 협동 시스템<br/>: 스파이더맨의 특정 스킬 발동 순간을 감지하여 아이언맨에게 협동 공격을 자동 트리거하는 연계 시스템을 구현하여, 전략적 깊이 추가</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-801a-b3a6-fa32f5624712" class="bulleted-list"><li style="list-style-type:disc">3명의 캐릭터 스킬 구현<br/>• 아이언맨, 스파이더맨, 닥터스트랜지 각 캐릭터 특성의 스킬을 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-800e-9e81-c37e75bdf17c" class="bulleted-list"><li style="list-style-type:disc">핵심 요약: 언리얼 엔진을 통해 단순한 그래픽 표현을 넘어, C++ 기반의 AI 로직 설계, 복합 수학 함수를 활용한 움직임 제어, 물리 기반 환경 상호작용 등 핵심 게임 시스템을 고도화하는 데 집중</li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80eb-83cc-ee8ccce6f6dc" class=""><strong>🔹FSM 5상태 구조</strong></p></div><div style="display:contents" dir="ltr"><table id="3206dae7-af2e-8052-b6cf-e5be90663b10" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80af-895b-fcc0f78bc3e4"><th id="@L@[" class="simple-table-header-color simple-table-header">상태</th><th id="VrKL" class="simple-table-header-color simple-table-header" style="width:430px">역할</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80b3-a29e-ee99d8b33d7d"><td id="@L@[" class=""><code>Idle</code></td><td id="VrKL" class="" style="width:430px">타겟 탐색 대기 (IdleDelayTime 후 Move로 전환)</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80b5-a2b5-d04a3e7ff814"><td id="@L@[" class=""><code>Move</code></td><td id="VrKL" class="" style="width:430px">3가지 이동 패턴 중 하나를 4초 주기로 교체하며 실행</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8032-80da-c6ad6af90e4c"><td id="@L@[" class=""><code>Attack</code></td><td id="VrKL" class="" style="width:430px">거리 기반 접근/후퇴/측면 기동 + Fire/Skill1 콤보</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80e7-a18b-dd0659c2eb01"><td id="@L@[" class=""><code>Damage</code></td><td id="VrKL" class="" style="width:430px">넉백 위치로 Lerp 이동, DamageDelayTime 후 Idle 복귀</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8080-b24b-db2a2e3a2dc1"><td id="@L@[" class=""><code>Die</code></td><td id="VrKL" class="" style="width:430px">충돌 비활성화, 중력 방향으로 가라앉은 뒤 Destroy</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80e0-95f5-f0f66acefa06" class=""><strong>🔹패턴 4초 주기 자동 전환 로직</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-8020-9c96-ce1d9a68ae5e" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">// MoveState() 내부: CurrentTime이 4초마다 패턴 인덱스를 순환
+int32 PatternIndex = static_cast&lt;int32&gt;(CurrentTime / 4.0f) % 3;
+CurrentPattern = static_cast&lt;EAIMovementPattern&gt;(PatternIndex);</code></pre></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8077-8f25-e3eba84a2600" class="bulleted-list"><li style="list-style-type:disc"><code>0 → ChaoticMovement</code> : 복합 삼각함수 기반 변칙 이동 + Fire</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80e3-a561-f53f7526147e" class="bulleted-list"><li style="list-style-type:disc"><code>1 → StrafingJump</code> : 좌우 스트레이핑 + 점프 + Skill1 (스파이더맨 협동)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8067-96b6-e39483d8b09a" class="bulleted-list"><li style="list-style-type:disc"><code>2 → CoverAttack</code> : Raycast 엄폐 탐색 + 집중 공격</li></ul></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-804b-83d9-f3f26a44c25b"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-802b-8917-f0799dc1cf23" class=""><strong>🔸ChaoticMovement (변칙 이동)</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-804a-95be-d6acc80c9dbc" class="bulleted-list"><li style="list-style-type:disc"><strong>기술 구현</strong>: 3개의 삼각함수를 서로 다른 주파수로 조합하여 예측 불가능한 벡터 생성</li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-806a-bdd6-e369795efe66" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">void UAiBrainComponent::ExecuteChaoticMovementPattern(
+    ACharacter* Character, const FVector&amp; ToTarget, float Distance){
+    FVector SideDirection = FVector::CrossProduct(ToTarget, FVector::UpVector).GetSafeNormal();
+
+    // 복잡한 수학 함수로 예측 불가능한 움직임 생성
+    float Chaos1 = FMath::Sin(CurrentTime * 6.2f) * 1.3f;
+    float Chaos2 = FMath::Cos(CurrentTime * 4.7f) * 0.9f;
+    float Chaos3 = FMath::Sin(CurrentTime * 3.1f) * FMath::Cos(CurrentTime * 2.3f) * 0.7f;
+
+    // 거리에 따른 기본 방향 (접근/유지/후퇴)
+    FVector BaseDirection = (Distance &gt; 250.0f) ? ToTarget.GetSafeNormal() * 0.8f :
+                            (Distance &lt; 150.0f) ? -ToTarget.GetSafeNormal() * 0.6f :
+                            FVector::ZeroVector;
+
+    // 혼란스러운 최종 방향 계산
+    FVector ChaoticDirection = BaseDirection
+        + (SideDirection * Chaos1)
+        + (ToTarget.GetSafeNormal() * Chaos2)
+        + (FVector::CrossProduct(SideDirection, FVector::UpVector) * Chaos3);
+
+    Character-&gt;AddMovementInput(ChaoticDirection.GetSafeNormal(), 2.0f);
+
+    if (FMath::Fmod(CurrentTime, 0.7f) &lt; 0.1f)
+        RecievedIntent(FName(&quot;Input.Fire&quot;));
+}</code></pre></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80dd-ae50-e0000bb0e4d8" class="bulleted-list"><li style="list-style-type:disc"><strong>효과</strong>: 단일 주파수 삼각함수 대비 훨씬 불규칙한 궤적으로 플레이어 조준 방해</li></ul></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-809e-964d-c1693e071fcc"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8012-a608-c94e73ac9d3b" class=""><strong>🔸Cover + Attack (엄폐 전투)</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-809b-bdef-c3664ef179be" class="bulleted-list"><li style="list-style-type:disc"><strong>기술 구현</strong>: <code>LineTraceSingleByChannel</code>로 플레이어 반대 방향의 지형지물 탐색 후 벽면 법선벡터 기반 은신 위치 계산</li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-8022-b864-cee535c64dc4" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">bool UAiBrainComponent::FindHidingSpot(){
+    FVector AwayFromPlayer = -(TargetActor-&gt;GetActorLocation() - GetOwner()-&gt;GetActorLocation())
+                              .GetSafeNormal();
+    FVector StartLocation = GetOwner()-&gt;GetActorLocation();
+    FVector EndLocation   = StartLocation + (AwayFromPlayer * 200.0f);
+
+    FHitResult HitResult;
+    FCollisionQueryParams QueryParams;
+    QueryParams.AddIgnoredActor(GetOwner());
+    QueryParams.AddIgnoredActor(TargetActor.Get());
+
+    bool bHit = GetWorld()-&gt;LineTraceSingleByChannel(
+        HitResult, StartLocation, EndLocation, ECC_WorldStatic, QueryParams);
+
+    if (bHit)
+    {
+        // 벽 법선벡터 방향으로 30유닛 오프셋 = 안전한 엄폐 위치
+        HidePosition = HitResult.Location + (HitResult.Normal * 30.0f);
+        bIsHiding = true;
+        return true;
+    }
+
+    // 벽이 없으면 후퇴 위치 사용
+    HidePosition = GetOwner()-&gt;GetActorLocation() + (AwayFromPlayer * 100.0f);
+    bIsHiding = true;
+    return false;
+}</code></pre></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-803b-a271-cdb5f663acb4" class="bulleted-list"><li style="list-style-type:disc"><strong>환경 상호작용</strong>: 정적인 맵 데이터가 아닌 물리 엔진 기반 실시간 위치 분석 수행</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8020-a1c2-c4252bb8c50c" class="bulleted-list"><li style="list-style-type:disc"><strong>은신 후 공격</strong>: <code>Fire</code>와 <code>Skill1</code>을 교대로 0.4/0.7초 주기로 난사, 2초 후 새 엄폐지 재탐색</li></ul></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-8018-ad40-c00259031112"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80f8-bca9-cf3385d62b64" class=""><strong>🔸AI 협동 시스템 (스파이더맨 → 아이언맨 연계)</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80f5-9a75-ccb9277700eb" class="bulleted-list"><li style="list-style-type:disc"><strong>기술 구현</strong>: 옵저버 패턴 — 스파이더맨의 <code>Action.Skill1</code> 실행 여부를 <code>ActionComponent</code>로 실시간 감지, 즉시 아이언맨에게 연계 스킬 트리거</li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-8077-bcfd-c49cd0d52d18" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">// IsSpiderManUsingPullSkill() — 스파이더맨 스킬 실행 중 여부 감지
+UActionComponent* ActionComp = SpiderManCharacter-&gt;FindComponentByClass&lt;UActionComponent&gt;();
+UActionBase* SpiderManSkill  = ActionComp-&gt;GetActionByTag(FName(&quot;Action.Skill1&quot;));
+
+if (SpiderManSkill &amp;&amp; SpiderManSkill-&gt;IsRunning())
+{
+    if (SpiderManSkill-&gt;GetClass()-&gt;GetName().Contains(TEXT(&quot;Skill1_SpiderManSwing&quot;)))
+        return true;  // 플레이어 당기기 확인됨
+}
+
+// TriggerIronManSkill() — 아이언맨에게 리펄서 발사 명령
+void UAiBrainComponent::TriggerIronManSkill(ACharacter* IronManCharacter){
+    RecievedIntent(FName(&quot;Input.Skill1&quot;)); // 아이언맨 리펄서 즉시 트리거
+}</code></pre></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80de-860a-e467132bd3c6" class="bulleted-list"><li style="list-style-type:disc"><strong>효과</strong>: AI 캐릭터들이 독립적으로 행동하면서도 상황에 따라 전략적 연계를 수행하는 팀플레이 연출</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-801d-8385-cac33510fe1e"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80dd-9b6c-e6cdb41a6061" class=""><strong>게임 모드 / 플로우 및 UI 통합</strong>   </h2></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8036-935d-d43ce9e0dc4a" class=""><mark class="highlight-default"><strong>🔸기술 구현 로직/방식</strong></mark></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-809a-83a7-d4346ea3705d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alien-pixel_orange.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8050-a717-f0142a77b4d0" class=""><strong>2-1. 안정적인 매치 사이클 구축</strong></p></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80c9-acf7-e6792ce102a6" class=""><strong>🔹매치 시작 파이프라인</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-808c-9958-cec7ac04b932" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">BeginPlay()
+    ├── 스폰 포인트 수집 (BP_SpawnZoneAssemble 태그 탐색)
+    ├── 0.6초 후 → PauseAllCharacters()
+    │       ├── 이동 컴포넌트 비활성화 (DisableMovement)
+    │       ├── AI Brain Tick 중지 (bBrainActive = false)
+    │       └── HUD 위젯 Hidden
+    └── 3.0초 후 → ResumeAllCharacters()
+            ├── 이동 복구 (MOVE_Walking)
+            ├── AI Brain 재개 (bBrainActive = true)
+            ├── HUD 표시
+            └── 120초 매치 타이머 시작 → HandleMatchTimeout()</code></pre></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-80a0-8a0b-db3f4c8b71cd" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">// BeginPlay — 중첩 타이머로 연출 연결
+GetWorld()-&gt;GetTimerManager().SetTimer(PauseTimerHandle, [this]()
+{
+    PauseAllCharacters();
+
+    GetWorld()-&gt;GetTimerManager().SetTimer(ResumeTimerHandle, [this]()
+    {
+        ResumeAllCharacters();
+        GetWorldTimerManager().SetTimer(
+            MatchTimerHandle, this,
+            &amp;AInfinityFightersGameModeBase::HandleMatchTimeout,
+            MatchDuration, false);   // 120s
+        StartUITimer();
+    }, 3.0f, false);
+
+}, 0.6f, false);</code></pre></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-8015-8e85-c5057a87b2af"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8037-8acf-dec6b64d5286" class=""><strong>🔹스폰 시스템 — 최소 거리 보장 알고리즘</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80f6-876e-c3ad17b56f76" class="bulleted-list"><li style="list-style-type:disc"><strong>설계 목적</strong>: 리스폰 직후 플레이어와 적이 겹쳐 스폰되는 문제 방지</li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-8027-a956-e1ad6abfd68b" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">FVector GetRandomSpawnLocationWithMinDistance(float MinDistance){
+    TArray&lt;AActor*&gt; ValidSpawnPoints;
+
+    // 이미 사용된 스폰 포인트와 MinDistance(300) 이상 떨어진 위치만 필터링
+    for (AActor* SpawnPoint : AvailableSpawnPoints)
+    {
+        bool bValidDistance = true;
+        for (AActor* UsedPoint : UsedSpawnPoints)
+        {
+            if (FVector::Dist(SpawnPoint-&gt;GetActorLocation(),
+                              UsedPoint-&gt;GetActorLocation()) &lt; MinDistance)
+            {
+                bValidDistance = false;
+                break;
+            }
+        }
+        if (bValidDistance) ValidSpawnPoints.Add(SpawnPoint);
+    }
+    // 유효 위치 중 랜덤 선택 후 UsedSpawnPoints로 이동
+    ...
+}</code></pre></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-807a-9c41-c168c5d780ac"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80c3-9470-c537ca2ceebb" class=""><strong>🔹리스폰 보호 시스템</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8028-ad99-c1d9ac5d248d" class="bulleted-list"><li style="list-style-type:disc"><strong>설계 목적</strong>: 리스폰 직후 무방비 상태에서의 즉사 방지</li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-80ca-abcf-df37731301bd" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">void ApplyRespawnProtection(ACharacterBase* Character){
+    // 메시 충돌 전체 무시 → 피격 불가
+    Character-&gt;GetMesh()-&gt;SetCollisionResponseToAllChannels(ECR_Ignore);
+
+    // 버블 쉴드 Niagara 이펙트 활성화
+    Character-&gt;RespawnProtectionSphere-&gt;SetVisibility(true);
+    Character-&gt;RespawnProtectionSphere-&gt;Activate(true);
+
+    // 3초 후 자동 해제
+    GetWorld()-&gt;GetTimerManager().SetTimer(
+        RespawnProtectionTimerHandle,
+        [this, Character]() { RemoveRespawnProtection(Character); },
+        3.0f, false);
+}</code></pre></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-806b-9d92-e1a10e75049b"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-803d-93d4-eff73ae0a00a" class=""><strong>🔹매치 종료 → 맵 전환</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-803f-ad3e-e1421c3acb1e" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">void AInfinityFightersGameModeBase::OnMatchEnded(){
+    if (bEnded) return;
+
+    // 매치 통계 캐싱 (MatchResult → GameInstance 저장)
+    if (UManagerController* GI = GetGameInstance&lt;UManagerController&gt;())
+        GI-&gt;SetMatchResult(GI-&gt;GetMatchResult());
+
+    bEnded = true;
+    UGameplayStatics::OpenLevel(this, TEXT(&quot;Ending_Map&quot;));
+}</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80a6-8c89-f342074a443e"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alien-pixel_orange.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8040-a1e9-caa2fbb9d9d5" class=""><strong>2-2. 전투 정보 시각화 (UI)</strong></p></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8006-a753-c067c8519f83" class=""><strong>🔹킬로그 시스템 — Delegate 기반 실시간 갱신</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-8020-a67d-d3045338d960" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">// NativeConstruct — BattleManager 탐색 후 동적 바인딩
+void UKillLogContainerWidget::NativeConstruct(){
+    for (TActorIterator&lt;ABattleManager&gt; It(GetWorld()); It; ++It)
+    {
+        BattleManager = *It;
+        BattleManager-&gt;OnKillLogAdded.AddDynamic(
+            this, &amp;UKillLogContainerWidget::HandleKillLogAdded);
+        break;
+    }
+}
+
+// 킬 이벤트 수신 → 최신 항목이 맨 위에 쌓이는 스택 구조
+void UKillLogContainerWidget::AddKillLogEntry(const FKillLogEvent&amp; Event){
+    UKillLogEntryWidget* Entry = CreateWidget&lt;UKillLogEntryWidget&gt;(...);
+    Entry-&gt;SetupFromEvent(Event);
+
+    LogList-&gt;InsertChildAt(0, Entry);   // 최신 항목이 맨 위
+
+    // MaxEntries 초과 시 가장 오래된 항목 제거
+    while (LogList-&gt;GetChildrenCount() &gt; MaxEntries)
+        LogList-&gt;RemoveChild(LogList-&gt;GetChildAt(LogList-&gt;GetChildrenCount() - 1));
+
+    // EntryLifetime 초 후 자동 소멸
+    if (EntryLifetime &gt; 0.f)
+    {
+        FTimerDelegate Del;
+        Del.BindUFunction(this, FName(&quot;OnEntryExpired&quot;), Entry);
+        GetWorld()-&gt;GetTimerManager().SetTimer(Handle, Del, EntryLifetime, false);
+    }
+}</code></pre></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-803d-ada2-de9f2e43ad8e" class=""><strong>🔹에임 피드백</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-804c-9079-cc2db962cfa5" class="bulleted-list"><li style="list-style-type:disc">적 조준 시 에임 색상 변경 및 히트 마커 구현으로 즉각적인 타격 피드백 제공</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8058-8491-f4dfe84e31eb" class="bulleted-list"><li style="list-style-type:disc"><code>IsInPlayerFieldOfView()</code> 체크 기반으로 시야각 내 적에게만 AimEnemy 위젯 표시</li></ul></div></div></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-803e-bd81-edc4ac4e7f98"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80b3-a70e-f6d665fd9861" class=""><strong>Skill 구현</strong></h2></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8038-beca-e7d3420c4800" class=""><mark class="highlight-default"><strong>🔸기술 구현 로직/방식</strong></mark></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-8038-9d2d-c8d4aa9b384b"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alien-pixel_orange.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80e8-bcd5-e04a27d8ad40" class=""><strong>2-1. 아이언맨</strong></p></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8060-b9b4-cc65fc8b5dad" class=""><strong>🔹 Repulsor Skill 구현</strong></p></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-80a5-bb85-ccea011daa82" class="image" style="text-align:center"><a href="image%204.png"><img style="width:434.98046875px" src="image%204.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-8053-9076-cd43c1af2b0b" class="image" style="text-align:center"><a href="image%205.png"><img style="width:338.96484375px" src="image%205.png"/></a></figure></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-80e2-a044-ce0466ace37d"/></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-805f-94c2-cdd548bc5275" class=""><strong>🔹Shooting Aim 총알 방향 구현</strong></p></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-80fb-921c-e1e6b31d149c" class="image"><a href="image%206.png"><img style="width:528.02734375px" src="image%206.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8029-ad02-dc776935cf4e" class=""><strong>🔹아이언맨 시야각 Aim</strong></p></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-805d-8db6-e8959ec8fcdc" class="image"><a href="image%207.png"><img style="width:509.296875px" src="image%207.png"/></a></figure></div></div></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-8005-9c99-c9491c27c4eb"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-8054-b09b-edd7456923ff"><div style="font-size:1.5em"><span class="icon">🧱</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-808c-8b9e-edbeb09a21ca" class=""><strong>OOP 설계 </strong></h2></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-804c-bdb5-c275e9ecb45d" class=""><strong>Character Framework 설계 원칙</strong></p></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8066-9dfd-c23804074853" class=""><strong>1. 책임 분리 (Brain-Action-MoveRouter)</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80c1-83d9-dc40871fe503" class="bulleted-list"><li style="list-style-type:disc"><strong>Brain (</strong><code><strong>UAiBrainComponent</strong></code><strong>)</strong>: FSM 의사결정 및 상태 전환 담당</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-803f-96ab-c40f1363f65e" class="bulleted-list"><li style="list-style-type:disc"><strong>ActionRouter</strong>: 스킬 및 공격 실행 제어 (Fire / Skill1 / Jump)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-805d-b016-fe0053139237" class="bulleted-list"><li style="list-style-type:disc"><strong>MoveRouter</strong>: 물리적 이동 및 수학적 경로 계산</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8004-ba10-f0add1f30c9f" class="bulleted-list"><li style="list-style-type:disc"><strong>InputProxy</strong>: <code>EmitIntent()</code> → 입력 추상화 레이어 (AI/플레이어 동일 인터페이스)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-800b-950d-f60bac6b55ce" class="bulleted-list"><li style="list-style-type:disc">→ 시스템 간 결합도를 낮추어 신규 캐릭터 및 패턴 추가 용이성 확보</li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-80a8-a006-c026f229dca9" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">CharacterBase
+    ├── UAiBrainComponent    ← 의사결정 (FSM)
+    ├── UActionRouter        ← 스킬 실행
+    ├── UMoveRouter          ← 이동 계산
+    ├── UInputProxyComponent ← EmitIntent() 추상화
+    └── UActionComponent     ← 실행 중 Action 쿼리 (GetActionByTag)</code></pre></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8010-a09c-e23959c73dc3" class=""><strong>2. DataAsset 기반 밸런싱</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-809f-828a-eabb0540d720" class="bulleted-list"><li style="list-style-type:disc"><code>UAIData</code> (DataAsset)으로 HP, 공격 범위, 이동 속도, 넉백 파워, 딜레이 타임을 외부화</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80a8-8953-f900bea1a0d2" class="bulleted-list"><li style="list-style-type:disc">→ 코드 수정 없이 에디터에서 밸런스 조정 가능</li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-809f-aa7b-dbf9c0b7ddd9" class=""><strong>3. Delegate 기반의 느슨한 결합</strong></p></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80be-9b07-ee848a830e19" class="bulleted-list"><li style="list-style-type:disc">UI와 게임 로직이 직접 참조하지 않고 <code>OnKillLogAdded</code> 델리게이트를 통해 통신하여 모듈성 강화</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-806f-9fcf-fe84145c4736" class="bulleted-list"><li style="list-style-type:disc"><code>OnDamaged</code> 델리게이트로 전투 이벤트를 구독 방식으로 전달</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="3206dae7-af2e-80f0-9fd1-c82773b79db0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-8059-9345-ca0ef0c7ce6d"><div style="font-size:1.5em"><span class="icon">💥</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-807e-8f77-ec63f7c8c166" class=""><strong>트러블 슈팅</strong></h2></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80f8-88ef-d03ae647e49e"><div style="font-size:1.5em"><span class="icon">🔧</span></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-80fc-bd01-fbbf96ce4e00" class=""><strong>AI 움직임의 결정론적 단조로움 해소</strong></h3></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80af-8a83-e5d722c20cb9"><div style="font-size:1.5em"><span class="icon">🚫</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80f3-8512-fc779c0b2d00" class=""><strong>문제 상황<br/>:  AI가 항상 일정한 패턴으로 움직여 전투의 재미가 반감됨</strong></p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80ff-8992-f9d08b43f338"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8053-948f-ca4d2afed79f" class=""><strong>문제 원인</strong><div class="indented"><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8042-a0c8-d32fbde8e8d3" class="numbered-list" start="1"><li><mark class="highlight-orange"><strong>결정론적 상태 전환<br/></strong></mark>: 단순 <code>if-else</code> 기반으로 인해 행동이 항상 예측 가능함</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8059-aaf3-c8d0e4f6a956" class="numbered-list" start="2"><li><mark class="highlight-orange"><strong>단순 경로<br/></strong></mark>: 직선 위주의 이동으로 인해 기계적인 느낌이 강함</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-802b-80d7-e88544bd6224" class="numbered-list" start="3"><li><mark class="highlight-orange"><strong>단일 패턴<br/></strong></mark>: 모든 AI가 동일한 추격 로직을 사용하여 전투 다양성 부재</li></ol></div></div></p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80b7-8b21-d80a62c4846d"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8028-a301-dca3a75b4b82" class=""><mark class="highlight-teal_background"><strong>해결 방법</strong></mark></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-8096-a3a1-c7c796bafe10"><div style="font-size:1.5em"><span class="icon">✔️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-802c-876e-c90be95291cd" class=""><strong>수학적 노이즈 + 주기적 패턴 순환 도입</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-80b6-a419-f36c40d22a91" class="numbered-list" start="1"><li><strong>4초 주기 패턴 자동 순환</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80f9-8564-db53f9783714" class="bulleted-list"><li style="list-style-type:disc"><code>CurrentTime / 4.0f % 3</code> 계산으로 Chaotic/Strafing/Cover 패턴을 시간 기반으로 교체</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8050-8852-ebd02c1deb90" class="bulleted-list"><li style="list-style-type:disc">패턴 초기화 시 <code>static</code> 카운터로 스폰된 AI마다 다른 패턴을 시작점으로 배정</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8080-af10-c3a80e8ecc1a" class="numbered-list" start="2"><li><strong>복합 삼각함수 기반 곡선 이동</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8072-9b14-fbf2d2bb0c5f" class="bulleted-list"><li style="list-style-type:disc">단일 <code>Sin</code> 함수 대신 서로 다른 주파수의 <code>Sin/Cos</code> 3개를 조합</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80fa-9d62-c408d838bd1d" class="bulleted-list"><li style="list-style-type:disc">각 항이 독립적으로 진동하면서 예측 불가능한 리사주 곡선 형태의 경로 생성</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3206dae7-af2e-8056-8c14-e07b82bc609f" class="code code-wrap"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">// 복합 삼각함수 — 각기 다른 주파수로 예측 불가능성 극대화
+float Chaos1 = FMath::Sin(CurrentTime * 6.2f) * 1.3f;   // 고주파, 큰 진폭
+float Chaos2 = FMath::Cos(CurrentTime * 4.7f) * 0.9f;   // 중주파
+float Chaos3 = FMath::Sin(CurrentTime * 3.1f)            // 곱셈 조합 → 변조파
+             * FMath::Cos(CurrentTime * 2.3f) * 0.7f;
+
+FVector ChaoticDirection = BaseDirection
+    + (SideDirection               * Chaos1)
+    + (ToTarget.GetSafeNormal()    * Chaos2)
+    + (FVector::CrossProduct(SideDirection, FVector::UpVector) * Chaos3);</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80c7-b54a-fe59843650d1"><div style="font-size:1.5em"><span class="icon">✔️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-806d-9b46-fad6aa1ab019" class="">결과</p></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-80ed-a482-f7bad06d4b6e" class="numbered-list" start="1"><li><strong>정량적 성과</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80a1-a193-f74c01a7f46a" class="bulleted-list"><li style="list-style-type:disc">AI 행동 패턴 <mark class="highlight-red"><strong>20가지 이상</strong></mark> 조합 가능 (3개 스킬 × 5개 상태)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802e-b1c5-d50880b29a85" class="bulleted-list"><li style="list-style-type:disc">플레이 테스트 만족도 <mark class="highlight-red"><strong>80% 이상</strong></mark> (단조로움 해소)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802d-9cd2-f8e15f4ea7f6" class="bulleted-list"><li style="list-style-type:disc">FSM 구조로 <mark class="highlight-red"><strong>유지보수성</strong></mark> 확보 (새 패턴 추가 용이)</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8008-9c94-de34fa3af211" class="numbered-list" start="2"><li><strong>기술적 학습</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-806b-bb32-db19272d6aef" class="bulleted-list"><li style="list-style-type:disc">FSM 설계 원칙 및 <mark class="highlight-red"><strong>상태 전환 로직</strong></mark> 구조화 능력 강화</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8059-b662-f469104e2b39" class="bulleted-list"><li style="list-style-type:disc">게임 밸런스와 <mark class="highlight-red"><strong>수학적 확률론</strong></mark>의 연결 이해</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80e9-8025-dcdc32109239" class="bulleted-list"><li style="list-style-type:disc">AI 디버깅 및 행동 시각화 경험</li></ul></div></li></ol></div></div></figure></div></div></figure></div></div></figure></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-80d5-8d00-fc3095fe86da" class="column-list"><div style="display:contents" dir="auto"><div id="3206dae7-af2e-808c-9081-f460aece6039" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-801f-9666-c2ccd7d1dc7b" class=""><mark class="highlight-red"><mark class="highlight-yellow_background"><strong><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">상단으로</a></strong></mark></mark></h3></div></div></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-807c-9993-fec434c93bd6" style="width:49.99999999999999%" class="column"><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-80d1-8d9f-ee7e011ab4aa" class=""><mark class="highlight-red"><mark class="highlight-yellow_background"><strong><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">구현 목차</a></strong></mark></mark></h3></div></div></div></div></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8079-b0c2-c1f453d26a3a" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
