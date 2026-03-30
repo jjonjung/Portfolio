@@ -1817,7 +1817,17 @@ textarea.form-input::-webkit-resizer { display: none; }
    * PORTFOLIO
    */
 
-  .project-list { grid-template-columns: repeat(3, 1fr); }
+  .project-list { grid-template-columns: repeat(4, 1fr); }
+
+  .project-card {
+    height: 580px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-achievements {
+    margin-top: auto;
+  }
 
 
 
