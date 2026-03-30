@@ -111,7 +111,12 @@
 }
 
 
-
+.highlight {
+  background-color: #fff59d;
+  padding: 2px 4px;
+  line-height: 1.8;
+  box-decoration-break: clone;
+}
 
 
 /*-----------------------------------*\
