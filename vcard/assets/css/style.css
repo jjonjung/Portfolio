@@ -832,6 +832,17 @@ main {
   line-height: 1.6;
 }
 
+.timeline-text li {
+  list-style-type: disc;
+  margin-left: 1.2em;
+  padding-left: 0.2em;
+  margin-bottom: 4px;
+}
+
+.timeline-text li::marker {
+  color: var(--orange-yellow-crayola);
+}
+
 
 /**
  * skills 
