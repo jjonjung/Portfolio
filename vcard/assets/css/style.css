@@ -610,6 +610,75 @@ main {
   overflow: hidden;
 }
 
+.testimonials-list.stacks-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  scroll-snap-type: none;
+}
+
+.testimonials-list.stacks-grid .testimonials-item {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.testimonials-list.stacks-grid .content-card {
+  height: 100%;
+  min-height: 132px;
+  padding: 12px;
+  padding-top: 12px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 8px;
+  row-gap: 6px;
+  align-items: start;
+}
+
+.testimonials-list.stacks-grid .testimonials-avatar-box {
+  position: static;
+  grid-column: 1;
+  grid-row: 1;
+  transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 0;
+}
+
+.testimonials-list.stacks-grid .testimonials-avatar-box img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.testimonials-list.stacks-grid .testimonials-item-title {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-left: 0;
+  margin-bottom: 0;
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.testimonials-list.stacks-grid .testimonials-text {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  align-self: start;
+  font-size: 0.72rem;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+}
+
 
 /**
  * #testimonials-modal
@@ -1910,6 +1979,10 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .testimonials-item { min-width: calc(50% - 15px); }
 
+  .testimonials-list.stacks-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   /* clients */
 
   .clients-item { min-width: calc(25% - 38px); }
@@ -1926,6 +1999,10 @@ textarea.form-input::-webkit-resizer { display: none; }
     height: 580px;
     display: flex;
     flex-direction: column;
+  }
+
+  .testimonials-list.stacks-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .card-achievements {
