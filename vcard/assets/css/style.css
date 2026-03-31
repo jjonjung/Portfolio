@@ -843,6 +843,57 @@ main {
   color: var(--orange-yellow-crayola);
 }
 
+/* Timeline toggle (details/summary) */
+.timeline-text li details summary {
+  cursor: pointer;
+  display: inline;
+  list-style: none;
+  font-weight: var(--fw-300);
+  color: var(--light-gray);
+}
+
+.timeline-text li details summary::-webkit-details-marker {
+  display: none;
+}
+
+.timeline-text li details summary::before {
+  content: '▸ ';
+  font-size: 10px;
+  color: var(--orange-yellow-crayola);
+}
+
+.timeline-text li details[open] summary::before {
+  content: '▾ ';
+}
+
+.timeline-toggle-content {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-left: 2px solid var(--orange-yellow-crayola);
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  line-height: 1.7;
+}
+
+.timeline-toggle-content p {
+  margin-bottom: 8px;
+}
+
+.timeline-toggle-content ol {
+  padding-left: 1.4em;
+  margin: 8px 0;
+}
+
+.timeline-toggle-content ol > li {
+  list-style-type: decimal;
+  margin-bottom: 6px;
+  padding-left: 0.2em;
+}
+
+.timeline-toggle-content ol > li::marker {
+  color: var(--orange-yellow-crayola);
+}
+
 
 /**
  * skills 
