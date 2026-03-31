@@ -1,0 +1,823 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title> DB 데이터 이관, 마이그레이션 </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="31e6dae7-af2e-8197-8c98-f5a528fc1301" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><h1 class="page-title" dir="auto"> <mark class="highlight-red"><strong>DB 데이터 이관, 마이그레이션</strong></mark> </h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>작업 영역</th><td><span class="selected-value select-value-color-pink">C#</span><span class="selected-value select-value-color-orange">MSSQL</span><span class="selected-value select-value-color-green">Maria</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 내용</th><td>  • 이기종 <mark class="highlight-red"><strong>DB 마이그레이션</strong></mark><strong> </strong>(MS→Maria)</td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>작업기간</th><td><mark class="highlight-gray">2023.11 ~ 2024.04</mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-80f9-a7e2-c49461ba8f77" class="image" style="text-align:center"><a href="%ED%98%84%EB%8C%80.png"><img style="width:261.953125px" src="%ED%98%84%EB%8C%80.png"/></a></figure></div><div style="display:contents" dir="auto"><h1 id="32d6dae7-af2e-806a-a7e7-f0dd7dd0f594" class="">현대 위아 DB 데이터 이관</h1></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e0-9559-e761ca631489" class=""><mark class="highlight-gray">2023.11 ~ 2024.04</mark></p></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-8054-a402-dbaf1cfa6d35" class="">1공장 운영 DB를 2공장 환경으로 안정적으로 복제하기 위해, 스키마 동일성 검증, 무중단 배치 이관, 보안 통제, 오류 재처리 및 복구 시나리오까지 포함한 운영 안정성 중심의 DB 마이그레이션 구조를 설계한 프로젝트입니다.</blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8048-8f50-e8c548b5b78f"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-805d-a9e2-e67e58e63d9f" class="">▶ 프로젝트 개요</h2></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8083-a535-f99f5b9a16cc" class="bulleted-list"><li style="list-style-type:disc"><strong>프로젝트명</strong>: 현대 위아 DB 데이터 이관</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80ed-bb03-d25ec3613b8e" class="bulleted-list"><li style="list-style-type:disc"><strong>기간</strong>: 2023.11 ~ 2024.04</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8055-8ce3-e51817f172d0" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: 1공장 → 2공장 DB 전체 복제 구조 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80a1-a8c0-dbe9b13172c9" class="bulleted-list"><li style="list-style-type:disc"><strong>핵심 키워드</strong>: 스키마 동일성 검증, 무중단 배치 이관, 보안 및 접근 통제, 오류 로그, 재처리 구조, 롤백 시나리오, MariaDB 기반 구축</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-800b-bf0e-d978584e9306"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80d3-9841-f5b6386efea7" class="">▶ 프로젝트 한 줄 요약</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c1-8e56-eea92ded32bb" class="">단순 Dump 방식이 아닌,<mark class="highlight-yellow_background"> </mark><mark class="highlight-yellow_background"><strong>스키마 완전 동일성 확보 → 배치 단위 무중단 이관 → 오류 재처리 및 복구 가능 구조</strong></mark>를 기준으로 1공장 DB를 2공장 환경에 안정적으로 복제한 프로젝트입니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80a3-9e5a-edf19d7bf5fb"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8074-af92-f8bb5fd8b32e" class="">▶ 핵심 요약</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-803c-9392-ca468efc1fdd" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[문제 상황]
+1공장 운영 DB를 2공장으로 이전해야 했지만
+단순 Dump 방식은 운영 중단, 정합성 오류,
+보안 리스크, 장애 복구 어려움이 존재
+
+        ↓
+
+[핵심 설계]
+스키마 완전 동일성 검증
+배치 단위 무중단 이관
+최소 권한 기반 계정 분리
+Error Log + 실패 PK 재처리 구조
+복구 및 롤백 절차 문서화
+
+        ↓
+
+[성과]
+운영 중단 없이 안정적 복제 완료
+일정보다 단축된 이관 수행
+무결성 및 보안 기준 준수 체계 확보
+MariaDB 기반 데이터베이스 구축 경험 확보</code></pre></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8064-97c3-ccff25fdf23f" class="">▶ 프로젝트 배경과 문제 정의</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8001-8abb-f77f4a544f83" class="">이 프로젝트의 핵심은 단순히 데이터를 복사하는 것이 아니라, <strong>운영 중인 1공장 DB를 2공장 환경으로 안정적으로 복제하면서도 서비스 중단과 데이터 불일치, 보안 리스크를 최소화하는 것</strong>이었습니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-802f-a102-c9be17370eb3" class="">특히 실시간 데이터가 계속 발생하는 운영 환경에서는 전체 Dump 후 일괄 반영하는 방식보다, <strong>스키마 동일성 검증과 단계적 배치 이관, 장애 발생 시 재처리 가능한 구조</strong>가 더 중요하다고 판단했습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8069-a27d-fb5419857ea0" class="">▶ 문제의 본질</h3></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-809f-881f-ebbba5f8e7bf" class="bulleted-list"><li style="list-style-type:disc">단순 Dump 방식은 운영 중단과 정합성 이슈 가능성이 큼</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80a0-9393-e5cf25a0e38c" class="bulleted-list"><li style="list-style-type:disc">스키마 차이가 있으면 복제 후 장애가 발생할 가능성이 높음</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-806e-87cd-ee4861d5b459" class="bulleted-list"><li style="list-style-type:disc">대용량 테이블 이관 시 운영 부하와 실패 리스크가 큼</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8025-baf4-e0fadd281d91" class="bulleted-list"><li style="list-style-type:disc">작업 권한과 접근 통제가 불명확하면 보안 사고 가능성이 존재</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80a4-8646-d0d90d0be63c" class="bulleted-list"><li style="list-style-type:disc">실패 이후 복구 절차가 없으면 운영 안정성이 떨어짐</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8098-8b54-fa50e072c53d"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8054-858a-c5a9180b92aa" class="">▶ 역할</h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80a3-9dfa-e3ad5dc85007" class="">1) 스키마 완전 동일성 기반 복제 구조 설계</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8006-83ae-c5303be68268" class="">단순 데이터 Dump가 아니라, <strong>테이블 / 컬럼 / PK / UK / FK / INDEX / 프로시저 / 트리거 정의를 비교</strong>해 1공장과 2공장 간 구조적 동일성을 먼저 확보한 뒤 데이터를 이관하는 방식을 설계했습니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e2-ba08-c82cac5882e0" class="">이 과정을 통해 이관 이후 발생할 수 있는 구조 불일치성 장애를 사전에 줄였습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-809b-b144-c7356a9bb5bd" class="">2) 대용량 데이터 무중단 배치 이관 설계</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e1-833f-c3cc7ce69fb7" class="">대용량 테이블은 한 번에 옮기지 않고 <strong>구간/배치 단위로 분할 처리</strong>하도록 설계했습니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80bb-8bf8-f92fe6619b3d" class="">또한 실패 시 재시도가 가능하도록 <strong>배치별 로그 기록 구조</strong>를 두고, 운영 부하를 최소화하기 위해 <strong>비작업 시간대 중심으로 작업</strong>을 수행하는 전략을 적용했습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80c6-841c-d32db661e2ba" class="">3) 보안 및 접근 통제 체계 수립</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8056-93dd-fbf102fda45b" class="">이관 작업은 운영 DB에 직접적인 영향을 줄 수 있으므로, <strong>운영 / 이관 / 검증 계정을 분리</strong>하고 최소 권한 원칙을 적용했습니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8001-84ff-ce9865d3e8ac" class="">또한 작업 로그와 이관 이력을 남기고, 외부 접근을 차단한 내부망 기반으로 작업해 보안 기준을 준수했습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-807f-af43-f153ee958a04" class="">4) 오류 모니터링 및 장애 대응 구조 설계</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-806a-90fb-e42c74005ea1" class="">이관 과정에서 발생한 오류를 별도의 <strong>Error Log Table</strong>에 기록하고, 실패한 데이터는 <strong>PK 기준으로 재처리</strong>할 수 있도록 설계했습니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8093-8674-d88d7cc14b73" class="">추가로 복구 시나리오와 롤백 절차를 문서화하여, 예상치 못한 장애가 발생하더라도 운영 관점에서 빠르게 대응할 수 있는 기준을 마련했습니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80f6-bf73-e99dd027043b"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80cd-b13e-cab59ca0126f" class="">▶ 전략 도식</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-804a-9db9-fab2d6213948" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Copy[사전 분석]
+1공장 / 2공장 스키마 비교
+테이블 / 컬럼 / PK / UK / FK / INDEX
+프로시저 / 트리거 정의 확인
+        ↓
+
+[이관 기준 수립]
+스키마 완전 동일성 확보
+작업 계정 분리
+작업 로그 및 접근 통제 설정
+        ↓
+
+[이관 실행]
+대용량 테이블 배치 단위 분할 처리
+비작업 시간대 중심 수행
+배치별 실행 로그 기록
+        ↓
+
+[오류 대응]
+Error Log Table 기록
+실패 PK 기준 재처리
+복구 / 롤백 절차 적용
+        ↓
+
+[검증]
+데이터 정합성 확인
+운영 영향 점검
+보안 및 이력 관리 기준 준수 확인
+        ↓
+
+[완료]
+운영 중단 없는 안정적 복제
+MariaDB 기반 운영 환경 구축
+Copy</code></pre></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80b5-ac1d-e34c91153c93"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8015-8f75-c72d06c324de" class="">▶ 핵심 설계 판단</h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80a4-9662-f3961c48a683" class="">1) 단순 Dump보다 스키마 동일성 확보가 우선</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80b5-a3d3-e663040df3eb" class="">데이터만 복사하는 방식은 빠를 수 있지만, 구조가 조금만 달라도 운영 장애로 이어질 수 있다고 판단했습니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80de-9b8c-fe06e3bbc5cf" class="">그래서<mark class="highlight-yellow_background"> </mark><mark class="highlight-yellow_background"><strong>데이터 이관 이전에 구조 동일성부터 검증하는 접근</strong></mark>을 기준으로 삼았습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80c0-842a-d7a3cf7d6d4f" class="">2) 무중단 이관을 위해 배치 단위 분할이 필요</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e8-ac83-e96381e88830" class="">운영 환경에서 대용량 데이터를 한 번에 처리하면 부하와 실패 범위가 커지기 때문에, <br/><mark class="highlight-yellow_background"><strong>작게 나누어 옮기고 실패 시 해당 배치만 재처리하는 방식</strong></mark>이 더 안전하다고 보았습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80dc-9bfe-ea2592b8825a" class="">3) 이관 작업도 보안 설계가 중요</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80db-a659-fb3031ab31b9" class="">DB 마이그레이션은 기술 작업이면서 동시에 운영 보안 이슈이기도 하기 때문에, <br/><mark class="highlight-yellow_background"><strong>권한 분리·최소 권한·내부망 기반 작업·이력 기록</strong></mark>을 필수 기준으로 두었습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8012-9f11-cd1651020cd7" class="">4) 이관 성공의 기준은 “복사 완료”가 아니라 “<mark class="highlight-default"><mark class="highlight-yellow_background"><strong>복구 가능성 확보</strong></mark></mark>”</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-801e-a6b0-f477c567606b" class="">데이터가 옮겨졌다는 사실보다 중요한 이관의 성공은 데이터 복사 완료가 아니라<mark class="highlight-red"><strong> 복구 가능성에 의해 판단</strong></mark><mark class="highlight-default">이라고 생각합니다</mark>. 오류 발생 시 원인을 추적하고 재처리할 수 있도록 <mark class="highlight-yellow_background"><strong>Error Log, 재처리 구조, 롤백 절차</strong></mark>를 함께 설계했습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80e5-9800-f0df575cba99"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-800a-96aa-e17cb3a3caa3" class="">▶ 구현 요약</h2></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80c4-ab7f-e8b28da3dfca" class="bulleted-list"><li style="list-style-type:disc">1공장 → 2공장 스키마 정의 비교</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-802a-b26d-df0caae041ed" class="bulleted-list"><li style="list-style-type:disc">테이블 / 컬럼 / PK / UK / FK / INDEX / 프로시저 / 트리거 검증</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8063-a93b-f83688396cc3" class="bulleted-list"><li style="list-style-type:disc">대용량 데이터 구간/배치 단위 이관 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8027-98c6-d4fd3578d75d" class="bulleted-list"><li style="list-style-type:disc">배치별 로그 기록 및 실패 재시도 구조 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8042-b10c-f18e65b56956" class="bulleted-list"><li style="list-style-type:disc">운영 / 이관 / 검증 계정 분리</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8039-add7-f23b0a6d3f26" class="bulleted-list"><li style="list-style-type:disc">최소 권한 원칙 적용 및 내부망 기반 접근 통제</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80c4-aae5-de5ab1af58c8" class="bulleted-list"><li style="list-style-type:disc">Error Log Table 기반 오류 추적</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-807e-a4f7-d863bb8976bd" class="bulleted-list"><li style="list-style-type:disc">실패 PK 기준 재처리 구조 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8079-8b5e-f291d6ba9853" class="bulleted-list"><li style="list-style-type:disc">복구 시나리오 및 롤백 절차 문서화</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80b9-a55e-e8e8d5ad23cb"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80a2-ac9f-ccb70892b18d" class="">▶ 핵심 성과</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-802b-abb4-e88aa9ad1681" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Copy운영 중단 없이
+1공장 → 2공장 DB 안정적 복제 완료
+
+일정 단축
+예정 일정 대비 빠르게 이관 완료
+
+무결성 확보
+데이터 정합성 기준 준수 체계 구축
+
+보안 준수
+계정 분리, 최소 권한, 작업 이력 관리 적용
+
+운영 안정성 확보
+오류 로그, 재처리, 롤백 절차 기반 대응 체계 구축</code></pre></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8056-9895-f98285ea1f24"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80a8-ab07-d37ee3680f7c" class="">▶ 역량 </h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80b7-8025-e0950e93f040" class="">1) 실시간 운영 환경에서의 단계적 이관 전략 수립 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80ff-83c3-daa7cd23656e" class="">실시간 데이터가 발생하는 운영 환경에서 무중단 이관을 위해, <br/><mark class="highlight-yellow_background"><strong>배치 단위 분할·부하 분산·실패 재처리</strong></mark> 중심 전략을 설계한 경험을 쌓았습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80ca-b2ff-c5ac04b74889" class="">2) 운영 안정성과 리스크 관리 역량</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80b3-99cd-e38b5848b401" class="">단순 이관 성공이 아니라, <mark class="highlight-yellow_background"><strong>실패 가능성과 복구 가능성까지 함께 설계하는 기준</strong></mark>을 갖추게 되었습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8048-9d55-c1fc435f4483" class="">3) 보안과 접근 통제를 고려한 DB 작업 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e6-8224-fc15dc0e8a28" class="">이관 프로젝트에서도 보안 설계가 중요하다는 점을 실무에서 체득했고, <br/><mark class="highlight-yellow_background"><strong>최소 권한 원칙과 계정 분리, 작업 이력 관리</strong></mark>를 직접 적용했습니다.</p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8065-a931-e4dba336da05" class="">4) MariaDB 기반 데이터베이스 구축 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8082-9c1e-f81bd3e2e1b0" class="">이 프로젝트를 통해 MariaDB 기반 환경에서의 데이터베이스 구축 및 운영 전환 경험을 확보했습니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80f0-9012-e8dab3407cb6"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80c0-8405-e43b618c9fed" class="">▶ 앞선 DB 마이그레이션 프로젝트와의 차별점</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8016-8e31-ce5dde1683b8" class="">기존 자사 솔루션 MSSQL → MariaDB 전환 프로젝트가 <mark class="highlight-yellow_background"><strong>문법 호환성과 실행계획 기반 성능 최적화</strong></mark> 중심이었다면,</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80a7-a05c-d96d01bbe1cd" class="">현대 위아 프로젝트는 <mark class="highlight-yellow_background"><strong>무중단 복제, 보안 통제, 오류 대응, 복구 시나리오 설계</strong></mark>에 더 초점을 둔 사례입니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-801f-b043-dde8cfe73f22" class="">즉, 두 프로젝트를 함께 보면 다음과 같은 역량을 한 페이지에서 보여줄 수 있습니다.</p></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80e9-988e-e5b87a59acad" class="bulleted-list"><li style="list-style-type:disc">호환성/성능 관점의 MariaDB 전환 경험</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-800e-92c9-e400c0f7e932" class="bulleted-list"><li style="list-style-type:disc">운영 안정성/보안 관점의 MariaDB 이관 경험</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80dd-a7fa-da983aca214f" class="bulleted-list"><li style="list-style-type:disc">검증 가능한 데이터 정합성 확보 경험</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8026-aadb-c3eaefad0487" class="bulleted-list"><li style="list-style-type:disc">실서비스 환경에서의 장애 대응 및 복구 설계 경험</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-805e-95a9-c94bea62c811"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8056-8945-e0dee468f087" class="">▶ 직무 역량</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8022-a4f9-d7e217ac7ba4" class="">이 프로젝트를 통해 단순 데이터 복사를 넘어, <mark class="highlight-orange_background"><strong>운영 중단 없는 이관 전략</strong></mark><mark class="highlight-orange_background">, </mark><mark class="highlight-orange_background"><strong>배치 단위 부하 관리</strong></mark><mark class="highlight-orange_background">, </mark><mark class="highlight-orange_background"><strong>오류 재처리 구조</strong></mark><mark class="highlight-orange_background">, </mark><mark class="highlight-orange_background"><strong>복구 및 롤백 절차 설계</strong></mark><mark class="highlight-orange_background">, </mark><mark class="highlight-orange_background"><strong>MariaDB 기반 운영 환경 구축</strong></mark><mark class="highlight-orange_background"> </mark>경험을 쌓았습니다. <br/>이는 개발 직무에서 <mark class="highlight-yellow_background"><strong>데이터 정합성, 운영 안정성, 장애 대응, 보안 인식</strong></mark>과 직접 연결되는 중요한 역량이라 생각합니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-805c-a590-f2c37ffb9902"/></div><div style="display:contents" dir="auto"><h1 id="32d6dae7-af2e-8055-9077-e307f668a896" class="">솔루션 프로그램 | DB 마이그레이션</h1></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8174-b8aa-c97812438146" class=""><mark class="highlight-gray">2023.11 ~ 2024.04</mark></p></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-802a-832e-d8d4d24bb310" class="image" style="text-align:center"><a href="image.png"><img style="width:562.96875px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-81b5-8439-df650f2a0040" class="bulleted-list"><li style="list-style-type:disc">역할 <div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-812e-816e-ee9f0581d4a1" class="bulleted-list"><li style="list-style-type:circle">전체 프로그램의 DB 이관(1공장→2공장)<div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8111-b3b6-f74831126b52" class="">1. MSSQL 기반 자사 솔루션의 전체 DB 스키마·프로시저·뷰·트리거 분석 후 MariaDB 환경에 맞게 구조 재설계<br/>2. MSSQL 전용 문법(TOP, MERGE, ISNULL, GETDATE 등)을 매핑 규칙 기반으로 일괄 치환하고, 고위험 쿼리는 실행계획 기반으로 수작업 재작성<br/>3. C# 코드 내 DB 의존 로직 전수 스캔 후 MariaDB 커넥션/파라미터/트랜잭션 구조로 수정 및 Vendor 종속 코드 분리<br/>4. 대용량 데이터 배치 단위 무중단 이관 스크립트 작성 및 인덱스/제약 조건 재적용 전략 설계<br/>5. Row Count·SUM 비교 및 대표 트랜잭션 시나리오 테스트를 통한 데이터 무결성 검증</p></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-81b1-92ee-caa4a1b7ba92" class="bulleted-list"><li style="list-style-type:disc">성과<div style="display:contents" dir="auto"><p id="31e6dae7-af2e-81a0-992a-ce0c30a3bb28" class="">1. 이기종 DB(MSSQL → MariaDB) 환경 전환을 일정 내 안정적으로 완료<br/>2. 규칙 기반 변환 + 선별 수작업 전략으로 대규모 쿼리 정확도 확보<br/>3. 무중단 배치 이관 및 검증 체계 수립으로 운영 영향 최소화<br/>4. DB Vendor 종속성 최소화 구조로 개선하여 향후 확장성 확보</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="31e6dae7-af2e-81b2-ac5e-f665f09c37de" class="bulleted-list"><li style="list-style-type:disc">역량<div style="display:contents" dir="auto"><p id="31e6dae7-af2e-81cb-8124-c47bc6373a68" class="">1. 이기종 DB 전환 경험을 통한 MySQL/MariaDB 기반 서버 환경 이해<br/>2. 대용량 데이터 처리 및 무결성 검증 경험<br/>3. DB 변경에 대응 가능한 구조 설계 경험<br/>4. 변환 → 실행 → 검증 루프 기반 문제 해결 능력</p></div></li></ul></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8171-8239-e25ddd8a4547" class="">         →  실행계획 분석(EXPLAIN), 배치 스크립트 설계</p></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80ff-9053-ca4c9d3fa367" class="">▶ 프로젝트 배경과 문제 정의</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e1-bb83-d94f53b9763c" class="">기존 자사 솔루션은 MSSQL 중심으로 설계되어 있어, 스키마·프로시저·뷰·트리거뿐 아니라 C# 애플리케이션 코드에도 DB Vendor 종속성이 깊게 반영되어 있었습니다. 이 때문에 단순히 DB만 교체해서는 안정적인 전환이 불가능했고, 쿼리 호환성 문제와 성능 저하, 운영 중단 리스크, 데이터 불일치 가능성까지 함께 고려해야 했습니다. 이 프로젝트에서는 DB 이관을 단순 변환 작업이 아니라, DB 구조와 애플리케이션 의존성을 함께 정리하는 아키텍처 개선 작업으로 보고 접근했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80eb-8bfe-d020634ee00c" class="">1. 현상 파악</h3></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-807a-ab37-d660f962ee59" class="bulleted-list"><li style="list-style-type:disc">MSSQL 전용 문법이 광범위하게 사용됨</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8020-9cd1-d896f350270c" class="bulleted-list"><li style="list-style-type:disc">트리거 내 무거운 실시간 연산으로 트랜잭션 지연 발생</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80f2-84ef-f78dea64822b" class="bulleted-list"><li style="list-style-type:disc">DB 교체 시 기존 프로시저/뷰/트리거 호환성 문제 예상</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-800d-8e85-d1e7ac0d4a8e" class="bulleted-list"><li style="list-style-type:disc">애플리케이션 코드 내 연결/파라미터/트랜잭션 로직도 Vendor 종속적이었음</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-802e-9943-f3217d1f6ef5" class="bulleted-list"><li style="list-style-type:disc">대용량 데이터 이관 과정에서 서비스 중단과 무결성 훼손 위험 존재 </li></ul></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8007-bae9-c6eee922eabe" class="">2. 문제의 본질</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8019-b2e7-c84779cf9987" class="">이 프로젝트의 본질은 “MSSQL 문법을 MariaDB 문법으로 바꾼다”가 아니라,</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8057-a0d8-e17cc4cf6c7a" class=""><strong>DB Vendor </strong>종속 구조를 줄이고, 이관 이후에도 안정적으로 운영 가능한 구조로 바꾸는 것이었습니다. 특히 이관 성공 여부는 단순 실행 성공이 아니라, 성능 유지 또는 개선, 데이터 무결성 확보, 운영 영향 최소화까지 포함해 판단해야 했습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-802b-80cd-ee90e79fde76"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-805a-a0ec-d30d5c8aac72" class="">▶ 수행 접근 방식</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-802b-a8a8-cb99828dc99a" class="">DB 마이그레이션은 자동 변환만으로 해결되지 않는다고 판단했습니다. 따라서 문법 치환이 가능한 영역은 <mark class="highlight-yellow_background"><strong>규칙 기반 자동 변환</strong></mark>으로 처리하고, 성능과 정합성에 직접 영향을 주는 고위험 쿼리와 트리거는 <mark class="highlight-yellow_background"><strong>실행계획 기반 수작업 재작성</strong></mark>으로 대응하는 하이브리드 전략을 적용했습니다. 또한 이관 자체보다 더 중요한 것은 검증 체계라고 보고, <mark class="highlight-yellow_background"><strong>Row Count 비교, SUM 비교, 대표 트랜잭션 시나리오 테스트</strong></mark>를 통해 결과를 반복 검증하는 루프를 설계했습니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8091-bdc0-f1abf9d8bef6"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80de-ac12-f649f52f11d8" class="">▶ 역할</h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80df-93f9-fd6143dbe68a" class="">1) DB 구조 전수 분석 및 MariaDB 재설계</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80f8-bd1f-cba7fe928524" class="">MSSQL 기반 자사 솔루션의 전체 DB 스키마, 프로시저, 뷰, 트리거를 분석한 뒤, MariaDB 환경에서 안정적으로 동작할 수 있도록 구조를 재설계했습니다. 단순 문법 치환이 아니라, MariaDB의 실행 특성과 운영 환경을 고려해 스키마와 객체 단위를 다시 검토했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80d3-9883-cd2637408770" class="">2) 규칙 기반 자동 치환 + 고위험 쿼리 수작업 재작성</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c6-8add-f546894947dc" class="">TOP, MERGE, ISNULL, GETDATE 등 MSSQL 전용 문법은 매핑 규칙 기반으로 일괄 치환했고, 복잡한 조인이나 성능 영향이 큰 쿼리는 실행계획을 분석해 수작업으로 재작성했습니다. 이를 통해 변환 효율성과 정확도를 동시에 확보했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80a6-8b1b-f35546f0760f" class="">3) C# 애플리케이션의 DB 의존 로직 정리</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8040-9136-ce2746dd19a1" class="">C# 코드 내 DB 연결, 파라미터 바인딩, 트랜잭션 처리, Vendor 종속 함수 사용 구간을 전수 스캔한 뒤 MariaDB 커넥션 구조에 맞게 수정했습니다. 이 과정에서 DB 변경에 취약한 로직을 분리해, 이후 환경 변경에도 대응 가능한 구조로 개선했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8088-b4b2-f6c78a8dd337" class="">4) 무중단 배치 이관 스크립트 및 운영 전략 설계</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8048-9f67-f35fb76778a5" class="">대용량 데이터 이관 시 서비스 영향이 최소화되도록 배치 단위 이관 스크립트를 작성하고, 인덱스와 제약 조건을 언제 재적용할지에 대한 전략도 함께 설계했습니다. 단순히 빨리 옮기는 것이 아니라, <mark class="highlight-yellow_background"><strong>운영 중단 없이 안정적으로 전환하는 흐름</strong></mark>에 초점을 맞췄습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-804b-b68f-f3f3313284a6" class="">5) 데이터 무결성 검증 체계 수립</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8074-be62-cde89b0491d1" class="">Row Count 비교, SUM 비교, 대표 트랜잭션 시나리오 테스트를 통해 이관 결과를 검증했습니다. 이 과정을 통해 단순 레코드 수 일치뿐 아니라, 실제 업무 흐름 기준으로도 데이터 정합성을 확인할 수 있도록 했습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8053-aae6-d5bc27e94054"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80b5-9a73-d0d3f6ab816c" class="">▶ 마이그레이션 전략 도식</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-80ac-b27d-e0defc31b705" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Copy[MSSQL 구조 분석]
+스키마 / 프로시저 / 뷰 / 트리거 / C# DB 의존 코드 분석
+        ↓
+
+[변환 전략 수립]
+규칙 기반 자동 치환 대상 분류
+고위험 쿼리 수작업 재작성 대상 분류
+        ↓
+
+[호환성 대응]
+TOP → LIMIT
+ISNULL → IFNULL
+GETDATE → NOW
+MERGE 대체 로직 재설계
+        ↓
+
+[성능 검토]
+EXPLAIN 기반 실행계획 분석
+병목 쿼리 인덱스 및 조인 구조 조정
+트리거 경량화
+        ↓
+
+[이관 실행]
+배치 단위 무중단 데이터 이관
+인덱스/제약 조건 재적용
+        ↓
+
+[검증]
+Row Count 비교
+SUM 비교
+대표 트랜잭션 시나리오 테스트
+        ↓
+
+[안정화]
+운영 영향 점검
+성능 모니터링
+DB Vendor 종속성 최소화 구조 확보
+Copy</code></pre></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-806f-ae89-e44e0625cc39"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8020-beed-f0c4a36ef5f7" class="">▶ 핵심 설계 판단</h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80c6-a1db-cc52ea614c9e" class="">1) 자동 변환만으로는 품질을 보장할 수 없다고 판단</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8060-b77a-f1fcf89ef359" class="">단순 문법 치환은 속도는 빠르지만, 복잡한 비즈니스 로직이나 성능 민감 쿼리까지 안전하게 옮기기 어렵다고 보았습니다. 그래서 <mark class="highlight-yellow_background"><strong>규칙 기반 자동 변환 + 선별 수작업 재작성</strong></mark> 전략을 적용했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-8090-b47a-df987c95788a" class="">2) 트리거의 실시간 무거운 연산은 구조적으로 분리</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8004-bdb3-d94b0c234eff" class="">실시간 트리거 안에서 무거운 집계나 부가 연산을 수행하면 응답성과 트랜잭션 지연에 직접적인 영향을 준다고 판단했습니다. 이에 트리거는 단순 이력 기록 중심으로 경량화하고, 집계는 타이머 기반 스케줄러로 분리하는 방향으로 구조를 개편했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80ff-a49a-f2cf4c51e692" class="">3) 이관 성공 기준을 “실행 성공”이 아니라 “검증 완료”로 정의</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80ae-94e0-c8f98bcfdf7f" class="">DB 마이그레이션은 스크립트가 돌아가는 것만으로 끝나지 않는다고 보고, <mark class="highlight-yellow_background"><strong>변환 → 실행 → 검증 루프</strong></mark>를 반복할 수 있는 체계를 구축했습니다. 이를 통해 정합성과 성능을 함께 확인하며 이관 품질을 높였습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8098-b848-d133d8a5934d"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8001-b99c-defc1d75f875" class="">▶ 구현 요약</h2></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-808f-a28a-ebfcbd86aa16" class="bulleted-list"><li style="list-style-type:disc">MSSQL 전체 DB 객체 분석 후 MariaDB 구조 재설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8062-9770-c7ceec58a5d5" class="bulleted-list"><li style="list-style-type:disc">MSSQL 전용 문법 매핑 규칙 정의 및 자동 치환</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80ab-9667-d6d7d037e61d" class="bulleted-list"><li style="list-style-type:disc">고위험 쿼리 실행계획 기반 수작업 재작성</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8063-8be6-caffc6597ef9" class="bulleted-list"><li style="list-style-type:disc">C# 코드 내 Vendor 종속 DB 로직 전수 스캔 및 분리</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-803f-9592-fd01edd089ba" class="bulleted-list"><li style="list-style-type:disc">무중단 배치 이관 스크립트 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8047-8d31-e79a7bda2c34" class="bulleted-list"><li style="list-style-type:disc">인덱스/제약 조건 재적용 전략 수립</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-807c-ad0b-da2c7dcd5be4" class="bulleted-list"><li style="list-style-type:disc">Row Count / SUM / 시나리오 테스트 기반 무결성 검증 체계 구축 </li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8075-aa85-c911c8159bc1"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8034-ad5c-e8d2105e0cb5" class="">▶ 핵심 성과</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-8068-b576-c81675ed62c5" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Copy이기종 DB 환경 전환 안정적 완료
+MSSQL → MariaDB 일정 내 전환 성공
+
+쿼리 정확도 확보
+규칙 기반 변환 + 선별 수작업 전략 적용
+
+운영 영향 최소화
+무중단 배치 이관 및 검증 체계 수립
+
+확장성 확보
+DB Vendor 종속성 최소화 구조로 개선</code></pre></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-b455-f2ecf60fa351" class="">이 프로젝트의 성과는 단순히 “이관에 성공했다”를 넘어, <mark class="highlight-yellow_background"><strong>이관 이후 성능 개선과 구조적 확장성 확보까지 달성했다는 점</strong></mark>에 있습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8088-b8d9-e5ac49f8d234"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8002-be10-cf072e6c8a84" class="">▶ 역량 </h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-800b-8710-cd7a807a96e2" class="">1) 이기종 DB 전환 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8036-a93e-d23ff4288127" class="">MSSQL에서 MariaDB로의 전환을 직접 수행하며, MySQL/MariaDB 기반 서버 환경에 대한 이해를 실무 수준으로 확장했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80d2-a4d5-c1098d74d162" class="">2) 실행계획 기반 성능 최적화 역량</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-ab88-f5b938aa9607" class="">EXPLAIN 기반으로 병목 쿼리를 분석하고, 조인 구조·인덱스·문법을 조정해 실질적인 성능 개선을 경험했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80b6-a767-cfcd35df3284" class="">3) 대용량 데이터 처리 및 무결성 검증 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80d5-a5f6-cd7bd1565cb3" class="">배치 단위 이관과 데이터 검증 체계를 설계하며, 대용량 데이터 처리에서 중요한 무결성과 운영 안정성을 함께 고려하는 기준을 갖추게 되었습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-801c-a36c-de498921a49a" class="">4) DB 변경에 대응 가능한 구조 설계 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8032-9f5d-d53596631c6f" class="">애플리케이션 코드와 DB 객체에서 Vendor 종속성을 줄이는 작업을 통해, 환경 변화에 유연하게 대응할 수 있는 구조 설계 경험을 쌓았습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8047-8194-de2a42eee739"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8014-9191-d3375536f0ee" class="">이 프로젝트를 통해 얻은 기술적 인사이트</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8066-99e7-dfa90169b189" class="">이 경험을 통해 DB 마이그레이션은 단순 변환 작업이 아니라, <mark class="highlight-yellow_background"><strong>호환성·성능·정합성·운영 안정성</strong></mark>을 함께 검토하는 구조 개선 작업이라는 점을 배웠습니다. 특히 자동화만으로 해결되지 않는 영역에서는 실행계획과 실제 업무 시나리오를 기준으로 수작업 최적화가 반드시 필요하다는 것을 체감했고, 이후에도 DB 변경 작업을 볼 때 “변환 후 실행”이 아니라 “검증까지 완료된 구조”를 기준으로 판단하게 되었습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-800a-a57d-d8cc1f87a0af"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8082-9b87-c720bfea27c3" class="">직무 연결 포인트</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8077-bc2d-f8a2bc97f6bd" class="">이 프로젝트는 게임 도메인은 아니지만, 기술적으로는 <mark class="highlight-yellow_background"><strong>MySQL/MariaDB 기반 DB 설계 이해</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>대용량 데이터 처리</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>실행계획 기반 쿼리 최적화</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>무결성 검증</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 중단을 최소화하는 배치 전략</strong></mark>을 담고 있습니다. 이는 서버 개발 직무에서 요구되는 <mark class="highlight-yellow_background"><strong>DB 설계 및 구현</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 안정성 확보</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>실서비스 대응 역량</strong></mark>과 직접 연결되는 경험이라고 생각합니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-805c-b2a7-c369dff6389a"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

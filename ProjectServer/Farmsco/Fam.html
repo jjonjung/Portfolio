@@ -1,0 +1,769 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>팜스코 </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="31e6dae7-af2e-8111-b6b5-d2c0f23a7e2f" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><h1 class="page-title" dir="auto"><strong>팜스코 </strong></h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>작업 영역</th><td><span class="selected-value select-value-color-brown">Android(JAVA)</span><span class="selected-value select-value-color-pink">C#</span><span class="selected-value select-value-color-orange">MSSQL</span><span class="selected-value select-value-color-green">Oracle</span><span class="selected-value select-value-color-yellow">SAP</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 내용</th><td>• <mark class="highlight-red"><strong>실시간 데이터 처리 시스템 안정화</strong></mark><mark class="highlight-default"><br/>• SAP–MES 인터페이스<br/>• MES 솔루션 구축</mark></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>작업기간</th><td><mark class="highlight-gray">2024.12 ~ 2025.11</mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c7-9e34-eb089a45ec47" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">1. 핵심 요약</a></p></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8169-a72a-fba72fa08e7d" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="31e6dae7-af2e-8110-9d3c-dc39635bcced" class="image"><a href="%ED%8C%9C%EC%8A%A4%EC%BD%94.png"><img style="width:237.94921875px" src="%ED%8C%9C%EC%8A%A4%EC%BD%94.png"/></a></figure></div><div style="display:contents" dir="auto"><h1 id="32d6dae7-af2e-808b-8b6c-c8803fc34f69" class="">인터페이스 실시간 데이터 처리 시스템 안정화</h1></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-80dd-a5be-f55eaf9123fa" class="">상태 기반 처리 구조와 재처리 가능한 운영 체계를 설계하여, <br/>SAP–MES 인터페이스를 안정적인 데이터 파이프라인으로 개선한 프로젝트입니다. </blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-807b-835d-f59ea8fa0574"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-802b-a4ff-fe8b301e6f0d" class="">▶ 프로젝트 개요</h2></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8056-ae20-e0e5e935353e" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: SAP–MES 인터페이스 설계 및 실시간 데이터 처리 시스템 개발</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80fa-9a2f-d58bd4308792" class="bulleted-list"><li style="list-style-type:disc"><strong>기술 스택</strong>: C#, MSSQL, Stored Procedure, 멀티스레딩</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8079-903e-e140fd1dc263" class="bulleted-list"><li style="list-style-type:disc"><strong>처리 규모</strong>: 일 평균 1만 건 이상 데이터 처리</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80c1-8322-dd885d8a21b4" class="bulleted-list"><li style="list-style-type:disc"><strong>핵심 키워드</strong>: 상태 기반 처리, Idempotent 설계, 배치 처리, 인덱스 최적화, 오류 재처리, 운영 모니터링</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8084-ad62-ca73741de0db"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8080-947c-e6971610e03f" class="">▶ 시스템 배경</h2></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-8016-a9cb-c26e286ad1bf" class="image"><a href="image.png"><img style="width:519px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-8082-93e1-c8bad04fe4c8" class="">표준 MES 기능 모듈을 기반으로 고객사 프로세스에 맞는 시스템 구성을 이해하고,<br/>SAP와 MES 간 인터페이스가 연결되는 운영 환경에서 실시간 데이터 처리 안정화 작업을 <br/>수행했습니다. </blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80df-89d7-f9be1a84b460"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-803d-9572-d0fd44bdc94f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80d5-bedd-d34c8374a9e8" class=""><strong>목차</strong></h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8005-98e8-ebc1725a131f" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">1. 핵심 요약</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8007-b6b9-e5c6b506b770" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">2. 프로젝트 배경과 문제 정의</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-afae-eb555a732f16" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">3. 수행 접근 방식</a><div class="indented"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8048-aa9f-e390adc0cf0b" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">3-1. 문제 해결 순서</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-808c-bf6d-da7e6c642600" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">3-1. 실시간 처리 파이프라인</a></p></div></div></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-805e-9ae8-d3e35c5f9958" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">4. 핵심 성과</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8099-ba29-e23f1db8dbfe" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">5. 구현 요약</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8030-bb2f-ff7054d8a80b" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">6. 프로젝트를 통한 기술적 인사이트</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-801e-bb04-c944665a6a42" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">7. 직무 역량</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c1-a459-eed5e97ae8e3" class=""><mark class="highlight-red"><mark class="highlight-default_background"><strong>▶ 핵심 요약</strong></mark></mark></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-8018-ab13-d63b787c6bd6"><div style="font-size:1.5em"><span class="icon">🚩</span></div><div style="width:100%"><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-80d5-a15e-f1349b409136" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[문제 발생]
+	SAP → MES 인터페이스가 구축 테스트 시 하루 3~4회 중단
+	대량 트랜잭션 처리 중 Lock 대기 발생
+	오류 발생 시 운영자가 직접 DB 수정 필요
+        ↓
+[원인 분석]
+	단순 적재용 테이블 구조
+	처리 상태 추적 불가
+	수신~검증~저장 로직의 책임 집중
+	재처리 구조 부재
+        ↓
+[핵심 설계]
+	상태 기반 처리 제어 테이블 설계 (WAIT / PROCESSING / DONE / ERROR)
+	배치 단위 트랜잭션 처리
+	빈번 조회 컬럼 인덱스 최적화
+	오류 로그 + 재처리 구조 구현
+	운영 모니터링 대시보드 개발
+        ↓
+[성과]
+	중단 빈도 80% 감소
+	장애 대응 시간 30분 → 5분
+	DB Lock 대기 70% 감소
+	운영 안정성 및 복구 가능성 확보</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="31e6dae7-af2e-8158-be0c-eb29c055820f"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80d8-a48c-fa2e039aacc8" class=""><mark class="highlight-red"><mark class="highlight-default_background">▶ </mark></mark><mark class="highlight-red"><mark class="highlight-default_background"><strong>프로젝트 배경과 문제 정의</strong></mark></mark><div class="indented"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8050-80c8-cca1cd730870" class="">기존 SAP–MES 인터페이스는 불안정했고, 장애가 발생하면 운영자가 직접 DB를 수정해야 하는 상황이 반복되었습니다. 단순 적재 방식의 구조에서는 어느 단계에서 처리가 멈췄는지 추적하기 어려웠고, 대량 데이터를 한 번에 처리하면서 Lock 대기와 성능 저하도 발생하고 있었습니다. <br/>이 프로젝트에서는 문제를 단순 성능 이슈가 아니라, 신설 구축이기 때문에 <mark class="highlight-yellow_background"><strong>테이블 구조·트랜잭션 범위·오류 복구 방식 자체의 설계 문제</strong></mark>로 보고 접근했습니다. </p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8058-9377-f8a1802c3f8f" class=""><mark class="highlight-default"><mark class="highlight-yellow_background"><strong>1. 현상 파악</strong></mark></mark></p></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80da-bd5e-e90c08b1a528" class="bulleted-list"><li style="list-style-type:disc">SAP에서 MES로 데이터를 전송하는 인터페이스가 하루 3~4회 멈춤</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8012-808a-f4c2824c1c2d" class="bulleted-list"><li style="list-style-type:disc">처리 중단 시 어디서 멈췄는지 추적이 어려움</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8025-85a0-c9cba47e4e06" class="bulleted-list"><li style="list-style-type:disc">오류 발생 시 운영자가 수동으로 확인 후 DB 수정 필요</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80a4-b811-e7fd164cd2ff" class="bulleted-list"><li style="list-style-type:disc">대량 데이터를 한 트랜잭션으로 처리하며 Lock 대기 발생 </li></ul></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8052-8a95-dec75b6a96d0" class=""><mark class="highlight-default"><mark class="highlight-yellow_background"><strong>2. 원인 분석</strong></mark></mark></p></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8054-bb8e-e00a351be0ec" class="bulleted-list"><li style="list-style-type:disc">테이블 구조가 단순 적재용이라 처리 상태를 추적할 수 없음</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80a7-bda6-fefd8322821e" class="bulleted-list"><li style="list-style-type:disc">수신부터 저장, 완료 처리까지 한 번에 처리되어 책임이 과도하게 집중됨</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80f9-9ee2-e23803bf8aab" class="bulleted-list"><li style="list-style-type:disc">대용량 데이터 처리 시 트랜잭션 범위가 커져 병목이 발생함</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-802d-b5b9-eb496ad9aa76" class="bulleted-list"><li style="list-style-type:disc">오류가 나도 운영자가 직접 개입하지 않으면 복구가 어려운 구조였음</li></ul></div></div></p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80ea-b694-e247376bc38f"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-808b-8633-f326c48b447a" class=""><mark class="highlight-red"><mark class="highlight-default_background">▶</mark></mark><mark class="highlight-red"><mark class="highlight-default_background"><strong> 수행 접근 방식</strong></mark></mark></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f6dae7-af2e-8069-a9f4-cb5ec60ad0c5" class="code code-wrap"><code class="language-Mermaid" style="white-space:pre-wrap;word-break:break-all">flowchart LR
+    A[현행 구조 분석] --&gt; B[GAP 분석]
+    B --&gt; C[To-Be 설계]
+    C --&gt; D[프로토타입 검증]
+    D --&gt; E[사용자 적용]
+    E --&gt; F[안정화]</code></pre></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-80be-97f7-d455bf666e13" class="">반복적으로 발생하던 인터페이스 중단 문제를 해결하기 위해, <br/>현행 구조를 분석하고 GAP을 도출한 뒤 To-Be 구조를 설계했습니다. <br/>이후 프로토타입 검증과 사용자 적용, 안정화 단계까지 순차적으로 진행하며 <br/>실제 운영 가능한 구조로 개선했습니다.</blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80f7-8a1b-fc1aac82ee54"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-80e8-b595-e7cf910070ca"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80f7-985a-cc3ceb4c765b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c7-9815-c2d5428e50a7" class=""><strong>1) 상태 기반 인터페이스 구조 설계</strong></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80bf-b10e-f95cc05378bf" class="">단순 적재 테이블이 아니라, 각 데이터가 <mark class="highlight-yellow_background"><strong>WAIT / PROCESSING / DONE / ERROR</strong></mark> 상태를 가지는 인터페이스 전용 처리 제어 테이블을 설계했습니다. 이를 통해 장애가 발생하더라도 어느 지점까지 처리되었는지 추적할 수 있도록 만들었고, 서버 중단 이후에도 상태 기준으로 복구 가능한 구조를 구현했습니다. </p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-802e-8d4b-e0e2eaf24092" class=""><strong>2) 대용량 데이터 배치 처리 및 인덱스 최적화</strong></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80ce-b4c3-c01e4006c6dc" class="">대량 데이터를 한 번에 처리하지 않고, <mark class="highlight-yellow_background"><strong>트랜잭션 범위를 배치 단위로 제한</strong></mark>해 Lock 대기를 줄였습니다. 또한 빈번 조회 컬럼에 <mark class="highlight-yellow_background"><strong>커버링 인덱스</strong></mark>를 적용해 인터페이스 처리 효율과 조회 성능을 개선했습니다. </p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-801b-b987-f1ad60f6d88c" class=""><strong>3) 실시간 수신 → 검증 → 저장 → 상태 갱신 로직 구현</strong></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e6-90da-f69b82bdb025" class="">C# 기반으로 처리 로직을 <mark class="highlight-yellow_background"><strong>수신 → 기본 형식 검증 → DB 적재 → 상태 갱신</strong></mark> 단계로 분리했습니다. 하나의 프로시저에 모든 책임을 몰지 않고 역할을 나누어, 장애 지점 파악과 유지보수가 쉬운 구조로 개선했습니다. </p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-802c-baef-e38363ba6b78" class=""><strong>4) 운영 모니터링 기능 개발</strong></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-802e-8c8e-c735ca1f16b2" class="">DB에 직접 접속하지 않고도 처리 상태를 확인할 수 있도록 <mark class="highlight-yellow_background"><strong>C# 기반 모니터링 대시보드</strong></mark>를 개발했습니다. WAIT / ERROR / SUCCESS 건수 집계, 오류 상세 조회, 재처리 버튼 기능을 제공해 현업 대응 시간을 크게 줄였습니다. </p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-802e-be06-df9433e1b940"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-80ff-bbc0-fca829761b9d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-802b-a4f3-c5fde0c07868" class=""><strong>실시간 처리 파이프라인</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-809e-8c0d-c00bbecfe955" class="code code-wrap"><code class="language-Mermaid" style="white-space:pre-wrap;word-break:break-all">flowchart LR
+    A[CopySAP 수신] --&gt; B[형식 검증]
+    B --&gt;|정상| C[전용 테이블 적재]
+    B --&gt;|실패| G[ERROR]
+
+    C --&gt; D[WAIT]
+    D --&gt; E[PROCESSING]
+    E --&gt;|성공| F[DONE]
+    E --&gt;|실패| G[ERROR]
+
+    F --&gt; H[대시보드 집계]
+    G --&gt; I[오류 로그]
+    I --&gt; J[재처리]
+    J --&gt; D
+
+    classDef base fill:#F5F7FA,stroke:#95A5A6,stroke-width:1.2px,color:#2C3E50;
+    classDef wait fill:#FFF4CC,stroke:#D4AC0D,stroke-width:2px,color:#7D6608;
+    classDef processing fill:#D6EAF8,stroke:#3498DB,stroke-width:2px,color:#154360;
+    classDef done fill:#D5F5E3,stroke:#28B463,stroke-width:2px,color:#145A32;
+    classDef error fill:#FADBD8,stroke:#CB4335,stroke-width:2px,color:#641E16;
+    classDef support fill:#F4ECF7,stroke:#9B59B6,stroke-width:1.5px,color:#4A235A;
+    classDef retry fill:#FDEBD0,stroke:#E67E22,stroke-width:1.5px,color:#6E2C00;
+
+    class A,B,C base;
+    class D wait;
+    class E processing;
+    class F done;
+    class G,I error;
+    class H support;
+    class J retry;</code></pre></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8099-b338-d02e568e8484" class="">이 프로젝트의 핵심은 데이터를 단순 저장하는 것이 아니라, <br/><mark class="highlight-yellow_background"><strong>정상 처리 / 실패 처리 / 복구 처리까지 포함하는 상태 기반 파이프라인</strong></mark>을 구축하여 <br/>유지 보수시에도 배치 단위 처리, 오류 로그 기록, 운영 대시보드 집계, 재처리 기능까지 연결하여 운영 안정성과 복구 가능성을 확보했습니다.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8067-99a7-e5bef5c4823b"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e7-8432-c2168d81c493" class=""><mark class="highlight-red"><mark class="highlight-default_background"><strong>▶ 핵심 성과</strong></mark></mark></p></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-8011-9580-f35cefda9523" class="">단순히 성능만 개선한 것이 아니라, 장애가 발생하더라도 <mark class="highlight-yellow_background"><strong>추적·복구·재처리 가능한 운영 구조</strong></mark>를 확보했다는 점이 가장 큰 성과였습니다. </blockquote></div><div style="display:contents" dir="ltr"><table id="32d6dae7-af2e-809b-8ce0-e7995a94f3f8" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-800b-98ee-e237b2c3cdae"><th id="?y=d" class="simple-table-header-color simple-table-header" style="width:133.75001525878906px">개선 항목</th><th id="v|wT" class="simple-table-header-color simple-table-header" style="width:176.75px">변경 전</th><th id="?zBi" class="simple-table-header-color simple-table-header" style="width:176.75px">변경 후</th><th id="mozB" class="simple-table-header-color simple-table-header" style="width:215.75001525878906px">성과</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-8021-a87d-e665642dd944"><td id="?y=d" class="" style="width:133.75001525878906px">Copy 중단 빈도</td><td id="v|wT" class="" style="width:176.75px">하루 3~4회</td><td id="?zBi" class="" style="width:176.75px">주 1회 이하</td><td id="mozB" class="" style="width:215.75001525878906px">약 80% 감소</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-8099-8b6b-e8866138bca1"><td id="?y=d" class="" style="width:133.75001525878906px">장애 대응 시간</td><td id="v|wT" class="" style="width:176.75px">약 30분</td><td id="?zBi" class="" style="width:176.75px">약 5분</td><td id="mozB" class="" style="width:215.75001525878906px">대응 속도 대폭 향상</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-807d-a9b4-ea2b78b61999"><td id="?y=d" class="" style="width:133.75001525878906px">DB Lock 대기</td><td id="v|wT" class="" style="width:176.75px">높은 대기 발생</td><td id="?zBi" class="" style="width:176.75px">70% 감소</td><td id="mozB" class="" style="width:215.75001525878906px">배치 처리 구조로 전환</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-80ee-8335-e56a2d5c1173"><td id="?y=d" class="" style="width:133.75001525878906px">운영 안정성</td><td id="v|wT" class="" style="width:176.75px">제한적 복구 방식</td><td id="?zBi" class="" style="width:176.75px">상태 기반 복구 구조</td><td id="mozB" class="" style="width:215.75001525878906px">시스템 안정성 및 복구력 향상</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-803f-ba6d-c433aa480088" class=""><mark class="highlight-red"><mark class="highlight-default_background"><strong>▶ 구현 요약</strong></mark></mark></p></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-809a-9aeb-f9f3ea162c12" class="bulleted-list"><li style="list-style-type:disc">SAP–MES 인터페이스 전용 상태 관리 테이블 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8081-9a4b-e84a9a751b8d" class="bulleted-list"><li style="list-style-type:disc">WAIT / PROCESSING / DONE / ERROR 기반 처리 프로시저 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8086-a8bd-edd5b1feb706" class="bulleted-list"><li style="list-style-type:disc">배치 단위 트랜잭션 처리 구조 적용</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-803c-b547-f7aca910dd94" class="bulleted-list"><li style="list-style-type:disc">빈번 조회 컬럼 기준 인덱스 재구성</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-805f-b5b9-dc1a11b12ac9" class="bulleted-list"><li style="list-style-type:disc">C# 기반 수신/검증/저장/상태 갱신 로직 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80af-8102-f4d24d60451d" class="bulleted-list"><li style="list-style-type:disc">오류 로그 저장 및 재처리 기능 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8064-a10d-fb9bff0930f3" class="bulleted-list"><li style="list-style-type:disc">운영 현황 대시보드 및 오류 상세 조회 기능 개발 </li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8070-a76a-ebeac8d5984f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-8009-b2f6-c584455c3ccf"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-803f-8795-efa5ab88e8aa" class="">운영 환경</p></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-8059-8312-f2843a5d681a" class="image"><a href="image%201.png"><img style="width:576.9642944335938px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80ff-b5ab-e0d90ee3fbfc" class=""><em>영업·생산·자재·품질·출하·재고를 통합한 MES 운영 환경에서 인터페이스 안정화 및 데이터 처리 구조 개선을 수행했습니다.</em> </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8096-be70-e3661aeca649"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-800c-9b72-ce16074e7eb8" class=""><mark class="highlight-blue"><strong>운영 효율과 확장성을 고려한 개발 경험</strong></mark></p></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-802c-96f7-f26bd305c7dc" class="image"><a href="image%202.png"><img style="width:578.982177734375px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-803a-b576-f26dadc9b69c" class="">운영 중에도 사용자 정의 메뉴와 화면을 등록할 수 있는 <br/>관리자용 개발 페이지를 경험했습니다. </blockquote></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-8023-ad9e-fe467f614d2e" class="image"><a href="image%203.png"><img style="width:581px" src="image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8078-ac67-d00fa8cc4e48" class="">설정만으로 조회·입력·그리드 화면을 구성할 수 있는 공통 프레임워크를 활용해 운영 효율과 유지보수성을 높였습니다. <br/>시스템에서는 기능 구현 자체뿐 아니라, <mark class="highlight-yellow_background"><strong>운영자가 직접 관리 가능한 구조</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>설정 기반으로 확장 가능한 화면 체계</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>표준화된 관리 기능</strong></mark>도 중요하다고 판단했습니다. 이러한 경험은 이후 장애 대응과 유지보수 효율을 고려한 설계 방식으로 이어졌습니다. </p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8080-a48e-f4b2cec43047"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80f0-96cc-d5d367ece33b" class="">▶ <mark class="highlight-red"><mark class="highlight-default_background"><strong>프로젝트를 통해 얻은 기술적 인사이트</strong></mark></mark></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e2-80ac-f52fbd630e37" class="">이 경험을 통해 실시간 데이터 처리 시스템에서 중요한 것은 단순히 <br/>“문제가 발생하지 않게 만드는 것”이 아니라,<mark class="highlight-blue"> </mark><mark class="highlight-default"><mark class="highlight-yellow_background"><strong>문제가 발생해도 어디서 멈췄는지 추적하고 다시 복구할 수 있는 구조를 설계하는 것</strong></mark></mark>이라는 점을 배웠습니다. <br/>또한 트랜잭션 범위 설계, 상태 기반 처리, 멱등성 확보, 로깅과 모니터링 체계가 운영 안정성을 좌우한다는 것을 실무에서 직접 체득했습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8094-8d96-d4e65bdde651"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-807e-af53-f996ac467ef6" class="">▶ <mark class="highlight-red"><mark class="highlight-default_background"><strong>직무 역량</strong></mark></mark></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e7-8a81-c6284e7394d7" class="">이 프로젝트는 제조 도메인 사례이지만, 기술적으로는 <mark class="highlight-yellow_background"><strong>실시간 데이터 처리 구조 설계</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>DB 상태 관리</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>배치 단위 트랜잭션 제어</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>재처리 가능한 오류 대응 구조</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 모니터링 체계 구축</strong></mark> 경험을 담고 있습니다. 이는 도메인이 달라도, 라이브 서비스형 서버에서 요구되는 <mark class="highlight-yellow_background"><strong>정합성·복구 가능성·운영 안정성</strong></mark>과 직접 연결되는 역량이라고 생각합니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8080-8e09-fcfa0f7b45de" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

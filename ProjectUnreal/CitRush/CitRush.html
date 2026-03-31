@@ -989,8 +989,22 @@ hr {
 
 /* Column list */
 .column-list {
-  gap: 20px !important;
-  flex-wrap: wrap !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  flex-wrap: nowrap !important;
+}
+
+.column-list > * {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.column {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* Highlight overrides */
@@ -1073,6 +1087,7 @@ td { white-space: normal !important; }
   border-color: #4ec9b0 !important;
 }
 
+/* pre.code + highlight.js VS Code Dark+ */
 pre.code {
   background: #1e1e1e !important;
   color: #d4d4d4 !important;
@@ -1087,9 +1102,10 @@ pre.code {
   box-shadow: none !important;
 }
 
-pre.code code {
-  background: none !important;
-  color: inherit !important;
+pre.code code,
+pre.code .hljs {
+  background: transparent !important;
+  color: #d4d4d4 !important;
   padding: 0 !important;
   font-size: inherit !important;
   border-radius: 0 !important;
@@ -1098,53 +1114,53 @@ pre.code code {
   word-break: break-all !important;
 }
 
-/* Prism token overrides - VS Code Dark+ */
-pre.code .token.comment,
-pre.code .token.block-comment,
-pre.code .token.prolog,
-pre.code .token.doctype,
-pre.code .token.cdata { color: #6a9955 !important; font-style: italic !important; }
+/* highlight.js VS Code Dark+ token colors */
+pre.code .hljs-comment,
+pre.code .hljs-quote { color: #6a9955 !important; font-style: italic !important; }
 
-pre.code .token.punctuation { color: #d4d4d4 !important; }
+pre.code .hljs-keyword,
+pre.code .hljs-selector-tag,
+pre.code .hljs-literal,
+pre.code .hljs-subst { color: #569cd6 !important; font-weight: normal !important; }
 
-pre.code .token.keyword,
-pre.code .token.important { color: #569cd6 !important; }
+pre.code .hljs-string,
+pre.code .hljs-doctag { color: #ce9178 !important; }
 
-pre.code .token.operator { color: #d4d4d4 !important; }
+pre.code .hljs-number,
+pre.code .hljs-regexp,
+pre.code .hljs-link { color: #b5cea8 !important; }
 
-pre.code .token.string,
-pre.code .token.char,
-pre.code .token.attr-value { color: #ce9178 !important; }
+pre.code .hljs-title,
+pre.code .hljs-section,
+pre.code .hljs-selector-id { color: #dcdcaa !important; }
 
-pre.code .token.number,
-pre.code .token.boolean,
-pre.code .token.constant { color: #b5cea8 !important; }
+pre.code .hljs-type,
+pre.code .hljs-class .hljs-title { color: #4ec9b0 !important; }
 
-pre.code .token.function { color: #dcdcaa !important; }
+pre.code .hljs-meta,
+pre.code .hljs-meta .hljs-keyword { color: #c586c0 !important; }
 
-pre.code .token.class-name,
-pre.code .token.type-name { color: #4ec9b0 !important; }
+pre.code .hljs-name,
+pre.code .hljs-attribute { color: #9cdcfe !important; }
 
-pre.code .token.macro,
-pre.code .token.directive,
-pre.code .token.preprocessor { color: #c586c0 !important; }
+pre.code .hljs-variable,
+pre.code .hljs-template-variable { color: #9cdcfe !important; }
 
-pre.code .token.namespace { color: #9cdcfe !important; }
+pre.code .hljs-built_in,
+pre.code .hljs-builtin-name { color: #4ec9b0 !important; }
 
-pre.code .token.variable,
-pre.code .token.symbol { color: #9cdcfe !important; }
+pre.code .hljs-symbol,
+pre.code .hljs-bullet { color: #b5cea8 !important; }
 
-pre.code .token.regex { color: #d16969 !important; }
+pre.code .hljs-params { color: #d4d4d4 !important; }
 
-pre.code .token.entity { color: #569cd6 !important; }
+pre.code .hljs-deletion { color: #f44747 !important; }
+pre.code .hljs-addition { color: #b5cea8 !important; }
 
-pre.code .token.inserted { color: #b5cea8 !important; }
-pre.code .token.deleted { color: #f44747 !important; }
+pre.code .hljs-emphasis { font-style: italic !important; }
+pre.code .hljs-strong { font-weight: bold !important; }
 
-pre.code .token.bold { font-weight: bold !important; }
-pre.code .token.italic { font-style: italic !important; }
-
-/* Scrollbar for code blocks */
+/* Scrollbar */
 pre.code::-webkit-scrollbar { height: 6px !important; }
 pre.code::-webkit-scrollbar-track { background: #2d2d2d !important; }
 pre.code::-webkit-scrollbar-thumb { background: #555 !important; border-radius: 3px !important; }
@@ -1404,22 +1420,74 @@ void UAIServerComponent::BlendToServerDecision(FAIDecision NewDecision) {
 </p></div><div style="display:contents" dir="auto"><hr id="31e6dae7-af2e-81f1-b7c1-cd3f38933f24"/></div><div style="display:contents" dir="auto"><div id="31e6dae7-af2e-81e2-a60e-e63d0cc49d36" class="column-list"><div style="display:contents" dir="auto"><div id="31e6dae7-af2e-8173-9d80-fefd192ea548" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="31e6dae7-af2e-8164-8b6a-f12372daa8a3" class=""><mark class="highlight-red"><mark class="highlight-yellow_background"><strong><a href="https://www.notion.so/CitRush-31e6dae7af2e8179bce3d3159c3e2718?pvs=21">상단으로</a></strong></mark></mark></h3></div></div></div><div style="display:contents" dir="auto"><div id="31e6dae7-af2e-815d-a687-fe6a34fc56f2" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="31e6dae7-af2e-8144-8c38-e38a471aa748" class=""><mark class="highlight-red"><mark class="highlight-yellow_background"><strong><a href="https://www.notion.so/CitRush-31e6dae7af2e8179bce3d3159c3e2718?pvs=21">구현 목차</a></strong></mark></mark></h3></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8191-8a00-e8ce7c84d066" class="">
 </p></div></div></div></div></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8122-85c5-ce1dc6dd260d" class="">
 </p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>
+<!-- highlight.js - VS Code Dark+ syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
 <script>
 (function() {
-  function initVSCodeBlocks() {
-    var icons = {
-      'C++':       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M12 6l-2 12"/></svg>',
-      'Plain Text':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>',
-      'Mermaid':   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
-    };
-    var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>';
+  var icons = {
+    'C++':        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M12 6l-2 12"/></svg>',
+    'Plain Text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>',
+    'Mermaid':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+  };
+  var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
 
+  function copyText(text, btn) {
+    var restore = function() {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(restore, 2000);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(restore, 2000);
+    }
+  }
+
+  function initVSCodeBlocks() {
     document.querySelectorAll('pre.code').forEach(function(pre) {
       if (pre.parentElement && pre.parentElement.classList.contains('vscode-block')) return;
-      var codeEl = pre.querySelector('code');
-      var langMatch = codeEl ? codeEl.className.match(/language-([^\s"]+)/) : null;
-      var lang = langMatch ? langMatch[1] : 'Code';
 
+      var codeEl = pre.querySelector('code');
+      if (!codeEl) return;
+
+      // Detect original language label
+      var origClass = codeEl.className || '';
+      var langLabel = 'Code';
+      var hljsLang = 'plaintext';
+
+      if (origClass.indexOf('C++') !== -1) {
+        langLabel = 'C++';
+        hljsLang = 'cpp';
+      } else if (origClass.indexOf('Mermaid') !== -1) {
+        langLabel = 'Mermaid';
+        hljsLang = 'plaintext';
+      } else if (origClass.indexOf('Plain Text') !== -1) {
+        langLabel = 'Plain Text';
+        hljsLang = 'plaintext';
+      }
+
+      // Apply highlight.js for C++
+      if (hljsLang === 'cpp' && typeof hljs !== 'undefined') {
+        codeEl.removeAttribute('data-highlighted');
+        codeEl.className = 'language-cpp';
+        hljs.highlightElement(codeEl);
+      }
+
+      // Build VS Code wrapper
       var wrapper = document.createElement('div');
       wrapper.className = 'vscode-block';
 
@@ -1428,34 +1496,13 @@ void UAIServerComponent::BlendToServerDecision(FAIDecision NewDecision) {
 
       var langSpan = document.createElement('span');
       langSpan.className = 'vscode-lang';
-      langSpan.innerHTML = (icons[lang] || defaultIcon) + lang;
+      langSpan.innerHTML = (icons[langLabel] || defaultIcon) + langLabel;
 
+      var rawText = codeEl.textContent;
       var copyBtn = document.createElement('button');
       copyBtn.className = 'vscode-copy';
       copyBtn.textContent = '복사';
-      copyBtn.addEventListener('click', function() {
-        var text = codeEl ? codeEl.textContent : pre.textContent;
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(text).then(function() {
-            copyBtn.textContent = '✓ 복사됨';
-            copyBtn.classList.add('copied');
-            setTimeout(function() {
-              copyBtn.textContent = '복사';
-              copyBtn.classList.remove('copied');
-            }, 2000);
-          });
-        } else {
-          var ta = document.createElement('textarea');
-          ta.value = text;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-          copyBtn.textContent = '✓ 복사됨';
-          copyBtn.classList.add('copied');
-          setTimeout(function() { copyBtn.textContent = '복사'; copyBtn.classList.remove('copied'); }, 2000);
-        }
-      });
+      copyBtn.addEventListener('click', function() { copyText(rawText, copyBtn); });
 
       header.appendChild(langSpan);
       header.appendChild(copyBtn);

@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>InfinityFighter</title><style>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>InfinityFighter</title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -707,6 +707,465 @@ blockquote.quote-large {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
+
+/* ========== VCARD DESIGN OVERRIDE ========== */
+:root {
+  --accent: hsl(45, 100%, 50%);
+  --accent-dark: hsl(35, 100%, 38%);
+  --bg: #f5f5f4;
+  --card-bg: #ffffff;
+  --text-main: hsl(0, 0%, 10%);
+  --text-muted: hsl(0, 0%, 42%);
+  --border: hsl(0, 0%, 88%);
+  --shadow: 0 4px 20px hsla(0,0%,0%,0.08);
+  --radius: 12px;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text-main) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: normal !important;
+}
+
+@media only screen {
+  body {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px 16px 60px !important;
+  }
+}
+
+/* Back button */
+.vcard-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none !important;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
+}
+.vcard-back:hover {
+  background: var(--accent);
+  color: hsl(0,0%,12%);
+  border-color: var(--accent);
+  text-decoration: none !important;
+}
+
+/* Article wrapper */
+article.page.sans {
+  max-width: 860px !important;
+  margin: 0 auto !important;
+  background: var(--card-bg) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 8px 40px hsla(0,0%,0%,0.10) !important;
+  overflow: hidden !important;
+  padding-bottom: 48px !important;
+}
+
+/* Cover image */
+.page-cover-image {
+  width: 100% !important;
+  max-height: 260px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+
+/* Header section */
+header {
+  padding: 0 32px 24px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.page-header-icon {
+  font-size: 2.5rem !important;
+  margin: 16px 0 8px !important;
+}
+
+.page-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  margin: 4px 0 20px !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Properties table */
+table.properties {
+  border: none !important;
+  width: 100% !important;
+  font-size: 13px !important;
+}
+table.properties td, table.properties th {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 6px !important;
+  vertical-align: middle !important;
+}
+table.properties th {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  padding-right: 20px !important;
+}
+table.properties .property-row:last-child td,
+table.properties .property-row:last-child th {
+  border-bottom: none !important;
+}
+
+/* Tags (selected-value) */
+.selected-value {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 2px 10px !important;
+  border-radius: 20px !important;
+  margin-right: 4px !important;
+  margin-top: 2px !important;
+  display: inline-block !important;
+}
+
+/* Page body */
+.page-body {
+  padding: 24px 32px 0 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Section h2 with gray_background */
+h2.block-color-gray_background {
+  background: linear-gradient(to right, hsla(45,100%,50%,0.10), transparent) !important;
+  border-left: 3px solid var(--accent) !important;
+  padding: 8px 14px !important;
+  border-radius: 0 6px 6px 0 !important;
+  font-size: 1rem !important;
+  color: var(--text-main) !important;
+  margin: 28px 0 12px !important;
+}
+
+h2 {
+  font-size: 1.1rem !important;
+  margin: 24px 0 10px !important;
+  color: var(--text-main) !important;
+}
+
+h3 {
+  font-size: 0.95rem !important;
+  color: var(--text-main) !important;
+  margin: 16px 0 8px !important;
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  margin: 12px 0 !important;
+  border: 1px solid var(--border) !important;
+}
+
+.block-color-default.callout,
+.block-color-default_background.callout {
+  background: #f9fafb !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--accent) !important;
+  background: #fffbeb !important;
+  padding: 12px 16px !important;
+  border-radius: 0 8px 8px 0 !important;
+  margin: 16px 0 !important;
+  font-style: normal !important;
+  color: var(--text-main) !important;
+}
+
+/* Simple tables */
+.simple-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  margin: 12px 0 !important;
+  overflow: hidden !important;
+}
+.simple-table th, .simple-table td {
+  border: 1px solid var(--border) !important;
+  padding: 9px 13px !important;
+  line-height: 1.5 !important;
+}
+.simple-table-header-color {
+  background: #f8f8f8 !important;
+  color: var(--text-muted) !important;
+}
+.simple-table-header {
+  font-weight: 600 !important;
+}
+
+/* Inline code */
+code {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-size: 12px !important;
+}
+
+/* Code blocks */
+pre {
+  background: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  overflow-x: auto !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+pre code {
+  background: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+}
+
+/* Links */
+a, a.visited {
+  color: var(--accent-dark) !important;
+  text-decoration: none !important;
+}
+a:hover {
+  color: var(--accent) !important;
+  text-decoration: underline !important;
+}
+.url-value {
+  word-break: break-all !important;
+  font-size: 12px !important;
+}
+
+/* Images */
+.image { margin: 16px 0 !important; }
+.image img {
+  border-radius: 8px !important;
+  box-shadow: var(--shadow) !important;
+  max-width: 100% !important;
+}
+
+/* Source link blocks */
+.source {
+  background: #f9fafb !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+}
+
+/* HR */
+hr {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  margin: 24px 0 !important;
+}
+
+/* Column list */
+.column-list {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  flex-wrap: nowrap !important;
+}
+
+.column-list > * {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.column {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Highlight overrides */
+.highlight-yellow_background { background: #fef9c3 !important; }
+.highlight-orange_background { background: #ffedd5 !important; }
+.highlight-red_background { background: #fee2e2 !important; }
+.highlight-blue_background { background: #dbeafe !important; }
+.highlight-teal_background { background: #ccfbf1 !important; }
+.highlight-green_background { background: #dcfce7 !important; }
+
+.highlight-red { color: #dc2626 !important; fill: #dc2626 !important; }
+.highlight-orange { color: #ea580c !important; fill: #ea580c !important; }
+
+/* Details/toggle */
+details summary {
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+p { white-space: normal !important; }
+li { white-space: normal !important; }
+td { white-space: normal !important; }
+
+/* ========== VS CODE STYLE CODE BLOCKS ========== */
+.vscode-block {
+  position: relative;
+  margin: 16px 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+}
+
+.vscode-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #252526 !important;
+  padding: 6px 14px !important;
+  border-bottom: 1px solid #3e3e42 !important;
+}
+
+.vscode-lang {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #cccccc !important;
+  letter-spacing: 0.02em !important;
+}
+
+.vscode-lang svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+.vscode-copy {
+  background: none !important;
+  border: 1px solid #3e3e42 !important;
+  border-radius: 4px !important;
+  padding: 3px 8px !important;
+  color: #858585 !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+  transition: color 0.15s, border-color 0.15s !important;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 1.4 !important;
+}
+.vscode-copy:hover {
+  color: #cccccc !important;
+  border-color: #6a6a6a !important;
+}
+.vscode-copy.copied {
+  color: #4ec9b0 !important;
+  border-color: #4ec9b0 !important;
+}
+
+/* pre.code + highlight.js VS Code Dark+ */
+pre.code {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  padding: 16px 18px !important;
+  overflow-x: auto !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  white-space: pre !important;
+  box-shadow: none !important;
+}
+
+pre.code code,
+pre.code .hljs {
+  background: transparent !important;
+  color: #d4d4d4 !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+}
+
+/* highlight.js VS Code Dark+ token colors */
+pre.code .hljs-comment,
+pre.code .hljs-quote { color: #6a9955 !important; font-style: italic !important; }
+
+pre.code .hljs-keyword,
+pre.code .hljs-selector-tag,
+pre.code .hljs-literal,
+pre.code .hljs-subst { color: #569cd6 !important; font-weight: normal !important; }
+
+pre.code .hljs-string,
+pre.code .hljs-doctag { color: #ce9178 !important; }
+
+pre.code .hljs-number,
+pre.code .hljs-regexp,
+pre.code .hljs-link { color: #b5cea8 !important; }
+
+pre.code .hljs-title,
+pre.code .hljs-section,
+pre.code .hljs-selector-id { color: #dcdcaa !important; }
+
+pre.code .hljs-type,
+pre.code .hljs-class .hljs-title { color: #4ec9b0 !important; }
+
+pre.code .hljs-meta,
+pre.code .hljs-meta .hljs-keyword { color: #c586c0 !important; }
+
+pre.code .hljs-name,
+pre.code .hljs-attribute { color: #9cdcfe !important; }
+
+pre.code .hljs-variable,
+pre.code .hljs-template-variable { color: #9cdcfe !important; }
+
+pre.code .hljs-built_in,
+pre.code .hljs-builtin-name { color: #4ec9b0 !important; }
+
+pre.code .hljs-symbol,
+pre.code .hljs-bullet { color: #b5cea8 !important; }
+
+pre.code .hljs-params { color: #d4d4d4 !important; }
+
+pre.code .hljs-deletion { color: #f44747 !important; }
+pre.code .hljs-addition { color: #b5cea8 !important; }
+
+pre.code .hljs-emphasis { font-style: italic !important; }
+pre.code .hljs-strong { font-weight: bold !important; }
+
+/* Scrollbar */
+pre.code::-webkit-scrollbar { height: 6px !important; }
+pre.code::-webkit-scrollbar-track { background: #2d2d2d !important; }
+pre.code::-webkit-scrollbar-thumb { background: #555 !important; border-radius: 3px !important; }
+
+
 </style></head><body><article id="31e6dae7-af2e-8187-87cc-f6605d94c462" class="page sans"><header><img class="page-cover-image" src="infinity_%EC%8D%B8%EB%84%A4%EC%9D%BC.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/archery_blue.svg"/></div><h1 class="page-title" dir="auto">InfinityFighter</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 설명</th><td>버블파이터를 오마주한 마블 히어로 배틀 시뮬레이터</td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>스킬</th><td><span class="selected-value select-value-color-brown">BluePrint</span><span class="selected-value select-value-color-green">C++</span><span class="selected-value select-value-color-brown">Enhanced Input</span><span class="selected-value select-value-color-green">FSM</span><span class="selected-value select-value-color-pink">Mutiplay</span><span class="selected-value select-value-color-brown">Network</span><span class="selected-value select-value-color-yellow">SteamSever</span><span class="selected-value select-value-color-blue">Unreal</span><span class="selected-value select-value-color-purple">listenServer</span></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>기간</th><td><time>@2025/09/01 → 2025/09/24</time></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/playback-play-button_gray.svg" style="width:14px;height:14px;display:block"/></span>시연 영상</th><td><a href="https://youtu.be/wRN-vNVbVC8?si=RwqurBEoky6E92Ew" class="url-value">https://youtu.be/wRN-vNVbVC8?si=RwqurBEoky6E92Ew</a></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/link_gray.svg" style="width:14px;height:14px;display:block"/></span>git</th><td><a href="https://github.com/jjonjung/Infinity" class="url-value">https://github.com/jjonjung/Infinity</a></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>성과</th><td><mark class="highlight-red"><strong>✔️ AI 활용 모션캡처, 애니메이션, Asset 구현<br/>✔️ 물리 적용 전투 Skill 구현</strong></mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8030-9b5d-c78420cb0852" class="block-color-gray_background"><strong>✔️ </strong>프로젝트 <mark class="highlight-default_background"><strong>소개</strong></mark></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80b2-8b4f-f70c5ab13a02"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8018-b038-e9353cab49ea" class=""><mark class="highlight-default"><mark class="highlight-gray_background"><code><strong>UE5.6 기반 </strong></code></mark></mark><mark class="highlight-default"><code><strong>버블파이터를 오마주한  마블 히어로 배틀 슈팅 시뮬레이터</strong></code></mark></p></div><div style="display:contents" dir="ltr"><table id="3206dae7-af2e-80ab-89a1-d2f5c74dbbf2" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-80c1-8b75-e48cb20387bf"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px">항목</th><th id="U=xv" class="simple-table-header-color simple-table-header" style="width:485.98046875px">내용</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8048-8e86-d75b7510b5e5"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px"><strong>장르</strong></th><td id="U=xv" class="" style="width:485.98046875px">3인칭 배틀 시뮬레이터</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8007-9eec-c788520502c7"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px"><strong>기술 스택</strong></th><td id="U=xv" class="" style="width:485.98046875px">- Unreal Engine 5.6 <br/>- C++<br/>- Blueprint<br/>- UMG<br/>- Steam Server</td></tr></div><div style="display:contents" dir="ltr"><tr id="3206dae7-af2e-8098-8fcc-f2ea04858108"><th id="MSdt" class="simple-table-header-color simple-table-header" style="width:105px"><strong>담당 개발 내용</strong></th><td id="U=xv" class="" style="width:485.98046875px">- FSM 기반 AI 시스템 총괄 (움직임, 스킬, 패턴)<br/>- 게임 모드 및 전체 플로우 제어 (스폰, 타이머, 맵 전환)<br/>- 인게임 UI 통합: 타이머, 킬로그, Aim/AimEnemy, 카메라 제어<br/>- 전투 정보 시각화 피드백 및 디버깅 UI </td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-809e-80b2-e5d56dc51cc5" class="block-color-gray_background"><strong>✔️ </strong><mark class="highlight-default_background"><strong>프로젝트 시연 영상</strong></mark><strong> </strong></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-804e-acac-dd3ccd208421"><div style="font-size:1.5em"><span class="icon">📹</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80fc-b090-d7f863c34171" class=""><strong>시연 영상</strong></p></div><div style="display:contents" dir="ltr"><figure id="3206dae7-af2e-80f9-a97c-e0e0a3988e7e"><div class="source"><a href="https://www.youtube.com/watch?v=wRN-vNVbVC8">https://www.youtube.com/watch?v=wRN-vNVbVC8</a></div></figure></div></div></figure></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-8076-a813-cb72df027341" class="column-list"><div style="display:contents" dir="auto"><div id="3206dae7-af2e-8021-8011-de8b4223fdea" style="width:50%" class="column"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-8031-90bb-e327c6c1f6fa" class="block-color-gray_background"><strong>✔️ 사용 기술 스택</strong></h2></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8081-86e4-c000d22ee325" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red"><code>Unreal Engine</code></mark><mark class="highlight-red"> ,  </mark><mark class="highlight-red"><code>C++</code></mark><mark class="highlight-red"> ,  </mark><mark class="highlight-red"><code>UMG</code></mark><mark class="highlight-red"> , </mark><code>Game Mathematics</code></li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8031-a0b7-e7e976d11da4" class="">
 </p></div><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80aa-bd99-c353e1744313" class="block-color-gray_background"><strong>✔️ 협업 및 도구</strong></h2></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80f9-b0e8-e6814559b011" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-brown"><code>Git</code></mark><mark class="highlight-brown"> </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80d1-af54-f874432c2a8f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><code>Google Drive (Gantt Chart)</code></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802d-a5f3-f35660c8d5bb" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>JIRA</code></mark> </li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-80e6-adeb-f363333f1783" class="">
 </p></div></div></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-80ca-845c-dbaeee3957f6" style="width:50.000000000000014%" class="column"><div style="display:contents" dir="auto"><h2 id="3206dae7-af2e-80cf-99e9-eaad364c9680" class="block-color-gray_background"><strong>✔️ 개발 내용</strong></h2></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80db-b793-d95ddcc0da90" class="bulleted-list"><li style="list-style-type:disc"><a href="#">핵심 기술 역량</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-803d-bb5d-db66ae346b67" class="bulleted-list"><li style="list-style-type:disc"><a href="#3206dae7-af2e-80cf-99e9-eaad364c9680">구현 내용 목차</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3216dae7-af2e-80f4-b285-c8beda8a69cb" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">AI 활용: 캐릭터, 애니메이션 생성</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8014-b588-f4f283138112" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">게임 구조</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80e8-b00d-d277aa5ac332" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">AI 시스템 (FSM &amp; Math)</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8042-9f4d-d5f9d5f8e9a9" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">트러블 슈팅</a></li></ul></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8041-b3b0-c779378528ae" class="">
@@ -886,4 +1345,105 @@ FVector ChaoticDirection = BaseDirection
     + (SideDirection               * Chaos1)
     + (ToTarget.GetSafeNormal()    * Chaos2)
     + (FVector::CrossProduct(SideDirection, FVector::UpVector) * Chaos3);</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="3206dae7-af2e-80c7-b54a-fe59843650d1"><div style="font-size:1.5em"><span class="icon">✔️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3206dae7-af2e-806d-9b46-fad6aa1ab019" class="">결과</p></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-80ed-a482-f7bad06d4b6e" class="numbered-list" start="1"><li><strong>정량적 성과</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80a1-a193-f74c01a7f46a" class="bulleted-list"><li style="list-style-type:disc">AI 행동 패턴 <mark class="highlight-red"><strong>20가지 이상</strong></mark> 조합 가능 (3개 스킬 × 5개 상태)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802e-b1c5-d50880b29a85" class="bulleted-list"><li style="list-style-type:disc">플레이 테스트 만족도 <mark class="highlight-red"><strong>80% 이상</strong></mark> (단조로움 해소)</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-802d-9cd2-f8e15f4ea7f6" class="bulleted-list"><li style="list-style-type:disc">FSM 구조로 <mark class="highlight-red"><strong>유지보수성</strong></mark> 확보 (새 패턴 추가 용이)</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3206dae7-af2e-8008-9c94-de34fa3af211" class="numbered-list" start="2"><li><strong>기술적 학습</strong><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-806b-bb32-db19272d6aef" class="bulleted-list"><li style="list-style-type:disc">FSM 설계 원칙 및 <mark class="highlight-red"><strong>상태 전환 로직</strong></mark> 구조화 능력 강화</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-8059-b662-f469104e2b39" class="bulleted-list"><li style="list-style-type:disc">게임 밸런스와 <mark class="highlight-red"><strong>수학적 확률론</strong></mark>의 연결 이해</li></ul></div><div style="display:contents" dir="auto"><ul id="3206dae7-af2e-80e9-8025-dcdc32109239" class="bulleted-list"><li style="list-style-type:disc">AI 디버깅 및 행동 시각화 경험</li></ul></div></li></ol></div></div></figure></div></div></figure></div></div></figure></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-80d5-8d00-fc3095fe86da" class="column-list"><div style="display:contents" dir="auto"><div id="3206dae7-af2e-808c-9081-f460aece6039" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-801f-9666-c2ccd7d1dc7b" class=""><mark class="highlight-red"><mark class="highlight-yellow_background"><strong><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">상단으로</a></strong></mark></mark></h3></div></div></div><div style="display:contents" dir="auto"><div id="3206dae7-af2e-807c-9993-fec434c93bd6" style="width:49.99999999999999%" class="column"><div style="display:contents" dir="auto"><h3 id="3206dae7-af2e-80d1-8d9f-ee7e011ab4aa" class=""><mark class="highlight-red"><mark class="highlight-yellow_background"><strong><a href="https://www.notion.so/InfinityFighter-31e6dae7af2e818787ccf6605d94c462?pvs=21">구현 목차</a></strong></mark></mark></h3></div></div></div></div></div><div style="display:contents" dir="auto"><p id="3206dae7-af2e-8079-b0c2-c1f453d26a3a" class="">
-</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- highlight.js - VS Code Dark+ syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script>
+(function() {
+  var icons = {
+    'C++':        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M12 6l-2 12"/></svg>',
+    'Plain Text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>',
+    'Mermaid':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+  };
+  var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
+
+  function copyText(text, btn) {
+    var restore = function() {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(restore, 2000);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(restore, 2000);
+    }
+  }
+
+  function initVSCodeBlocks() {
+    document.querySelectorAll('pre.code').forEach(function(pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains('vscode-block')) return;
+
+      var codeEl = pre.querySelector('code');
+      if (!codeEl) return;
+
+      // Detect original language label
+      var origClass = codeEl.className || '';
+      var langLabel = 'Code';
+      var hljsLang = 'plaintext';
+
+      if (origClass.indexOf('C++') !== -1) {
+        langLabel = 'C++';
+        hljsLang = 'cpp';
+      } else if (origClass.indexOf('Mermaid') !== -1) {
+        langLabel = 'Mermaid';
+        hljsLang = 'plaintext';
+      } else if (origClass.indexOf('Plain Text') !== -1) {
+        langLabel = 'Plain Text';
+        hljsLang = 'plaintext';
+      }
+
+      // Apply highlight.js for C++
+      if (hljsLang === 'cpp' && typeof hljs !== 'undefined') {
+        codeEl.removeAttribute('data-highlighted');
+        codeEl.className = 'language-cpp';
+        hljs.highlightElement(codeEl);
+      }
+
+      // Build VS Code wrapper
+      var wrapper = document.createElement('div');
+      wrapper.className = 'vscode-block';
+
+      var header = document.createElement('div');
+      header.className = 'vscode-header';
+
+      var langSpan = document.createElement('span');
+      langSpan.className = 'vscode-lang';
+      langSpan.innerHTML = (icons[langLabel] || defaultIcon) + langLabel;
+
+      var rawText = codeEl.textContent;
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'vscode-copy';
+      copyBtn.textContent = '복사';
+      copyBtn.addEventListener('click', function() { copyText(rawText, copyBtn); });
+
+      header.appendChild(langSpan);
+      header.appendChild(copyBtn);
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(header);
+      wrapper.appendChild(pre);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVSCodeBlocks);
+  } else {
+    initVSCodeBlocks();
+  }
+})();
+</script>
+
+
+</body></html>
