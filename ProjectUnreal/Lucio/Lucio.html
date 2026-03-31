@@ -888,7 +888,7 @@ h3 {
 
 .block-color-default.callout,
 .block-color-default_background.callout {
-  background: #f9fafb !important;
+  background: #ffffff !important;
   border: 1px solid var(--border) !important;
 }
 
@@ -907,10 +907,12 @@ blockquote {
 .simple-table {
   width: 100% !important;
   border-collapse: collapse !important;
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   font-size: 13px !important;
   margin: 12px 0 !important;
-  overflow: hidden !important;
+  overflow: visible !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 .simple-table th, .simple-table td {
   border: 1px solid var(--border) !important;
@@ -923,6 +925,13 @@ blockquote {
 }
 .simple-table-header {
   font-weight: 600 !important;
+}
+
+/* Properties table top/bottom border */
+table.properties {
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-collapse: collapse !important;
 }
 
 /* Inline code */
@@ -967,8 +976,8 @@ a:hover {
 /* Images */
 .image { margin: 16px 0 !important; }
 .image img {
-  border-radius: 8px !important;
-  box-shadow: var(--shadow) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   max-width: 100% !important;
 }
 
