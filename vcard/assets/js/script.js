@@ -156,7 +156,8 @@ const pages = document.querySelectorAll("[data-page]");
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
-    const targetPage = this.innerText.trim().toLowerCase();
+    const targetPage = this.dataset.target;
+    if (!targetPage) return;
 
     for (let j = 0; j < navigationLinks.length; j++) {
       navigationLinks[j].classList.remove("active");
