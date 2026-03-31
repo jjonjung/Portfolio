@@ -5,7 +5,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
 
 ## Live
 
-- Main Portfolio: https://jjonjung.github.io/Portfolio/Main/main.html
+- Main Portfolio: https://jjonjung.github.io/Portfolio/vcard/index.html
 
 ## Overview
 
