@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title> DB 데이터 이관, 마이그레이션 </title><style>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title> DB 데이터 이관, 마이그레이션 </title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -707,6 +707,537 @@ blockquote.quote-large {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
+
+/* ========== VCARD DESIGN OVERRIDE ========== */
+:root {
+  --accent: hsl(45, 100%, 50%);
+  --accent-dark: hsl(35, 100%, 38%);
+  --bg: #f5f5f4;
+  --card-bg: #ffffff;
+  --text-main: hsl(0, 0%, 10%);
+  --text-muted: hsl(0, 0%, 42%);
+  --border: hsl(0, 0%, 88%);
+  --shadow: 0 4px 20px hsla(0,0%,0%,0.08);
+  --radius: 12px;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text-main) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: normal !important;
+}
+
+@media only screen {
+  body {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px 16px 60px !important;
+  }
+}
+
+/* Back button */
+.vcard-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none !important;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
+}
+.vcard-back:hover {
+  background: var(--accent);
+  color: hsl(0,0%,12%);
+  border-color: var(--accent);
+  text-decoration: none !important;
+}
+
+/* Article wrapper */
+article.page.sans {
+  max-width: 860px !important;
+  margin: 0 auto !important;
+  background: var(--card-bg) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 8px 40px hsla(0,0%,0%,0.10) !important;
+  overflow: hidden !important;
+  padding-bottom: 48px !important;
+}
+
+/* Cover image */
+.page-cover-image {
+  width: 100% !important;
+  max-height: 260px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+
+/* Header section */
+header {
+  padding: 0 32px 24px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.page-header-icon {
+  font-size: 2.5rem !important;
+  margin: 16px 0 8px !important;
+}
+
+.page-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  margin: 4px 0 20px !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Properties table */
+table.properties {
+  border: none !important;
+  width: 100% !important;
+  font-size: 13px !important;
+}
+table.properties td, table.properties th {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 6px !important;
+  vertical-align: middle !important;
+}
+table.properties th {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  padding-right: 20px !important;
+}
+table.properties .property-row:last-child td,
+table.properties .property-row:last-child th {
+  border-bottom: none !important;
+}
+
+/* Tags (selected-value) */
+.selected-value {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 2px 10px !important;
+  border-radius: 20px !important;
+  margin-right: 4px !important;
+  margin-top: 2px !important;
+  display: inline-block !important;
+}
+
+/* Page body */
+.page-body {
+  padding: 24px 32px 0 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Section h2 with gray_background */
+h2.block-color-gray_background {
+  background: linear-gradient(to right, hsla(45,100%,50%,0.10), transparent) !important;
+  border-left: 3px solid var(--accent) !important;
+  padding: 8px 14px !important;
+  border-radius: 0 6px 6px 0 !important;
+  font-size: 1rem !important;
+  color: var(--text-main) !important;
+  margin: 28px 0 12px !important;
+}
+
+h2 {
+  font-size: 1.1rem !important;
+  margin: 24px 0 10px !important;
+  color: var(--text-main) !important;
+}
+
+h3 {
+  font-size: 0.95rem !important;
+  color: var(--text-main) !important;
+  margin: 16px 0 8px !important;
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  margin: 12px 0 !important;
+  border: 1px solid var(--border) !important;
+}
+
+.block-color-default.callout,
+.block-color-default_background.callout {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--accent) !important;
+  background: #fffbeb !important;
+  padding: 12px 16px !important;
+  border-radius: 0 8px 8px 0 !important;
+  margin: 16px 0 !important;
+  font-style: normal !important;
+  color: var(--text-main) !important;
+}
+
+/* Simple tables */
+.simple-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  margin: 12px 0 !important;
+  overflow: visible !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.simple-table th, .simple-table td {
+  border: 1px solid var(--border) !important;
+  padding: 9px 13px !important;
+  line-height: 1.5 !important;
+}
+.simple-table-header-color {
+  background: #f8f8f8 !important;
+  color: var(--text-muted) !important;
+}
+.simple-table-header {
+  font-weight: 600 !important;
+}
+
+/* Properties table top/bottom border */
+table.properties {
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-collapse: collapse !important;
+}
+
+/* Inline code */
+code {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-size: 12px !important;
+}
+
+/* Code blocks */
+pre {
+  background: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  overflow-x: auto !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+pre code {
+  background: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+}
+
+/* Links */
+a, a.visited {
+  color: var(--accent-dark) !important;
+  text-decoration: none !important;
+}
+a:hover {
+  color: var(--accent) !important;
+  text-decoration: underline !important;
+}
+.url-value {
+  word-break: break-all !important;
+  font-size: 12px !important;
+}
+
+/* Video thumbnail embed */
+.video-embed-figure {
+  margin: 16px 0 !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.yt-thumb-link {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  overflow: hidden !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  background: #000 !important;
+}
+
+.yt-thumb-link img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  opacity: 0.92 !important;
+  transition: opacity 0.2s !important;
+}
+
+.yt-thumb-link:hover img {
+  opacity: 0.75 !important;
+}
+
+.yt-play-btn {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -58%) !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)) !important;
+  transition: transform 0.2s !important;
+}
+
+.yt-thumb-link:hover .yt-play-btn {
+  transform: translate(-50%, -58%) scale(1.1) !important;
+}
+
+.yt-label {
+  position: absolute !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0,0,0,0.65) !important;
+  color: #fff !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 4px 14px !important;
+  border-radius: 20px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+
+/* Images */
+.image { margin: 16px 0 !important; }
+.image img {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+}
+
+/* Source link blocks */
+.source {
+  background: #f9fafb !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+}
+
+/* HR */
+hr {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  margin: 24px 0 !important;
+}
+
+/* Column list */
+.column-list {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  flex-wrap: nowrap !important;
+}
+
+.column-list > * {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.column {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Highlight overrides */
+.highlight-yellow_background { background: #fef9c3 !important; }
+.highlight-orange_background { background: #ffedd5 !important; }
+.highlight-red_background { background: #fee2e2 !important; }
+.highlight-blue_background { background: #dbeafe !important; }
+.highlight-teal_background { background: #ccfbf1 !important; }
+.highlight-green_background { background: #dcfce7 !important; }
+
+.highlight-red { color: #dc2626 !important; fill: #dc2626 !important; }
+.highlight-orange { color: #ea580c !important; fill: #ea580c !important; }
+
+/* Details/toggle */
+details summary {
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+p { white-space: normal !important; }
+li { white-space: normal !important; }
+td { white-space: normal !important; }
+
+/* ========== VS CODE STYLE CODE BLOCKS ========== */
+.vscode-block {
+  position: relative;
+  margin: 16px 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+}
+
+.vscode-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #252526 !important;
+  padding: 6px 14px !important;
+  border-bottom: 1px solid #3e3e42 !important;
+}
+
+.vscode-lang {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #cccccc !important;
+  letter-spacing: 0.02em !important;
+}
+
+.vscode-lang svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+.vscode-copy {
+  background: none !important;
+  border: 1px solid #3e3e42 !important;
+  border-radius: 4px !important;
+  padding: 3px 8px !important;
+  color: #858585 !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+  transition: color 0.15s, border-color 0.15s !important;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 1.4 !important;
+}
+.vscode-copy:hover {
+  color: #cccccc !important;
+  border-color: #6a6a6a !important;
+}
+.vscode-copy.copied {
+  color: #4ec9b0 !important;
+  border-color: #4ec9b0 !important;
+}
+
+/* pre.code + highlight.js VS Code Dark+ */
+pre.code {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  padding: 16px 18px !important;
+  overflow-x: auto !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  white-space: pre !important;
+  box-shadow: none !important;
+}
+
+pre.code code,
+pre.code .hljs {
+  background: transparent !important;
+  color: #d4d4d4 !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+}
+
+/* highlight.js VS Code Dark+ token colors */
+pre.code .hljs-comment,
+pre.code .hljs-quote { color: #6a9955 !important; font-style: italic !important; }
+
+pre.code .hljs-keyword,
+pre.code .hljs-selector-tag,
+pre.code .hljs-literal,
+pre.code .hljs-subst { color: #569cd6 !important; font-weight: normal !important; }
+
+pre.code .hljs-string,
+pre.code .hljs-doctag { color: #ce9178 !important; }
+
+pre.code .hljs-number,
+pre.code .hljs-regexp,
+pre.code .hljs-link { color: #b5cea8 !important; }
+
+pre.code .hljs-title,
+pre.code .hljs-section,
+pre.code .hljs-selector-id { color: #dcdcaa !important; }
+
+pre.code .hljs-type,
+pre.code .hljs-class .hljs-title { color: #4ec9b0 !important; }
+
+pre.code .hljs-meta,
+pre.code .hljs-meta .hljs-keyword { color: #c586c0 !important; }
+
+pre.code .hljs-name,
+pre.code .hljs-attribute { color: #9cdcfe !important; }
+
+pre.code .hljs-variable,
+pre.code .hljs-template-variable { color: #9cdcfe !important; }
+
+pre.code .hljs-built_in,
+pre.code .hljs-builtin-name { color: #4ec9b0 !important; }
+
+pre.code .hljs-symbol,
+pre.code .hljs-bullet { color: #b5cea8 !important; }
+
+pre.code .hljs-params { color: #d4d4d4 !important; }
+
+pre.code .hljs-deletion { color: #f44747 !important; }
+pre.code .hljs-addition { color: #b5cea8 !important; }
+
+pre.code .hljs-emphasis { font-style: italic !important; }
+pre.code .hljs-strong { font-weight: bold !important; }
+
+/* Scrollbar */
+pre.code::-webkit-scrollbar { height: 6px !important; }
+pre.code::-webkit-scrollbar-track { background: #2d2d2d !important; }
+pre.code::-webkit-scrollbar-thumb { background: #555 !important; border-radius: 3px !important; }
+
+
 </style></head><body><article id="31e6dae7-af2e-8197-8c98-f5a528fc1301" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><h1 class="page-title" dir="auto"> <mark class="highlight-red"><strong>DB 데이터 이관, 마이그레이션</strong></mark> </h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>작업 영역</th><td><span class="selected-value select-value-color-pink">C#</span><span class="selected-value select-value-color-orange">MSSQL</span><span class="selected-value select-value-color-green">Maria</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 내용</th><td>  • 이기종 <mark class="highlight-red"><strong>DB 마이그레이션</strong></mark><strong> </strong>(MS→Maria)</td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>작업기간</th><td><mark class="highlight-gray">2023.11 ~ 2024.04</mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-80f9-a7e2-c49461ba8f77" class="image" style="text-align:center"><a href="%ED%98%84%EB%8C%80.png"><img style="width:261.953125px" src="%ED%98%84%EB%8C%80.png"/></a></figure></div><div style="display:contents" dir="auto"><h1 id="32d6dae7-af2e-806a-a7e7-f0dd7dd0f594" class="">현대 위아 DB 데이터 이관</h1></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e0-9559-e761ca631489" class=""><mark class="highlight-gray">2023.11 ~ 2024.04</mark></p></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-8054-a402-dbaf1cfa6d35" class="">1공장 운영 DB를 2공장 환경으로 안정적으로 복제하기 위해, 스키마 동일성 검증, 무중단 배치 이관, 보안 통제, 오류 재처리 및 복구 시나리오까지 포함한 운영 안정성 중심의 DB 마이그레이션 구조를 설계한 프로젝트입니다.</blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8048-8f50-e8c548b5b78f"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-805d-a9e2-e67e58e63d9f" class="">▶ 프로젝트 개요</h2></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8083-a535-f99f5b9a16cc" class="bulleted-list"><li style="list-style-type:disc"><strong>프로젝트명</strong>: 현대 위아 DB 데이터 이관</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80ed-bb03-d25ec3613b8e" class="bulleted-list"><li style="list-style-type:disc"><strong>기간</strong>: 2023.11 ~ 2024.04</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8055-8ce3-e51817f172d0" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: 1공장 → 2공장 DB 전체 복제 구조 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80a1-a8c0-dbe9b13172c9" class="bulleted-list"><li style="list-style-type:disc"><strong>핵심 키워드</strong>: 스키마 동일성 검증, 무중단 배치 이관, 보안 및 접근 통제, 오류 로그, 재처리 구조, 롤백 시나리오, MariaDB 기반 구축</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-800b-bf0e-d978584e9306"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80d3-9841-f5b6386efea7" class="">▶ 프로젝트 한 줄 요약</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c1-8e56-eea92ded32bb" class="">단순 Dump 방식이 아닌,<mark class="highlight-yellow_background"> </mark><mark class="highlight-yellow_background"><strong>스키마 완전 동일성 확보 → 배치 단위 무중단 이관 → 오류 재처리 및 복구 가능 구조</strong></mark>를 기준으로 1공장 DB를 2공장 환경에 안정적으로 복제한 프로젝트입니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80a3-9e5a-edf19d7bf5fb"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8074-af92-f8bb5fd8b32e" class="">▶ 핵심 요약</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-803c-9392-ca468efc1fdd" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[문제 상황]
 1공장 운영 DB를 2공장으로 이전해야 했지만
 단순 Dump 방식은 운영 중단, 정합성 오류,
@@ -820,4 +1351,105 @@ MSSQL → MariaDB 일정 내 전환 성공
 무중단 배치 이관 및 검증 체계 수립
 
 확장성 확보
-DB Vendor 종속성 최소화 구조로 개선</code></pre></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-b455-f2ecf60fa351" class="">이 프로젝트의 성과는 단순히 “이관에 성공했다”를 넘어, <mark class="highlight-yellow_background"><strong>이관 이후 성능 개선과 구조적 확장성 확보까지 달성했다는 점</strong></mark>에 있습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8088-b8d9-e5ac49f8d234"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8002-be10-cf072e6c8a84" class="">▶ 역량 </h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-800b-8710-cd7a807a96e2" class="">1) 이기종 DB 전환 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8036-a93e-d23ff4288127" class="">MSSQL에서 MariaDB로의 전환을 직접 수행하며, MySQL/MariaDB 기반 서버 환경에 대한 이해를 실무 수준으로 확장했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80d2-a4d5-c1098d74d162" class="">2) 실행계획 기반 성능 최적화 역량</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-ab88-f5b938aa9607" class="">EXPLAIN 기반으로 병목 쿼리를 분석하고, 조인 구조·인덱스·문법을 조정해 실질적인 성능 개선을 경험했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80b6-a767-cfcd35df3284" class="">3) 대용량 데이터 처리 및 무결성 검증 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80d5-a5f6-cd7bd1565cb3" class="">배치 단위 이관과 데이터 검증 체계를 설계하며, 대용량 데이터 처리에서 중요한 무결성과 운영 안정성을 함께 고려하는 기준을 갖추게 되었습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-801c-a36c-de498921a49a" class="">4) DB 변경에 대응 가능한 구조 설계 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8032-9f5d-d53596631c6f" class="">애플리케이션 코드와 DB 객체에서 Vendor 종속성을 줄이는 작업을 통해, 환경 변화에 유연하게 대응할 수 있는 구조 설계 경험을 쌓았습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8047-8194-de2a42eee739"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8014-9191-d3375536f0ee" class="">이 프로젝트를 통해 얻은 기술적 인사이트</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8066-99e7-dfa90169b189" class="">이 경험을 통해 DB 마이그레이션은 단순 변환 작업이 아니라, <mark class="highlight-yellow_background"><strong>호환성·성능·정합성·운영 안정성</strong></mark>을 함께 검토하는 구조 개선 작업이라는 점을 배웠습니다. 특히 자동화만으로 해결되지 않는 영역에서는 실행계획과 실제 업무 시나리오를 기준으로 수작업 최적화가 반드시 필요하다는 것을 체감했고, 이후에도 DB 변경 작업을 볼 때 “변환 후 실행”이 아니라 “검증까지 완료된 구조”를 기준으로 판단하게 되었습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-800a-a57d-d8cc1f87a0af"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8082-9b87-c720bfea27c3" class="">직무 연결 포인트</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8077-bc2d-f8a2bc97f6bd" class="">이 프로젝트는 게임 도메인은 아니지만, 기술적으로는 <mark class="highlight-yellow_background"><strong>MySQL/MariaDB 기반 DB 설계 이해</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>대용량 데이터 처리</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>실행계획 기반 쿼리 최적화</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>무결성 검증</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 중단을 최소화하는 배치 전략</strong></mark>을 담고 있습니다. 이는 서버 개발 직무에서 요구되는 <mark class="highlight-yellow_background"><strong>DB 설계 및 구현</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 안정성 확보</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>실서비스 대응 역량</strong></mark>과 직접 연결되는 경험이라고 생각합니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-805c-b2a7-c369dff6389a"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+DB Vendor 종속성 최소화 구조로 개선</code></pre></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-b455-f2ecf60fa351" class="">이 프로젝트의 성과는 단순히 “이관에 성공했다”를 넘어, <mark class="highlight-yellow_background"><strong>이관 이후 성능 개선과 구조적 확장성 확보까지 달성했다는 점</strong></mark>에 있습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8088-b8d9-e5ac49f8d234"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8002-be10-cf072e6c8a84" class="">▶ 역량 </h2></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-800b-8710-cd7a807a96e2" class="">1) 이기종 DB 전환 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8036-a93e-d23ff4288127" class="">MSSQL에서 MariaDB로의 전환을 직접 수행하며, MySQL/MariaDB 기반 서버 환경에 대한 이해를 실무 수준으로 확장했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80d2-a4d5-c1098d74d162" class="">2) 실행계획 기반 성능 최적화 역량</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-ab88-f5b938aa9607" class="">EXPLAIN 기반으로 병목 쿼리를 분석하고, 조인 구조·인덱스·문법을 조정해 실질적인 성능 개선을 경험했습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-80b6-a767-cfcd35df3284" class="">3) 대용량 데이터 처리 및 무결성 검증 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80d5-a5f6-cd7bd1565cb3" class="">배치 단위 이관과 데이터 검증 체계를 설계하며, 대용량 데이터 처리에서 중요한 무결성과 운영 안정성을 함께 고려하는 기준을 갖추게 되었습니다. </p></div><div style="display:contents" dir="auto"><h3 id="32d6dae7-af2e-801c-a36c-de498921a49a" class="">4) DB 변경에 대응 가능한 구조 설계 경험</h3></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8032-9f5d-d53596631c6f" class="">애플리케이션 코드와 DB 객체에서 Vendor 종속성을 줄이는 작업을 통해, 환경 변화에 유연하게 대응할 수 있는 구조 설계 경험을 쌓았습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8047-8194-de2a42eee739"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8014-9191-d3375536f0ee" class="">이 프로젝트를 통해 얻은 기술적 인사이트</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8066-99e7-dfa90169b189" class="">이 경험을 통해 DB 마이그레이션은 단순 변환 작업이 아니라, <mark class="highlight-yellow_background"><strong>호환성·성능·정합성·운영 안정성</strong></mark>을 함께 검토하는 구조 개선 작업이라는 점을 배웠습니다. 특히 자동화만으로 해결되지 않는 영역에서는 실행계획과 실제 업무 시나리오를 기준으로 수작업 최적화가 반드시 필요하다는 것을 체감했고, 이후에도 DB 변경 작업을 볼 때 “변환 후 실행”이 아니라 “검증까지 완료된 구조”를 기준으로 판단하게 되었습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-800a-a57d-d8cc1f87a0af"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8082-9b87-c720bfea27c3" class="">직무 연결 포인트</h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8077-bc2d-f8a2bc97f6bd" class="">이 프로젝트는 게임 도메인은 아니지만, 기술적으로는 <mark class="highlight-yellow_background"><strong>MySQL/MariaDB 기반 DB 설계 이해</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>대용량 데이터 처리</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>실행계획 기반 쿼리 최적화</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>무결성 검증</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 중단을 최소화하는 배치 전략</strong></mark>을 담고 있습니다. 이는 서버 개발 직무에서 요구되는 <mark class="highlight-yellow_background"><strong>DB 설계 및 구현</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 안정성 확보</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>실서비스 대응 역량</strong></mark>과 직접 연결되는 경험이라고 생각합니다.</p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-805c-b2a7-c369dff6389a"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- highlight.js - VS Code Dark+ syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script>
+(function() {
+  var icons = {
+    'C++':        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M12 6l-2 12"/></svg>',
+    'Plain Text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>',
+    'Mermaid':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+  };
+  var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
+
+  function copyText(text, btn) {
+    var restore = function() {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(restore, 2000);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(restore, 2000);
+    }
+  }
+
+  function initVSCodeBlocks() {
+    document.querySelectorAll('pre.code').forEach(function(pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains('vscode-block')) return;
+
+      var codeEl = pre.querySelector('code');
+      if (!codeEl) return;
+
+      // Detect original language label
+      var origClass = codeEl.className || '';
+      var langLabel = 'Code';
+      var hljsLang = 'plaintext';
+
+      if (origClass.indexOf('C++') !== -1) {
+        langLabel = 'C++';
+        hljsLang = 'cpp';
+      } else if (origClass.indexOf('Mermaid') !== -1) {
+        langLabel = 'Mermaid';
+        hljsLang = 'plaintext';
+      } else if (origClass.indexOf('Plain Text') !== -1) {
+        langLabel = 'Plain Text';
+        hljsLang = 'plaintext';
+      }
+
+      // Apply highlight.js for C++
+      if (hljsLang === 'cpp' && typeof hljs !== 'undefined') {
+        codeEl.removeAttribute('data-highlighted');
+        codeEl.className = 'language-cpp';
+        hljs.highlightElement(codeEl);
+      }
+
+      // Build VS Code wrapper
+      var wrapper = document.createElement('div');
+      wrapper.className = 'vscode-block';
+
+      var header = document.createElement('div');
+      header.className = 'vscode-header';
+
+      var langSpan = document.createElement('span');
+      langSpan.className = 'vscode-lang';
+      langSpan.innerHTML = (icons[langLabel] || defaultIcon) + langLabel;
+
+      var rawText = codeEl.textContent;
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'vscode-copy';
+      copyBtn.textContent = '복사';
+      copyBtn.addEventListener('click', function() { copyText(rawText, copyBtn); });
+
+      header.appendChild(langSpan);
+      header.appendChild(copyBtn);
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(header);
+      wrapper.appendChild(pre);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVSCodeBlocks);
+  } else {
+    initVSCodeBlocks();
+  }
+})();
+</script>
+
+
+</body></html>

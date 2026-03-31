@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>팜스코 </title><style>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>팜스코 </title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -707,6 +707,537 @@ blockquote.quote-large {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
+
+/* ========== VCARD DESIGN OVERRIDE ========== */
+:root {
+  --accent: hsl(45, 100%, 50%);
+  --accent-dark: hsl(35, 100%, 38%);
+  --bg: #f5f5f4;
+  --card-bg: #ffffff;
+  --text-main: hsl(0, 0%, 10%);
+  --text-muted: hsl(0, 0%, 42%);
+  --border: hsl(0, 0%, 88%);
+  --shadow: 0 4px 20px hsla(0,0%,0%,0.08);
+  --radius: 12px;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text-main) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: normal !important;
+}
+
+@media only screen {
+  body {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px 16px 60px !important;
+  }
+}
+
+/* Back button */
+.vcard-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none !important;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
+}
+.vcard-back:hover {
+  background: var(--accent);
+  color: hsl(0,0%,12%);
+  border-color: var(--accent);
+  text-decoration: none !important;
+}
+
+/* Article wrapper */
+article.page.sans {
+  max-width: 860px !important;
+  margin: 0 auto !important;
+  background: var(--card-bg) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 8px 40px hsla(0,0%,0%,0.10) !important;
+  overflow: hidden !important;
+  padding-bottom: 48px !important;
+}
+
+/* Cover image */
+.page-cover-image {
+  width: 100% !important;
+  max-height: 260px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+
+/* Header section */
+header {
+  padding: 0 32px 24px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.page-header-icon {
+  font-size: 2.5rem !important;
+  margin: 16px 0 8px !important;
+}
+
+.page-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  margin: 4px 0 20px !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Properties table */
+table.properties {
+  border: none !important;
+  width: 100% !important;
+  font-size: 13px !important;
+}
+table.properties td, table.properties th {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 6px !important;
+  vertical-align: middle !important;
+}
+table.properties th {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  padding-right: 20px !important;
+}
+table.properties .property-row:last-child td,
+table.properties .property-row:last-child th {
+  border-bottom: none !important;
+}
+
+/* Tags (selected-value) */
+.selected-value {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 2px 10px !important;
+  border-radius: 20px !important;
+  margin-right: 4px !important;
+  margin-top: 2px !important;
+  display: inline-block !important;
+}
+
+/* Page body */
+.page-body {
+  padding: 24px 32px 0 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Section h2 with gray_background */
+h2.block-color-gray_background {
+  background: linear-gradient(to right, hsla(45,100%,50%,0.10), transparent) !important;
+  border-left: 3px solid var(--accent) !important;
+  padding: 8px 14px !important;
+  border-radius: 0 6px 6px 0 !important;
+  font-size: 1rem !important;
+  color: var(--text-main) !important;
+  margin: 28px 0 12px !important;
+}
+
+h2 {
+  font-size: 1.1rem !important;
+  margin: 24px 0 10px !important;
+  color: var(--text-main) !important;
+}
+
+h3 {
+  font-size: 0.95rem !important;
+  color: var(--text-main) !important;
+  margin: 16px 0 8px !important;
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  margin: 12px 0 !important;
+  border: 1px solid var(--border) !important;
+}
+
+.block-color-default.callout,
+.block-color-default_background.callout {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--accent) !important;
+  background: #fffbeb !important;
+  padding: 12px 16px !important;
+  border-radius: 0 8px 8px 0 !important;
+  margin: 16px 0 !important;
+  font-style: normal !important;
+  color: var(--text-main) !important;
+}
+
+/* Simple tables */
+.simple-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  margin: 12px 0 !important;
+  overflow: visible !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.simple-table th, .simple-table td {
+  border: 1px solid var(--border) !important;
+  padding: 9px 13px !important;
+  line-height: 1.5 !important;
+}
+.simple-table-header-color {
+  background: #f8f8f8 !important;
+  color: var(--text-muted) !important;
+}
+.simple-table-header {
+  font-weight: 600 !important;
+}
+
+/* Properties table top/bottom border */
+table.properties {
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-collapse: collapse !important;
+}
+
+/* Inline code */
+code {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-size: 12px !important;
+}
+
+/* Code blocks */
+pre {
+  background: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  overflow-x: auto !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+pre code {
+  background: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+}
+
+/* Links */
+a, a.visited {
+  color: var(--accent-dark) !important;
+  text-decoration: none !important;
+}
+a:hover {
+  color: var(--accent) !important;
+  text-decoration: underline !important;
+}
+.url-value {
+  word-break: break-all !important;
+  font-size: 12px !important;
+}
+
+/* Video thumbnail embed */
+.video-embed-figure {
+  margin: 16px 0 !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.yt-thumb-link {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  overflow: hidden !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  background: #000 !important;
+}
+
+.yt-thumb-link img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  opacity: 0.92 !important;
+  transition: opacity 0.2s !important;
+}
+
+.yt-thumb-link:hover img {
+  opacity: 0.75 !important;
+}
+
+.yt-play-btn {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -58%) !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)) !important;
+  transition: transform 0.2s !important;
+}
+
+.yt-thumb-link:hover .yt-play-btn {
+  transform: translate(-50%, -58%) scale(1.1) !important;
+}
+
+.yt-label {
+  position: absolute !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0,0,0,0.65) !important;
+  color: #fff !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 4px 14px !important;
+  border-radius: 20px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+
+/* Images */
+.image { margin: 16px 0 !important; }
+.image img {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+}
+
+/* Source link blocks */
+.source {
+  background: #f9fafb !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+}
+
+/* HR */
+hr {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  margin: 24px 0 !important;
+}
+
+/* Column list */
+.column-list {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  flex-wrap: nowrap !important;
+}
+
+.column-list > * {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.column {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Highlight overrides */
+.highlight-yellow_background { background: #fef9c3 !important; }
+.highlight-orange_background { background: #ffedd5 !important; }
+.highlight-red_background { background: #fee2e2 !important; }
+.highlight-blue_background { background: #dbeafe !important; }
+.highlight-teal_background { background: #ccfbf1 !important; }
+.highlight-green_background { background: #dcfce7 !important; }
+
+.highlight-red { color: #dc2626 !important; fill: #dc2626 !important; }
+.highlight-orange { color: #ea580c !important; fill: #ea580c !important; }
+
+/* Details/toggle */
+details summary {
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+p { white-space: normal !important; }
+li { white-space: normal !important; }
+td { white-space: normal !important; }
+
+/* ========== VS CODE STYLE CODE BLOCKS ========== */
+.vscode-block {
+  position: relative;
+  margin: 16px 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+}
+
+.vscode-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #252526 !important;
+  padding: 6px 14px !important;
+  border-bottom: 1px solid #3e3e42 !important;
+}
+
+.vscode-lang {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #cccccc !important;
+  letter-spacing: 0.02em !important;
+}
+
+.vscode-lang svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+.vscode-copy {
+  background: none !important;
+  border: 1px solid #3e3e42 !important;
+  border-radius: 4px !important;
+  padding: 3px 8px !important;
+  color: #858585 !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+  transition: color 0.15s, border-color 0.15s !important;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 1.4 !important;
+}
+.vscode-copy:hover {
+  color: #cccccc !important;
+  border-color: #6a6a6a !important;
+}
+.vscode-copy.copied {
+  color: #4ec9b0 !important;
+  border-color: #4ec9b0 !important;
+}
+
+/* pre.code + highlight.js VS Code Dark+ */
+pre.code {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  padding: 16px 18px !important;
+  overflow-x: auto !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  white-space: pre !important;
+  box-shadow: none !important;
+}
+
+pre.code code,
+pre.code .hljs {
+  background: transparent !important;
+  color: #d4d4d4 !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+}
+
+/* highlight.js VS Code Dark+ token colors */
+pre.code .hljs-comment,
+pre.code .hljs-quote { color: #6a9955 !important; font-style: italic !important; }
+
+pre.code .hljs-keyword,
+pre.code .hljs-selector-tag,
+pre.code .hljs-literal,
+pre.code .hljs-subst { color: #569cd6 !important; font-weight: normal !important; }
+
+pre.code .hljs-string,
+pre.code .hljs-doctag { color: #ce9178 !important; }
+
+pre.code .hljs-number,
+pre.code .hljs-regexp,
+pre.code .hljs-link { color: #b5cea8 !important; }
+
+pre.code .hljs-title,
+pre.code .hljs-section,
+pre.code .hljs-selector-id { color: #dcdcaa !important; }
+
+pre.code .hljs-type,
+pre.code .hljs-class .hljs-title { color: #4ec9b0 !important; }
+
+pre.code .hljs-meta,
+pre.code .hljs-meta .hljs-keyword { color: #c586c0 !important; }
+
+pre.code .hljs-name,
+pre.code .hljs-attribute { color: #9cdcfe !important; }
+
+pre.code .hljs-variable,
+pre.code .hljs-template-variable { color: #9cdcfe !important; }
+
+pre.code .hljs-built_in,
+pre.code .hljs-builtin-name { color: #4ec9b0 !important; }
+
+pre.code .hljs-symbol,
+pre.code .hljs-bullet { color: #b5cea8 !important; }
+
+pre.code .hljs-params { color: #d4d4d4 !important; }
+
+pre.code .hljs-deletion { color: #f44747 !important; }
+pre.code .hljs-addition { color: #b5cea8 !important; }
+
+pre.code .hljs-emphasis { font-style: italic !important; }
+pre.code .hljs-strong { font-weight: bold !important; }
+
+/* Scrollbar */
+pre.code::-webkit-scrollbar { height: 6px !important; }
+pre.code::-webkit-scrollbar-track { background: #2d2d2d !important; }
+pre.code::-webkit-scrollbar-thumb { background: #555 !important; border-radius: 3px !important; }
+
+
 </style></head><body><article id="31e6dae7-af2e-8111-b6b5-d2c0f23a7e2f" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><h1 class="page-title" dir="auto"><strong>팜스코 </strong></h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>작업 영역</th><td><span class="selected-value select-value-color-brown">Android(JAVA)</span><span class="selected-value select-value-color-pink">C#</span><span class="selected-value select-value-color-orange">MSSQL</span><span class="selected-value select-value-color-green">Oracle</span><span class="selected-value select-value-color-yellow">SAP</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 내용</th><td>• <mark class="highlight-red"><strong>실시간 데이터 처리 시스템 안정화</strong></mark><mark class="highlight-default"><br/>• SAP–MES 인터페이스<br/>• MES 솔루션 구축</mark></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>작업기간</th><td><mark class="highlight-gray">2024.12 ~ 2025.11</mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c7-9e34-eb089a45ec47" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">1. 핵심 요약</a></p></div><div style="display:contents" dir="auto"><p id="31e6dae7-af2e-8169-a72a-fba72fa08e7d" class="">
 </p></div><div style="display:contents" dir="ltr"><figure id="31e6dae7-af2e-8110-9d3c-dc39635bcced" class="image"><a href="%ED%8C%9C%EC%8A%A4%EC%BD%94.png"><img style="width:237.94921875px" src="%ED%8C%9C%EC%8A%A4%EC%BD%94.png"/></a></figure></div><div style="display:contents" dir="auto"><h1 id="32d6dae7-af2e-808b-8b6c-c8803fc34f69" class="">인터페이스 실시간 데이터 처리 시스템 안정화</h1></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-80dd-a5be-f55eaf9123fa" class="">상태 기반 처리 구조와 재처리 가능한 운영 체계를 설계하여, <br/>SAP–MES 인터페이스를 안정적인 데이터 파이프라인으로 개선한 프로젝트입니다. </blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-807b-835d-f59ea8fa0574"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-802b-a4ff-fe8b301e6f0d" class="">▶ 프로젝트 개요</h2></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8056-ae20-e0e5e935353e" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: SAP–MES 인터페이스 설계 및 실시간 데이터 처리 시스템 개발</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80fa-9a2f-d58bd4308792" class="bulleted-list"><li style="list-style-type:disc"><strong>기술 스택</strong>: C#, MSSQL, Stored Procedure, 멀티스레딩</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8079-903e-e140fd1dc263" class="bulleted-list"><li style="list-style-type:disc"><strong>처리 규모</strong>: 일 평균 1만 건 이상 데이터 처리</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80c1-8322-dd885d8a21b4" class="bulleted-list"><li style="list-style-type:disc"><strong>핵심 키워드</strong>: 상태 기반 처리, Idempotent 설계, 배치 처리, 인덱스 최적화, 오류 재처리, 운영 모니터링</li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8084-ad62-ca73741de0db"/></div><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-8080-947c-e6971610e03f" class="">▶ 시스템 배경</h2></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-8016-a9cb-c26e286ad1bf" class="image"><a href="image.png"><img style="width:519px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-8082-93e1-c8bad04fe4c8" class="">표준 MES 기능 모듈을 기반으로 고객사 프로세스에 맞는 시스템 구성을 이해하고,<br/>SAP와 MES 간 인터페이스가 연결되는 운영 환경에서 실시간 데이터 처리 안정화 작업을 <br/>수행했습니다. </blockquote></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-80df-89d7-f9be1a84b460"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-803d-9572-d0fd44bdc94f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h2 id="32d6dae7-af2e-80d5-bedd-d34c8374a9e8" class=""><strong>목차</strong></h2></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8005-98e8-ebc1725a131f" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">1. 핵심 요약</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8007-b6b9-e5c6b506b770" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">2. 프로젝트 배경과 문제 정의</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8021-afae-eb555a732f16" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">3. 수행 접근 방식</a><div class="indented"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8048-aa9f-e390adc0cf0b" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">3-1. 문제 해결 순서</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-808c-bf6d-da7e6c642600" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">3-1. 실시간 처리 파이프라인</a></p></div></div></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-805e-9ae8-d3e35c5f9958" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">4. 핵심 성과</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8099-ba29-e23f1db8dbfe" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">5. 구현 요약</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8030-bb2f-ff7054d8a80b" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">6. 프로젝트를 통한 기술적 인사이트</a></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-801e-bb04-c944665a6a42" class=""><a href="https://www.notion.so/31e6dae7af2e8111b6b5d2c0f23a7e2f?pvs=21">7. 직무 역량</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80c1-a459-eed5e97ae8e3" class=""><mark class="highlight-red"><mark class="highlight-default_background"><strong>▶ 핵심 요약</strong></mark></mark></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-8018-ab13-d63b787c6bd6"><div style="font-size:1.5em"><span class="icon">🚩</span></div><div style="width:100%"><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32d6dae7-af2e-80d5-a15e-f1349b409136" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[문제 발생]
 	SAP → MES 인터페이스가 구축 테스트 시 하루 3~4회 중단
@@ -766,4 +1297,176 @@ blockquote.quote-large {
     class G,I error;
     class H support;
     class J retry;</code></pre></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8099-b338-d02e568e8484" class="">이 프로젝트의 핵심은 데이터를 단순 저장하는 것이 아니라, <br/><mark class="highlight-yellow_background"><strong>정상 처리 / 실패 처리 / 복구 처리까지 포함하는 상태 기반 파이프라인</strong></mark>을 구축하여 <br/>유지 보수시에도 배치 단위 처리, 오류 로그 기록, 운영 대시보드 집계, 재처리 기능까지 연결하여 운영 안정성과 복구 가능성을 확보했습니다.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8067-99a7-e5bef5c4823b"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e7-8432-c2168d81c493" class=""><mark class="highlight-red"><mark class="highlight-default_background"><strong>▶ 핵심 성과</strong></mark></mark></p></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-8011-9580-f35cefda9523" class="">단순히 성능만 개선한 것이 아니라, 장애가 발생하더라도 <mark class="highlight-yellow_background"><strong>추적·복구·재처리 가능한 운영 구조</strong></mark>를 확보했다는 점이 가장 큰 성과였습니다. </blockquote></div><div style="display:contents" dir="ltr"><table id="32d6dae7-af2e-809b-8ce0-e7995a94f3f8" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-800b-98ee-e237b2c3cdae"><th id="?y=d" class="simple-table-header-color simple-table-header" style="width:133.75001525878906px">개선 항목</th><th id="v|wT" class="simple-table-header-color simple-table-header" style="width:176.75px">변경 전</th><th id="?zBi" class="simple-table-header-color simple-table-header" style="width:176.75px">변경 후</th><th id="mozB" class="simple-table-header-color simple-table-header" style="width:215.75001525878906px">성과</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-8021-a87d-e665642dd944"><td id="?y=d" class="" style="width:133.75001525878906px">Copy 중단 빈도</td><td id="v|wT" class="" style="width:176.75px">하루 3~4회</td><td id="?zBi" class="" style="width:176.75px">주 1회 이하</td><td id="mozB" class="" style="width:215.75001525878906px">약 80% 감소</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-8099-8b6b-e8866138bca1"><td id="?y=d" class="" style="width:133.75001525878906px">장애 대응 시간</td><td id="v|wT" class="" style="width:176.75px">약 30분</td><td id="?zBi" class="" style="width:176.75px">약 5분</td><td id="mozB" class="" style="width:215.75001525878906px">대응 속도 대폭 향상</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-807d-a9b4-ea2b78b61999"><td id="?y=d" class="" style="width:133.75001525878906px">DB Lock 대기</td><td id="v|wT" class="" style="width:176.75px">높은 대기 발생</td><td id="?zBi" class="" style="width:176.75px">70% 감소</td><td id="mozB" class="" style="width:215.75001525878906px">배치 처리 구조로 전환</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d6dae7-af2e-80ee-8335-e56a2d5c1173"><td id="?y=d" class="" style="width:133.75001525878906px">운영 안정성</td><td id="v|wT" class="" style="width:176.75px">제한적 복구 방식</td><td id="?zBi" class="" style="width:176.75px">상태 기반 복구 구조</td><td id="mozB" class="" style="width:215.75001525878906px">시스템 안정성 및 복구력 향상</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-803f-ba6d-c433aa480088" class=""><mark class="highlight-red"><mark class="highlight-default_background"><strong>▶ 구현 요약</strong></mark></mark></p></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-809a-9aeb-f9f3ea162c12" class="bulleted-list"><li style="list-style-type:disc">SAP–MES 인터페이스 전용 상태 관리 테이블 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8081-9a4b-e84a9a751b8d" class="bulleted-list"><li style="list-style-type:disc">WAIT / PROCESSING / DONE / ERROR 기반 처리 프로시저 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8086-a8bd-edd5b1feb706" class="bulleted-list"><li style="list-style-type:disc">배치 단위 트랜잭션 처리 구조 적용</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-803c-b547-f7aca910dd94" class="bulleted-list"><li style="list-style-type:disc">빈번 조회 컬럼 기준 인덱스 재구성</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-805f-b5b9-dc1a11b12ac9" class="bulleted-list"><li style="list-style-type:disc">C# 기반 수신/검증/저장/상태 갱신 로직 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-80af-8102-f4d24d60451d" class="bulleted-list"><li style="list-style-type:disc">오류 로그 저장 및 재처리 기능 구현</li></ul></div><div style="display:contents" dir="auto"><ul id="32d6dae7-af2e-8064-a10d-fb9bff0930f3" class="bulleted-list"><li style="list-style-type:disc">운영 현황 대시보드 및 오류 상세 조회 기능 개발 </li></ul></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8070-a76a-ebeac8d5984f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="32d6dae7-af2e-8009-b2f6-c584455c3ccf"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-803f-8795-efa5ab88e8aa" class="">운영 환경</p></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-8059-8312-f2843a5d681a" class="image"><a href="image%201.png"><img style="width:576.9642944335938px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80ff-b5ab-e0d90ee3fbfc" class=""><em>영업·생산·자재·품질·출하·재고를 통합한 MES 운영 환경에서 인터페이스 안정화 및 데이터 처리 구조 개선을 수행했습니다.</em> </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8096-be70-e3661aeca649"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-800c-9b72-ce16074e7eb8" class=""><mark class="highlight-blue"><strong>운영 효율과 확장성을 고려한 개발 경험</strong></mark></p></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-802c-96f7-f26bd305c7dc" class="image"><a href="image%202.png"><img style="width:578.982177734375px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><blockquote id="32d6dae7-af2e-803a-b576-f26dadc9b69c" class="">운영 중에도 사용자 정의 메뉴와 화면을 등록할 수 있는 <br/>관리자용 개발 페이지를 경험했습니다. </blockquote></div><div style="display:contents" dir="ltr"><figure id="32d6dae7-af2e-8023-ad9e-fe467f614d2e" class="image"><a href="image%203.png"><img style="width:581px" src="image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8078-ac67-d00fa8cc4e48" class="">설정만으로 조회·입력·그리드 화면을 구성할 수 있는 공통 프레임워크를 활용해 운영 효율과 유지보수성을 높였습니다. <br/>시스템에서는 기능 구현 자체뿐 아니라, <mark class="highlight-yellow_background"><strong>운영자가 직접 관리 가능한 구조</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>설정 기반으로 확장 가능한 화면 체계</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>표준화된 관리 기능</strong></mark>도 중요하다고 판단했습니다. 이러한 경험은 이후 장애 대응과 유지보수 효율을 고려한 설계 방식으로 이어졌습니다. </p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8080-a48e-f4b2cec43047"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80f0-96cc-d5d367ece33b" class="">▶ <mark class="highlight-red"><mark class="highlight-default_background"><strong>프로젝트를 통해 얻은 기술적 인사이트</strong></mark></mark></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e2-80ac-f52fbd630e37" class="">이 경험을 통해 실시간 데이터 처리 시스템에서 중요한 것은 단순히 <br/>“문제가 발생하지 않게 만드는 것”이 아니라,<mark class="highlight-blue"> </mark><mark class="highlight-default"><mark class="highlight-yellow_background"><strong>문제가 발생해도 어디서 멈췄는지 추적하고 다시 복구할 수 있는 구조를 설계하는 것</strong></mark></mark>이라는 점을 배웠습니다. <br/>또한 트랜잭션 범위 설계, 상태 기반 처리, 멱등성 확보, 로깅과 모니터링 체계가 운영 안정성을 좌우한다는 것을 실무에서 직접 체득했습니다. </p></div><div style="display:contents" dir="auto"><hr id="32d6dae7-af2e-8094-8d96-d4e65bdde651"/></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-807e-af53-f996ac467ef6" class="">▶ <mark class="highlight-red"><mark class="highlight-default_background"><strong>직무 역량</strong></mark></mark></p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-80e7-8a81-c6284e7394d7" class="">이 프로젝트는 제조 도메인 사례이지만, 기술적으로는 <mark class="highlight-yellow_background"><strong>실시간 데이터 처리 구조 설계</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>DB 상태 관리</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>배치 단위 트랜잭션 제어</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>재처리 가능한 오류 대응 구조</strong></mark><mark class="highlight-yellow_background">, </mark><mark class="highlight-yellow_background"><strong>운영 모니터링 체계 구축</strong></mark> 경험을 담고 있습니다. 이는 도메인이 달라도, 라이브 서비스형 서버에서 요구되는 <mark class="highlight-yellow_background"><strong>정합성·복구 가능성·운영 안정성</strong></mark>과 직접 연결되는 역량이라고 생각합니다.</p></div><div style="display:contents" dir="auto"><p id="32d6dae7-af2e-8080-8e09-fcfa0f7b45de" class="">
-</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- highlight.js - VS Code Dark+ syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script>
+(function() {
+  var icons = {
+    'C++':        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M12 6l-2 12"/></svg>',
+    'Plain Text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>',
+    'Mermaid':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+  };
+  var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
+
+  function copyText(text, btn) {
+    var restore = function() {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(restore, 2000);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(restore, 2000);
+    }
+  }
+
+  function initVSCodeBlocks() {
+    document.querySelectorAll('pre.code').forEach(function(pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains('vscode-block')) return;
+
+      var codeEl = pre.querySelector('code');
+      if (!codeEl) return;
+
+      // Detect original language label
+      var origClass = codeEl.className || '';
+      var langLabel = 'Code';
+      var hljsLang = 'plaintext';
+
+      if (origClass.indexOf('C++') !== -1) {
+        langLabel = 'C++';
+        hljsLang = 'cpp';
+      } else if (origClass.indexOf('Mermaid') !== -1) {
+        langLabel = 'Mermaid';
+        hljsLang = 'plaintext';
+      } else if (origClass.indexOf('Plain Text') !== -1) {
+        langLabel = 'Plain Text';
+        hljsLang = 'plaintext';
+      }
+
+      // Apply highlight.js for C++
+      if (hljsLang === 'cpp' && typeof hljs !== 'undefined') {
+        codeEl.removeAttribute('data-highlighted');
+        codeEl.className = 'language-cpp';
+        hljs.highlightElement(codeEl);
+      }
+
+      // Build VS Code wrapper
+      var wrapper = document.createElement('div');
+      wrapper.className = 'vscode-block';
+
+      var header = document.createElement('div');
+      header.className = 'vscode-header';
+
+      var langSpan = document.createElement('span');
+      langSpan.className = 'vscode-lang';
+      langSpan.innerHTML = (icons[langLabel] || defaultIcon) + langLabel;
+
+      var rawText = codeEl.textContent;
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'vscode-copy';
+      copyBtn.textContent = '복사';
+      copyBtn.addEventListener('click', function() { copyText(rawText, copyBtn); });
+
+      header.appendChild(langSpan);
+      header.appendChild(copyBtn);
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(header);
+      wrapper.appendChild(pre);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVSCodeBlocks);
+  } else {
+    initVSCodeBlocks();
+  }
+})();
+</script>
+
+
+
+<!-- Mermaid.js - flowchart rendering -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+(function() {
+  function renderMermaid() {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'default',
+      flowchart: { curve: 'basis', htmlLabels: true },
+      themeVariables: {
+        primaryColor: '#fff7ed',
+        primaryBorderColor: '#d97706',
+        primaryTextColor: '#1a1a1a',
+        lineColor: '#9ca3af',
+        secondaryColor: '#f0fdf4',
+        tertiaryColor: '#eff6ff',
+        fontSize: '14px'
+      }
+    });
+
+    document.querySelectorAll('pre.code code.language-Mermaid, pre.code code[class*="Mermaid"]').forEach(function(codeEl) {
+      var pre = codeEl.closest('pre');
+      if (!pre) return;
+
+      // Decode HTML entities
+      var raw = codeEl.textContent || codeEl.innerText;
+
+      // Create mermaid div
+      var wrapper = document.createElement('div');
+      wrapper.className = 'mermaid-wrapper';
+
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = raw;
+
+      wrapper.appendChild(div);
+
+      // Replace pre with mermaid div
+      var parent = pre.parentNode;
+      // If wrapped in vscode-block, replace that
+      var block = parent && parent.classList && parent.classList.contains('vscode-block') ? parent : pre;
+      block.parentNode.insertBefore(wrapper, block);
+      block.style.display = 'none';
+    });
+
+    mermaid.run({ querySelector: '.mermaid' });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+<style>
+.mermaid-wrapper {
+  margin: 16px 0;
+  background: #ffffff;
+  border: 1px solid hsl(0,0%,88%);
+  border-radius: 8px;
+  padding: 24px 16px;
+  overflow-x: auto;
+  text-align: center;
+}
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+</style>
+</body></html>

@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>NZN Web UI 디자인</title><style>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>NZN Web UI 디자인</title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -707,5 +707,637 @@ blockquote.quote-large {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
+
+/* ========== VCARD DESIGN OVERRIDE ========== */
+:root {
+  --accent: hsl(45, 100%, 50%);
+  --accent-dark: hsl(35, 100%, 38%);
+  --bg: #f5f5f4;
+  --card-bg: #ffffff;
+  --text-main: hsl(0, 0%, 10%);
+  --text-muted: hsl(0, 0%, 42%);
+  --border: hsl(0, 0%, 88%);
+  --shadow: 0 4px 20px hsla(0,0%,0%,0.08);
+  --radius: 12px;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text-main) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: normal !important;
+}
+
+@media only screen {
+  body {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px 16px 60px !important;
+  }
+}
+
+/* Back button */
+.vcard-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none !important;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
+}
+.vcard-back:hover {
+  background: var(--accent);
+  color: hsl(0,0%,12%);
+  border-color: var(--accent);
+  text-decoration: none !important;
+}
+
+/* Article wrapper */
+article.page.sans {
+  max-width: 860px !important;
+  margin: 0 auto !important;
+  background: var(--card-bg) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 8px 40px hsla(0,0%,0%,0.10) !important;
+  overflow: hidden !important;
+  padding-bottom: 48px !important;
+}
+
+/* Cover image */
+.page-cover-image {
+  width: 100% !important;
+  max-height: 260px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+
+/* Header section */
+header {
+  padding: 0 32px 24px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.page-header-icon {
+  font-size: 2.5rem !important;
+  margin: 16px 0 8px !important;
+}
+
+.page-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  margin: 4px 0 20px !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Properties table */
+table.properties {
+  border: none !important;
+  width: 100% !important;
+  font-size: 13px !important;
+}
+table.properties td, table.properties th {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 6px !important;
+  vertical-align: middle !important;
+}
+table.properties th {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  padding-right: 20px !important;
+}
+table.properties .property-row:last-child td,
+table.properties .property-row:last-child th {
+  border-bottom: none !important;
+}
+
+/* Tags (selected-value) */
+.selected-value {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 2px 10px !important;
+  border-radius: 20px !important;
+  margin-right: 4px !important;
+  margin-top: 2px !important;
+  display: inline-block !important;
+}
+
+/* Page body */
+.page-body {
+  padding: 24px 32px 0 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Section h2 with gray_background */
+h2.block-color-gray_background {
+  background: linear-gradient(to right, hsla(45,100%,50%,0.10), transparent) !important;
+  border-left: 3px solid var(--accent) !important;
+  padding: 8px 14px !important;
+  border-radius: 0 6px 6px 0 !important;
+  font-size: 1rem !important;
+  color: var(--text-main) !important;
+  margin: 28px 0 12px !important;
+}
+
+h2 {
+  font-size: 1.1rem !important;
+  margin: 24px 0 10px !important;
+  color: var(--text-main) !important;
+}
+
+h3 {
+  font-size: 0.95rem !important;
+  color: var(--text-main) !important;
+  margin: 16px 0 8px !important;
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  margin: 12px 0 !important;
+  border: 1px solid var(--border) !important;
+}
+
+.block-color-default.callout,
+.block-color-default_background.callout {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--accent) !important;
+  background: #fffbeb !important;
+  padding: 12px 16px !important;
+  border-radius: 0 8px 8px 0 !important;
+  margin: 16px 0 !important;
+  font-style: normal !important;
+  color: var(--text-main) !important;
+}
+
+/* Simple tables */
+.simple-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  margin: 12px 0 !important;
+  overflow: visible !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.simple-table th, .simple-table td {
+  border: 1px solid var(--border) !important;
+  padding: 9px 13px !important;
+  line-height: 1.5 !important;
+}
+.simple-table-header-color {
+  background: #f8f8f8 !important;
+  color: var(--text-muted) !important;
+}
+.simple-table-header {
+  font-weight: 600 !important;
+}
+
+/* Properties table top/bottom border */
+table.properties {
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-collapse: collapse !important;
+}
+
+/* Inline code */
+code {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-size: 12px !important;
+}
+
+/* Code blocks */
+pre {
+  background: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  overflow-x: auto !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+pre code {
+  background: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+}
+
+/* Links */
+a, a.visited {
+  color: var(--accent-dark) !important;
+  text-decoration: none !important;
+}
+a:hover {
+  color: var(--accent) !important;
+  text-decoration: underline !important;
+}
+.url-value {
+  word-break: break-all !important;
+  font-size: 12px !important;
+}
+
+/* Video thumbnail embed */
+.video-embed-figure {
+  margin: 16px 0 !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.yt-thumb-link {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  overflow: hidden !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  background: #000 !important;
+}
+
+.yt-thumb-link img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  opacity: 0.92 !important;
+  transition: opacity 0.2s !important;
+}
+
+.yt-thumb-link:hover img {
+  opacity: 0.75 !important;
+}
+
+.yt-play-btn {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -58%) !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)) !important;
+  transition: transform 0.2s !important;
+}
+
+.yt-thumb-link:hover .yt-play-btn {
+  transform: translate(-50%, -58%) scale(1.1) !important;
+}
+
+.yt-label {
+  position: absolute !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0,0,0,0.65) !important;
+  color: #fff !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 4px 14px !important;
+  border-radius: 20px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+
+/* Images */
+.image { margin: 16px 0 !important; }
+.image img {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+}
+
+/* Source link blocks */
+.source {
+  background: #f9fafb !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+}
+
+/* HR */
+hr {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  margin: 24px 0 !important;
+}
+
+/* Column list */
+.column-list {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  flex-wrap: nowrap !important;
+}
+
+.column-list > * {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.column {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Highlight overrides */
+.highlight-yellow_background { background: #fef9c3 !important; }
+.highlight-orange_background { background: #ffedd5 !important; }
+.highlight-red_background { background: #fee2e2 !important; }
+.highlight-blue_background { background: #dbeafe !important; }
+.highlight-teal_background { background: #ccfbf1 !important; }
+.highlight-green_background { background: #dcfce7 !important; }
+
+.highlight-red { color: #dc2626 !important; fill: #dc2626 !important; }
+.highlight-orange { color: #ea580c !important; fill: #ea580c !important; }
+
+/* Details/toggle */
+details summary {
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+p { white-space: normal !important; }
+li { white-space: normal !important; }
+td { white-space: normal !important; }
+
+/* ========== VS CODE STYLE CODE BLOCKS ========== */
+.vscode-block {
+  position: relative;
+  margin: 16px 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+}
+
+.vscode-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #252526 !important;
+  padding: 6px 14px !important;
+  border-bottom: 1px solid #3e3e42 !important;
+}
+
+.vscode-lang {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #cccccc !important;
+  letter-spacing: 0.02em !important;
+}
+
+.vscode-lang svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+.vscode-copy {
+  background: none !important;
+  border: 1px solid #3e3e42 !important;
+  border-radius: 4px !important;
+  padding: 3px 8px !important;
+  color: #858585 !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+  transition: color 0.15s, border-color 0.15s !important;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 1.4 !important;
+}
+.vscode-copy:hover {
+  color: #cccccc !important;
+  border-color: #6a6a6a !important;
+}
+.vscode-copy.copied {
+  color: #4ec9b0 !important;
+  border-color: #4ec9b0 !important;
+}
+
+/* pre.code + highlight.js VS Code Dark+ */
+pre.code {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  padding: 16px 18px !important;
+  overflow-x: auto !important;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  white-space: pre !important;
+  box-shadow: none !important;
+}
+
+pre.code code,
+pre.code .hljs {
+  background: transparent !important;
+  color: #d4d4d4 !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+}
+
+/* highlight.js VS Code Dark+ token colors */
+pre.code .hljs-comment,
+pre.code .hljs-quote { color: #6a9955 !important; font-style: italic !important; }
+
+pre.code .hljs-keyword,
+pre.code .hljs-selector-tag,
+pre.code .hljs-literal,
+pre.code .hljs-subst { color: #569cd6 !important; font-weight: normal !important; }
+
+pre.code .hljs-string,
+pre.code .hljs-doctag { color: #ce9178 !important; }
+
+pre.code .hljs-number,
+pre.code .hljs-regexp,
+pre.code .hljs-link { color: #b5cea8 !important; }
+
+pre.code .hljs-title,
+pre.code .hljs-section,
+pre.code .hljs-selector-id { color: #dcdcaa !important; }
+
+pre.code .hljs-type,
+pre.code .hljs-class .hljs-title { color: #4ec9b0 !important; }
+
+pre.code .hljs-meta,
+pre.code .hljs-meta .hljs-keyword { color: #c586c0 !important; }
+
+pre.code .hljs-name,
+pre.code .hljs-attribute { color: #9cdcfe !important; }
+
+pre.code .hljs-variable,
+pre.code .hljs-template-variable { color: #9cdcfe !important; }
+
+pre.code .hljs-built_in,
+pre.code .hljs-builtin-name { color: #4ec9b0 !important; }
+
+pre.code .hljs-symbol,
+pre.code .hljs-bullet { color: #b5cea8 !important; }
+
+pre.code .hljs-params { color: #d4d4d4 !important; }
+
+pre.code .hljs-deletion { color: #f44747 !important; }
+pre.code .hljs-addition { color: #b5cea8 !important; }
+
+pre.code .hljs-emphasis { font-style: italic !important; }
+pre.code .hljs-strong { font-weight: bold !important; }
+
+/* Scrollbar */
+pre.code::-webkit-scrollbar { height: 6px !important; }
+pre.code::-webkit-scrollbar-track { background: #2d2d2d !important; }
+pre.code::-webkit-scrollbar-thumb { background: #555 !important; border-radius: 3px !important; }
+
+
 </style></head><body><article id="3336dae7-af2e-814d-bb1c-fea3d9b836c1" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checkmark_gray.svg"/></div><h1 class="page-title" dir="auto">NZN Web UI 디자인</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>작업 영역</th><td><span class="selected-value select-value-color-pink">C#</span><span class="selected-value select-value-color-default">HTTP</span><span class="selected-value select-value-color-orange">MSSQL</span><span class="selected-value select-value-color-blue">PHP</span><span class="selected-value select-value-color-green">UI</span><span class="selected-value select-value-color-gray">모니터링</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>프로젝트 내용</th><td>  • 고객 대응 WEB Server UI 디자인<br/>  • 항온항습기 자동제어 및 전력, 온/습도 모니터링</td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>작업기간</th><td><mark class="highlight-gray">2024.04 ~ 2024.09</mark></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="3336dae7-af2e-81df-8aa9-f80d53307793" class="">▶ 고객 대응 WEB Server UI 디자인</h1></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-81e6-9a8f-f1f46371f3ef" class="image"><a href="image.png"><img style="width:709.984375px" src="image.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-8179-878f-c087ad290f24" class="image"><a href="image%201.png"><img style="width:709.984375px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-815b-b3f9-fcf370bb04ff" class="image"><a href="image%202.png"><img style="width:709.96875px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-811a-b31f-fa49e4d81a86" class="image"><a href="image%203.png"><img style="width:709.984375px" src="image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="3336dae7-af2e-8075-9c25-ef1d1cfc85b5" class="block-color-yellow_background">낙천 막걸리 실시간 항온항습기 모니터링 UI/UX 개발</h2></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-807b-b05e-d507ba55af66" class="image"><a href="%EB%82%99%EC%B2%9C.png"><img style="width:196.97265625px" src="%EB%82%99%EC%B2%9C.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3336dae7-af2e-801e-beef-e67fc31f320b" class=""><mark class="highlight-gray">2024.04 ~ 2024.09</mark></p></div><div style="display:contents" dir="auto"><ul id="3336dae7-af2e-8083-89d2-da88283e71c2" class="bulleted-list"><li style="list-style-type:disc">소속: (주)지오넥스</li></ul></div><div style="display:contents" dir="auto"><ul id="3336dae7-af2e-8064-a1da-f9de97ba0e9b" class="bulleted-list"><li style="list-style-type:disc">역할: UI/대시보드 개발 및 실시간 데이터 시각화 담당</li></ul></div><div style="display:contents" dir="auto"><ul id="3336dae7-af2e-8075-9362-e1d751934a2d" class="bulleted-list"><li style="list-style-type:disc">성과<div style="display:contents" dir="auto"><ul id="3336dae7-af2e-80e2-9838-cc4aa9929e8b" class="bulleted-list"><li style="list-style-type:circle">실시간 전력, 온도, 습도 실시간 모니터링 대시보드</li></ul></div><div style="display:contents" dir="auto"><ul id="3336dae7-af2e-8068-81f8-f89d7899b6f9" class="bulleted-list"><li style="list-style-type:circle">실시간 환경 데이터 수집을 위한 DB 테이블 및 프로시저 설계</li></ul></div><div style="display:contents" dir="auto"><ul id="3336dae7-af2e-8091-bb17-dcd93398170e" class="bulleted-list"><li style="list-style-type:circle">대량의 수집 데이터 저장 및 관리 체계 구축</li></ul></div><div style="display:contents" dir="auto"><ul id="3336dae7-af2e-8075-9c68-eea836a801c9" class="bulleted-list"><li style="list-style-type:circle">데이터 시각화 및 실시간 알림(Alarm) 시스템 개발</li></ul></div><div style="display:contents" dir="auto"><p id="3336dae7-af2e-8048-b203-e081f16c5649" class="">       →  데이터 모델링, 저장구조 최적화, 데이터 시각화 경험 확보</p></div><div style="display:contents" dir="auto"><p id="3336dae7-af2e-8026-ba93-e5854b45e18d" class="">
-</p></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-8014-957e-f083cfca5eab" class="image"><a href="image%204.png"><img style="width:566.97265625px" src="image%204.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-80d1-b3ad-fb96cb3b9c9a" class="image"><a href="image%205.png"><img style="width:549.00390625px" src="image%205.png"/></a></figure></div><div style="display:contents" dir="auto"><hr id="3336dae7-af2e-8071-b4c5-f531851cc663"/></div></li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+</p></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-8014-957e-f083cfca5eab" class="image"><a href="image%204.png"><img style="width:566.97265625px" src="image%204.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3336dae7-af2e-80d1-b3ad-fb96cb3b9c9a" class="image"><a href="image%205.png"><img style="width:549.00390625px" src="image%205.png"/></a></figure></div><div style="display:contents" dir="auto"><hr id="3336dae7-af2e-8071-b4c5-f531851cc663"/></div></li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- highlight.js - VS Code Dark+ syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script>
+(function() {
+  var icons = {
+    'C++':        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M12 6l-2 12"/></svg>',
+    'Plain Text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h12"/></svg>',
+    'Mermaid':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+  };
+  var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
+
+  function copyText(text, btn) {
+    var restore = function() {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(restore, 2000);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(restore, 2000);
+    }
+  }
+
+  function initVSCodeBlocks() {
+    document.querySelectorAll('pre.code').forEach(function(pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains('vscode-block')) return;
+
+      var codeEl = pre.querySelector('code');
+      if (!codeEl) return;
+
+      // Detect original language label
+      var origClass = codeEl.className || '';
+      var langLabel = 'Code';
+      var hljsLang = 'plaintext';
+
+      if (origClass.indexOf('C++') !== -1) {
+        langLabel = 'C++';
+        hljsLang = 'cpp';
+      } else if (origClass.indexOf('Mermaid') !== -1) {
+        langLabel = 'Mermaid';
+        hljsLang = 'plaintext';
+      } else if (origClass.indexOf('Plain Text') !== -1) {
+        langLabel = 'Plain Text';
+        hljsLang = 'plaintext';
+      }
+
+      // Apply highlight.js for C++
+      if (hljsLang === 'cpp' && typeof hljs !== 'undefined') {
+        codeEl.removeAttribute('data-highlighted');
+        codeEl.className = 'language-cpp';
+        hljs.highlightElement(codeEl);
+      }
+
+      // Build VS Code wrapper
+      var wrapper = document.createElement('div');
+      wrapper.className = 'vscode-block';
+
+      var header = document.createElement('div');
+      header.className = 'vscode-header';
+
+      var langSpan = document.createElement('span');
+      langSpan.className = 'vscode-lang';
+      langSpan.innerHTML = (icons[langLabel] || defaultIcon) + langLabel;
+
+      var rawText = codeEl.textContent;
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'vscode-copy';
+      copyBtn.textContent = '복사';
+      copyBtn.addEventListener('click', function() { copyText(rawText, copyBtn); });
+
+      header.appendChild(langSpan);
+      header.appendChild(copyBtn);
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(header);
+      wrapper.appendChild(pre);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVSCodeBlocks);
+  } else {
+    initVSCodeBlocks();
+  }
+})();
+</script>
+
+
+</body></html>
