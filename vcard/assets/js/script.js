@@ -152,26 +152,43 @@ for (let i = 0; i < formInputs.length; i++) {
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
+const navStorageKey = "vcard-active-page";
+
+const setActivePage = function (targetPage) {
+  if (!targetPage) return;
+
+  for (let i = 0; i < navigationLinks.length; i++) {
+    const isActive = navigationLinks[i].dataset.target === targetPage;
+    navigationLinks[i].classList.toggle("active", isActive);
+  }
+
+  for (let i = 0; i < pages.length; i++) {
+    pages[i].classList.toggle("active", pages[i].dataset.page === targetPage);
+  }
+
+  try {
+    localStorage.setItem(navStorageKey, targetPage);
+  } catch (error) {
+    // Ignore storage failures and keep navigation functional.
+  }
+};
 
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
     const targetPage = this.dataset.target;
     if (!targetPage) return;
+    setActivePage(targetPage);
 
-    for (let j = 0; j < navigationLinks.length; j++) {
-      navigationLinks[j].classList.remove("active");
-    }
-
-    for (let j = 0; j < pages.length; j++) {
-      if (targetPage === pages[j].dataset.page) {
-        pages[j].classList.add("active");
-        this.classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[j].classList.remove("active");
-      }
-    }
-
+    window.scrollTo(0, 0);
   });
+}
+
+try {
+  const savedPage = localStorage.getItem(navStorageKey);
+  const defaultPage = navigationLinks[0] ? navigationLinks[0].dataset.target : null;
+  setActivePage(savedPage || defaultPage);
+} catch (error) {
+  const defaultPage = navigationLinks[0] ? navigationLinks[0].dataset.target : null;
+  setActivePage(defaultPage);
 }
