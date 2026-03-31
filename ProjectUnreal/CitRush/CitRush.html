@@ -1606,4 +1606,206 @@ void UAIServerComponent::BlendToServerDecision(FAIDecision NewDecision) {
 })();
 </script>
 
+
+<!-- Mermaid.js - flowchart rendering -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+(function() {
+  function renderMermaid() {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'default',
+      flowchart: { curve: 'basis', htmlLabels: true },
+      themeVariables: {
+        primaryColor: '#fff7ed',
+        primaryBorderColor: '#d97706',
+        primaryTextColor: '#1a1a1a',
+        lineColor: '#9ca3af',
+        secondaryColor: '#f0fdf4',
+        tertiaryColor: '#eff6ff',
+        fontSize: '14px'
+      }
+    });
+
+    document.querySelectorAll('pre.code code.language-Mermaid, pre.code code[class*="Mermaid"]').forEach(function(codeEl) {
+      var pre = codeEl.closest('pre');
+      if (!pre) return;
+
+      var raw = codeEl.textContent || codeEl.innerText;
+
+      var wrapper = document.createElement('div');
+      wrapper.className = 'mermaid-wrapper';
+
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = raw;
+
+      wrapper.appendChild(div);
+
+      var parent = pre.parentNode;
+      var block = parent && parent.classList && parent.classList.contains('vscode-block') ? parent : pre;
+      block.parentNode.insertBefore(wrapper, block);
+      block.style.display = 'none';
+    });
+
+    mermaid.run({ querySelector: '.mermaid' }).then(function() {
+      setupMermaidModal();
+    });
+  }
+
+  function setupMermaidModal() {
+    var modal = document.createElement('div');
+    modal.id = 'mermaid-modal';
+    modal.innerHTML =
+      '<div class="mermaid-modal-inner">' +
+        '<div class="mermaid-modal-header">' +
+          '<span class="mermaid-modal-hint">마우스 휠로 확대/축소 · 배경 클릭 또는 ESC로 닫기</span>' +
+          '<button class="mermaid-modal-close" title="닫기">✕</button>' +
+        '</div>' +
+        '<div class="mermaid-modal-content"></div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    var content = modal.querySelector('.mermaid-modal-content');
+    var currentSvg = null;
+    var currentScale = 3;
+    var naturalW = 0, naturalH = 0;
+
+    document.querySelectorAll('.mermaid-wrapper').forEach(function(wrapper) {
+      wrapper.title = '클릭하여 확대';
+      wrapper.addEventListener('click', function() {
+        var svg = wrapper.querySelector('svg');
+        if (!svg) return;
+
+        var vb = svg.viewBox && svg.viewBox.baseVal;
+        if (vb && vb.width) {
+          naturalW = vb.width;
+          naturalH = vb.height;
+        } else {
+          var rect = svg.getBoundingClientRect();
+          naturalW = rect.width || 800;
+          naturalH = rect.height || 400;
+        }
+
+        var cloned = svg.cloneNode(true);
+        if (!cloned.getAttribute('viewBox') && naturalW && naturalH) {
+          cloned.setAttribute('viewBox', '0 0 ' + naturalW + ' ' + naturalH);
+        }
+
+        cloned.style.maxWidth = 'none';
+        cloned.style.display = 'block';
+
+        content.innerHTML = '';
+        content.appendChild(cloned);
+        currentSvg = cloned;
+        modal.classList.add('active');
+
+        // 모달 가로폭에 맞게 초기 scale 자동 계산
+        var availW = content.clientWidth - 64;
+        currentScale = (naturalW > 0 && availW > 0) ? availW / naturalW : 1;
+        cloned.setAttribute('width', Math.round(naturalW * currentScale));
+        cloned.setAttribute('height', Math.round(naturalH * currentScale));
+      });
+    });
+
+    content.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      if (!currentSvg) return;
+      var factor = e.deltaY < 0 ? 0.25 : -0.25;
+      currentScale = Math.max(0.3, Math.min(20, currentScale + factor));
+      currentSvg.setAttribute('width', Math.round(naturalW * currentScale));
+      currentSvg.setAttribute('height', Math.round(naturalH * currentScale));
+    }, { passive: false });
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+    modal.querySelector('.mermaid-modal-close').addEventListener('click', function() {
+      modal.classList.remove('active');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') modal.classList.remove('active');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+<style>
+.mermaid-wrapper {
+  margin: 16px 0;
+  background: #ffffff;
+  border: 1px solid hsl(0,0%,88%);
+  border-radius: 8px;
+  padding: 24px 16px;
+  overflow-x: auto;
+  text-align: center;
+  cursor: zoom-in;
+  transition: box-shadow 0.2s;
+}
+.mermaid-wrapper:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.mermaid svg { max-width: 100%; height: auto; }
+
+/* Modal */
+#mermaid-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+#mermaid-modal.active { display: flex; }
+.mermaid-modal-inner {
+  background: #fff;
+  border-radius: 12px;
+  width: 92vw;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+.mermaid-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+.mermaid-modal-hint {
+  font-size: 12px;
+  color: #999;
+  font-family: 'Poppins', sans-serif;
+}
+.mermaid-modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #888;
+  border-radius: 4px;
+}
+.mermaid-modal-close:hover { background: #f0f0f0; color: #111; }
+.mermaid-modal-content {
+  flex: 1;
+  overflow: auto;
+  padding: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.mermaid-modal-content svg {
+  display: block;
+  flex-shrink: 0;
+}
+</style>
 </body></html>
