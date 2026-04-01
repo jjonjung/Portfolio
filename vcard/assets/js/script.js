@@ -167,7 +167,7 @@ const setActivePage = function (targetPage) {
   }
 
   try {
-    localStorage.setItem(navStorageKey, targetPage);
+    sessionStorage.setItem(navStorageKey, targetPage);
   } catch (error) {
     // Ignore storage failures and keep navigation functional.
   }
@@ -185,7 +185,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
 }
 
 try {
-  const savedPage = localStorage.getItem(navStorageKey);
+  const savedPage = sessionStorage.getItem(navStorageKey);
   const defaultPage = navigationLinks[0] ? navigationLinks[0].dataset.target : null;
   setActivePage(savedPage || defaultPage);
 } catch (error) {
