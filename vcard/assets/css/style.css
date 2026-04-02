@@ -1069,7 +1069,7 @@ main {
 .project-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 15px;
+  gap: 5px;
   margin-bottom: 10px;
 }
 
@@ -1153,6 +1153,9 @@ main {
   box-shadow: var(--shadow-2);
   transition: var(--transition-1);
   cursor: pointer;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card:hover { transform: translateY(-5px); }
@@ -1996,7 +1999,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .project-list { grid-template-columns: repeat(4, 1fr); }
 
   .project-card {
-    height: 580px;
+    height: 500px;
     display: flex;
     flex-direction: column;
   }
