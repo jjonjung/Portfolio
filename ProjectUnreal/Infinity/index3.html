@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InfinityFighter — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --surface2: #1c2330;
+      --border:   #30363d;
+      --accent:   #2f81f7;
+      --accent2:  #56d364;
+      --accent3:  #e3b341;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+      --red:      #f85149;
+      --radius:   12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-btn {
+      position: fixed; top: 16px; left: 16px; z-index: 100;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--muted); font-size: 11px;
+      text-decoration: none; transition: all .2s;
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── WRAPPER ── */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    /* ════════════════════════════════
+       HERO BANNER
+    ════════════════════════════════ */
+    .hero-banner {
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: linear-gradient(135deg, #1565c0 0%, #1976d2 40%, #0d47a1 100%);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+    .hero-banner h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .02em;
+      text-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+
+    /* character image strip */
+    .char-strip {
+      background: linear-gradient(180deg, #1565c040 0%, var(--surface) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0 0;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .char-strip img {
+      height: 110px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+    }
+    .char-placeholder {
+      display: flex; gap: 16px; padding-bottom: 8px;
+    }
+    .char-icon { font-size: 3.5rem; }
+
+    /* link buttons next to banner */
+    .hero-links {
+      display: flex; gap: 8px; margin-bottom: 0;
+      padding: 10px 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      justify-content: flex-end;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 14px; border-radius: 6px;
+      font-size: 11px; font-weight: 500; text-decoration: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #1a6fd8; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ════════════════════════════════
+       TWO-COLUMN OVERVIEW
+    ════════════════════════════════ */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .overview-col {
+      padding: 20px;
+      border-right: 1px solid var(--border);
+    }
+    .overview-col:last-child { border-right: none; }
+
+    /* section header inside overview */
+    .ov-section-title {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px; margin-top: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ov-section-title:first-child { margin-top: 0; }
+    .ov-section-title .plus { color: var(--accent2); font-size: 14px; }
+
+    /* compact table inside overview */
+    .ov-table { width: 100%; border-collapse: collapse; }
+    .ov-table tr { border-bottom: 1px solid var(--border)55; }
+    .ov-table tr:last-child { border-bottom: none; }
+    .ov-table th {
+      width: 72px; padding: 6px 8px 6px 0;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      vertical-align: top; white-space: nowrap;
+    }
+    .ov-table td {
+      padding: 6px 0;
+      font-size: 12px; color: var(--text);
+      vertical-align: top;
+    }
+
+    /* role section */
+    .role-row { display: flex; flex-direction: column; gap: 10px; }
+    .role-item { }
+    .role-label {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .role-val { font-size: 12px; color: var(--text); }
+    .role-val ul { list-style: disc; padding-left: 18px; }
+    .role-val ul li { font-size: 11px; color: var(--text); margin-bottom: 2px; }
+    .role-divider { height: 1px; background: var(--border)55; margin: 4px 0; }
+
+    .contrib-badge {
+      display: inline-block;
+      padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
+      background: var(--accent)22; color: var(--accent);
+      border: 1px solid var(--accent)44;
+    }
+
+    /* tech table */
+    .tech-table { width: 100%; border-collapse: collapse; }
+    .tech-table tr { border-bottom: 1px solid var(--border)55; }
+    .tech-table tr:last-child { border-bottom: none; }
+    .tech-table th {
+      width: 72px; padding: 6px 8px 6px 0;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      vertical-align: top; white-space: nowrap;
+    }
+    .tech-table td {
+      padding: 6px 0;
+      font-size: 12px; color: var(--text);
+      vertical-align: top;
+    }
+
+    /* problem-solution rows */
+    .ps-list { display: flex; flex-direction: column; gap: 8px; }
+    .ps-item { background: var(--surface2); border-radius: 8px; padding: 10px 12px; }
+    .ps-item-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+    .ps-item-content { display: flex; gap: 8px; align-items: flex-start; font-size: 11px; }
+    .ps-item-prob { color: #ff7b72; }
+    .ps-arrow { color: var(--accent); font-weight: 700; flex-shrink: 0; }
+    .ps-item-sol  { color: var(--accent2); }
+
+    /* result / improve rows */
+    .result-list, .improve-list { display: flex; flex-direction: column; gap: 4px; }
+    .result-item, .improve-item {
+      display: flex; gap: 8px; align-items: flex-start; font-size: 11px;
+    }
+    .result-key { color: var(--muted); width: 60px; flex-shrink: 0; font-weight: 600; }
+    .result-val { color: var(--text); }
+    .improve-key { color: var(--muted); width: 40px; flex-shrink: 0; font-weight: 600; }
+    .improve-val { color: var(--text); }
+
+    /* ════════════════════════════════
+       SECTION LABEL (divider)
+    ════════════════════════════════ */
+    .sec-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--muted);
+      margin: 32px 0 14px;
+    }
+    .sec-label::after { content:''; flex:1; height:1px; background: var(--border); }
+
+    /* ════════════════════════════════
+       FSM DIAGRAM
+    ════════════════════════════════ */
+    .fsm-states {
+      display: flex; align-items: stretch; flex-wrap: wrap;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .fsm-state {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 16px 12px; flex: 1; min-width: 90px;
+      position: relative; border-right: 1px solid var(--border);
+    }
+    .fsm-state:last-child { border-right: none; }
+    .fsm-arr {
+      position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      color: var(--accent); font-weight: bold; font-size: 14px; z-index: 1;
+    }
+    .fsm-dot {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; border: 2px solid;
+    }
+    .fsm-name { font-size: 11px; font-weight: 600; margin-top: 2px; }
+    .fsm-cond { font-size: 10px; color: var(--muted); text-align: center; }
+    .s-idle   { background: #30363d33; border-color: #8b949e; }
+    .s-chase  { background: #2f81f722; border-color: var(--accent); }
+    .s-attack { background: #f8514922; border-color: var(--red); }
+    .s-cover  { background: #e3b34122; border-color: var(--accent3); }
+    .s-skill  { background: #d2a8ff22; border-color: #d2a8ff; }
+
+    /* ════════════════════════════════
+       IMPL CARDS
+    ════════════════════════════════ */
+    .impl-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 14px; margin-bottom: 32px;
+    }
+    .impl-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: border-color .2s;
+    }
+    .impl-card:hover { border-color: var(--accent); }
+    .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .card-icon { font-size: 1.3rem; }
+    .card-title { font-size: 14px; font-weight: 600; margin-bottom: 1px; }
+    .card-badge {
+      padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
+      background: var(--accent)22; color: var(--accent); border: 1px solid var(--accent)44;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ps-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .ps-box { border-radius: 7px; padding: 9px 11px; font-size: 11px; }
+    .ps-box.prob { background: #f851491a; border: 1px solid #f8514930; }
+    .ps-box.sol  { background: #56d3641a; border: 1px solid #56d36430; }
+    .ps-box h5 {
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing:.06em; margin-bottom: 3px;
+    }
+    .ps-box.prob h5 { color: var(--red); }
+    .ps-box.sol h5  { color: var(--accent2); }
+    .metric-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .metric {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 5px; padding: 4px 9px; font-size: 11px;
+    }
+    .metric-val { font-weight: 700; font-size: 12px; color: var(--accent2); }
+    .card-list { list-style: none; }
+    .card-list li {
+      font-size: 11px; color: var(--text);
+      padding: 2px 0; display: flex; gap: 7px; align-items: flex-start;
+    }
+    .card-list li::before { content:'▸'; color: var(--accent); font-size: 9px; margin-top:3px; flex-shrink:0; }
+
+    /* ════════════════════════════════
+       CODE BLOCK
+    ════════════════════════════════ */
+    .code-card {
+      background: #010409; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin-bottom: 32px;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 16px; background: var(--surface); border-bottom: 1px solid var(--border);
+    }
+    .code-header span { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .code-lang { font-size: 10px; font-weight: 600; color: var(--accent); }
+    .code-body { padding: 14px 18px; overflow-x: auto; }
+    .code-body pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; line-height: 1.7; color: #e6edf3; white-space: pre;
+    }
+    .kw  { color: #ff7b72; }
+    .fn  { color: #d2a8ff; }
+    .str { color: #a5d6ff; }
+    .cm  { color: #8b949e; font-style: italic; }
+    .num { color: #79c0ff; }
+
+    /* ════════════════════════════════
+       OPTIMIZATION TABLE
+    ════════════════════════════════ */
+    .opt-table-wrap { margin-bottom: 32px; overflow-x: auto; }
+    .opt-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .opt-table thead tr { background: var(--surface2); }
+    .opt-table th {
+      padding: 9px 13px; text-align: left; font-weight: 600;
+      color: var(--muted); font-size: 10px; text-transform: uppercase;
+      letter-spacing:.05em; border-bottom: 1px solid var(--border);
+    }
+    .opt-table td { padding: 9px 13px; border-bottom: 1px solid var(--border)55; vertical-align: middle; }
+    .opt-table tr:hover td { background: var(--surface); }
+    .before { color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+    .after  { color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+    .arrow  { color: var(--muted); }
+
+    /* ── TAGS ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      padding: 2px 9px; border-radius: 20px; font-size: 10px; font-weight: 500; border: 1px solid;
+    }
+    .tag-blue  { color: #79c0ff; border-color: #1f6feb; background: #1f6feb1a; }
+    .tag-green { color: #56d364; border-color: #388bfd30; background: #56d3641a; }
+    .tag-orange{ color: #ffa657; border-color: #db6d281a; background: #db6d281a; }
+    .tag-gray  { color: var(--muted); border-color: var(--border); background: var(--surface); }
+
+    /* ── FOOTER ── */
+    footer { text-align: center; padding-top: 32px; color: var(--muted); font-size: 11px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .overview-grid { grid-template-columns: 1fr; }
+      .impl-grid     { grid-template-columns: 1fr; }
+      .ps-row        { grid-template-columns: 1fr; }
+      .fsm-states    { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="back-btn" href="../../index.html">← Portfolio</a>
+
+<div class="wrap">
+
+  <!-- ══════════════════════════════════
+       HERO BANNER
+  ══════════════════════════════════ -->
+  <div class="hero-banner">
+    <h1>⚔️ &nbsp;Infinity Shooting Wars</h1>
+  </div>
+
+  <!-- character strip -->
+  <div class="char-strip">
+    <div class="char-placeholder">
+      <span class="char-icon">🦾</span>
+      <span class="char-icon">🕷️</span>
+      <span class="char-icon">🌀</span>
+    </div>
+  </div>
+
+  <!-- links bar -->
+  <div class="hero-links">
+    <div class="tags" style="flex:1">
+      <span class="tag tag-blue">UE 5.6</span>
+      <span class="tag tag-blue">C++</span>
+      <span class="tag tag-green">FSM</span>
+      <span class="tag tag-green">Physics</span>
+      <span class="tag tag-orange">Listen Server</span>
+      <span class="tag tag-gray">Blueprint</span>
+      <span class="tag tag-gray">Steam</span>
+    </div>
+    <a class="btn btn-primary" href="https://youtu.be/wRN-vNVbVC8" target="_blank">▶ 시연 영상</a>
+    <a class="btn btn-outline" href="https://github.com/jjonjung/Infinity" target="_blank">GitHub</a>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TWO-COLUMN OVERVIEW (이미지 참고)
+  ══════════════════════════════════ -->
+  <div class="overview-grid">
+
+    <!-- ── LEFT COL ── -->
+    <div class="overview-col">
+
+      <!-- 프로젝트 개요 -->
+      <div class="ov-section-title"><span class="plus">＋</span> 프로젝트 개요</div>
+      <table class="ov-table">
+        <tr>
+          <th>프로젝트</th>
+          <td>캐주얼 TPS + 스킬 액션</td>
+        </tr>
+        <tr>
+          <th>목표</th>
+          <td>물리 기반 전투 + 캐릭터 스킬 결합 전투 경험 구현</td>
+        </tr>
+        <tr>
+          <th>기간</th>
+          <td>2025.09 (약 3.5주)</td>
+        </tr>
+        <tr>
+          <th>인원</th>
+          <td>3명</td>
+        </tr>
+        <tr>
+          <th>기술</th>
+          <td>Unreal Engine / C++ / Blueprint / AI Tool</td>
+        </tr>
+      </table>
+
+      <!-- 역할 및 기여도 -->
+      <div class="ov-section-title"><span class="plus">＋</span> 역할 및 기여도</div>
+      <div class="role-row">
+        <div class="role-item">
+          <div class="role-label">총 기여도</div>
+          <div class="role-val"><span class="contrib-badge">약 45%</span></div>
+        </div>
+        <div class="role-divider"></div>
+        <div class="role-item">
+          <div class="role-label">담당 범위</div>
+          <div class="role-val">
+            캐릭터 액션 / 전투 / AI 핵심 시스템 직접 설계 및 구현
+            <ul>
+              <li>플레이어: 이동, 점프, 공격, 조준 시스템 구현</li>
+              <li>전투 시스템: 총알 방향 계산, 충돌 및 임펄스 처리, 아이언맨(Repulsor·비행), 스파이더맨(Grab) 구현</li>
+              <li>AI: Enemy FSM 설계 및 행동 패턴 구현</li>
+              <li>시스템: Respawn, Battle Manager</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role-divider"></div>
+        <div class="role-item">
+          <div class="role-label">타 팀원 담당</div>
+          <div class="role-val">UI / 사운드 / 레벨 디자인 / 연출</div>
+        </div>
+        <div class="role-divider"></div>
+        <div class="role-item">
+          <div class="role-label">구현 책임</div>
+          <div class="role-val">본인 담당 영역 100% 단독 구현</div>
+        </div>
+      </div>
+
+    </div><!-- /left col -->
+
+    <!-- ── RIGHT COL ── -->
+    <div class="overview-col">
+
+      <!-- 기술 핵심 -->
+      <div class="ov-section-title"><span class="plus">＋</span> 기술 핵심</div>
+      <table class="tech-table">
+        <tr>
+          <th>입력 처리</th>
+          <td>Input → 판단 → 실행 구조 분리</td>
+        </tr>
+        <tr>
+          <th>설계 패턴</th>
+          <td>Command + Strategy + State</td>
+        </tr>
+        <tr>
+          <th>구조 원칙</th>
+          <td>SRP / OCP 기반 확장 구조</td>
+        </tr>
+        <tr>
+          <th>물리 처리</th>
+          <td>Impulse / 가속도 / 벡터 기반 계산</td>
+        </tr>
+        <tr>
+          <th>AI 구조</th>
+          <td>FSM 기반 3단계 행동 패턴</td>
+        </tr>
+      </table>
+
+      <!-- 문제 해결 -->
+      <div class="ov-section-title"><span class="plus">＋</span> 문제 해결</div>
+      <div class="ps-list">
+        <div class="ps-item">
+          <div class="ps-item-label">AI 단순 행동</div>
+          <div class="ps-item-content">
+            <span class="ps-item-prob">AI가 항상 일정한 패턴 움직임으로 재미 반감</span>
+            <span class="ps-arrow">→</span>
+            <span class="ps-item-sol">수학적 노이즈 + 주기적 패턴 순환 도입</span>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-item-label">스킬 동작 불안정</div>
+          <div class="ps-item-content">
+            <span class="ps-item-prob">물리 계산 미흡</span>
+            <span class="ps-arrow">→</span>
+            <span class="ps-item-sol">벡터 및 임펄스 기반 재구성</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 성과 -->
+      <div class="ov-section-title"><span class="plus">＋</span> 성과</div>
+      <div class="result-list">
+        <div class="result-item">
+          <span class="result-key">전투 완성도</span>
+          <span class="result-val">물리 기반 전투 구현</span>
+        </div>
+        <div class="result-item">
+          <span class="result-key">AI 수준</span>
+          <span class="result-val">공격/수비/이동/엄폐 — 다양한 랜덤 패턴 분리</span>
+        </div>
+        <div class="result-item">
+          <span class="result-key">만족도</span>
+          <span class="result-val" style="color:var(--accent2);font-weight:600">플레이 테스트 80%+</span>
+        </div>
+      </div>
+
+      <!-- 개선 사항 -->
+      <div class="ov-section-title"><span class="plus">＋</span> 개선 사항</div>
+      <div class="improve-list">
+        <div class="improve-item">
+          <span class="improve-key">AI Enemy</span>
+          <span class="improve-val">행동 패턴 고도화 (전략적 판단 추가)</span>
+        </div>
+        <div class="improve-item">
+          <span class="improve-key">구조</span>
+          <span class="improve-val">GAS 기반으로 확장 가능</span>
+        </div>
+        <div class="improve-item">
+          <span class="improve-key">서비스</span>
+          <span class="improve-val">멀티플레이 실환경 검증 강화</span>
+        </div>
+      </div>
+
+    </div><!-- /right col -->
+  </div><!-- /overview-grid -->
+
+
+  <!-- ══════════════════════════════════
+       FSM STATE DIAGRAM
+  ══════════════════════════════════ -->
+  <div class="sec-label">AI FSM 상태 구조</div>
+  <div class="fsm-states" style="margin-bottom:32px">
+    <div class="fsm-state">
+      <div class="fsm-dot s-idle">💤</div>
+      <span class="fsm-name">Idle</span>
+      <span class="fsm-cond">대기 / 감지 전</span>
+      <span class="fsm-arr">→</span>
+    </div>
+    <div class="fsm-state">
+      <div class="fsm-dot s-chase">🏃</div>
+      <span class="fsm-name">Chase</span>
+      <span class="fsm-cond">거리 &gt; 공격 범위</span>
+      <span class="fsm-arr">→</span>
+    </div>
+    <div class="fsm-state">
+      <div class="fsm-dot s-attack">🔫</div>
+      <span class="fsm-name">Attack</span>
+      <span class="fsm-cond">사거리 내·체력 &gt;30%</span>
+      <span class="fsm-arr">→</span>
+    </div>
+    <div class="fsm-state">
+      <div class="fsm-dot s-cover">🛡️</div>
+      <span class="fsm-name">Cover</span>
+      <span class="fsm-cond">체력 &lt;30%</span>
+      <span class="fsm-arr">→</span>
+    </div>
+    <div class="fsm-state">
+      <div class="fsm-dot s-skill">⚡</div>
+      <span class="fsm-name">Skill</span>
+      <span class="fsm-cond">쿨다운 완료</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       IMPL CARDS
+  ══════════════════════════════════ -->
+  <div class="sec-label">핵심 구현</div>
+  <div class="impl-grid">
+
+    <div class="impl-card">
+      <div class="card-head">
+        <div><div class="card-icon">🤖</div><div class="card-title">AI Chaos 이동</div></div>
+        <span class="card-badge">FSM · Observer</span>
+      </div>
+      <div class="ps-row">
+        <div class="ps-box prob"><h5>문제</h5>단조로운 패턴 → 플레이어 조준 쉬움</div>
+        <div class="ps-box sol"><h5>해결</h5>Sin·Cos 다주파수 조합 카오스 벡터</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric"><span class="metric-val">80%+</span>플레이 만족도</div>
+        <div class="metric"><span class="metric-val">3×</span>주파수 조합</div>
+      </div>
+    </div>
+
+    <div class="impl-card">
+      <div class="card-head">
+        <div><div class="card-icon">🕸️</div><div class="card-title">AI 협동 시스템</div></div>
+        <span class="card-badge">Observer Pattern</span>
+      </div>
+      <ul class="card-list">
+        <li>스파이더맨 Skill1 실행을 <code>ActionComponent</code>에서 실시간 감지</li>
+        <li>아이언맨 리펄서 <strong>자동 트리거</strong> — AI 간 전략적 연계</li>
+        <li>독립 행동 중 상황 기반 협동 연출</li>
+      </ul>
+      <div class="metric-row">
+        <div class="metric"><span class="metric-val">20+</span>행동 패턴 조합</div>
+      </div>
+    </div>
+
+    <div class="impl-card">
+      <div class="card-head">
+        <div><div class="card-icon">💥</div><div class="card-title">물리 기반 전투</div></div>
+        <span class="card-badge">SphereSwap · Impulse</span>
+      </div>
+      <div class="ps-row">
+        <div class="ps-box prob"><h5>문제</h5>LineTrace만으로는 빔 폭 없음 + 중복 타격</div>
+        <div class="ps-box sol"><h5>해결</h5>SweepMultiByChannel + MakeSphere(radius)</div>
+      </div>
+      <ul class="card-list">
+        <li>Box Collision Broad Phase → FHitResult Narrow Phase</li>
+        <li><code>FHitResult.BoneName</code> 기반 헤드샷 판정</li>
+        <li><code>TWeakObjectPtr</code> 집합으로 샷 단위 중복 제거</li>
+      </ul>
+    </div>
+
+    <div class="impl-card">
+      <div class="card-head">
+        <div><div class="card-icon">🌐</div><div class="card-title">멀티플레이 네트워크</div></div>
+        <span class="card-badge">Listen Server · Steam</span>
+      </div>
+      <div class="ps-row">
+        <div class="ps-box prob"><h5>문제</h5>발사 직후 소유자 충돌 · Bone 정보 손실</div>
+        <div class="ps-box sol"><h5>해결</h5>IgnoreActorWhenMoving + HasAuthority()</div>
+      </div>
+      <ul class="card-list">
+        <li><code>HasAuthority()</code> — 서버에서만 데미지 처리</li>
+        <li>Steam Online Subsystem 세션 생성·참가</li>
+        <li><code>bFromSweep</code> 우선으로 BoneName 보존</li>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       CODE BLOCK
+  ══════════════════════════════════ -->
+  <div class="sec-label">코드 하이라이트 — AI Chaos 이동</div>
+  <div class="code-card">
+    <div class="code-header">
+      <span>UAiBrainComponent.cpp</span>
+      <span class="code-lang">C++</span>
+    </div>
+    <div class="code-body"><pre><span class="cm">// Sin·Cos 다주파수 조합으로 불규칙 이동 벡터 생성</span>
+<span class="kw">void</span> <span class="fn">UAiBrainComponent</span>::<span class="fn">ChaoticChase</span>()
+{
+    <span class="kw">float</span> t = GetWorld()-><span class="fn">GetTimeSeconds</span>();
+
+    <span class="kw">float</span> Chaos1 = FMath::<span class="fn">Sin</span>(t * <span class="num">1.3f</span>) * <span class="num">0.8f</span>;
+    <span class="kw">float</span> Chaos2 = FMath::<span class="fn">Sin</span>(t * <span class="num">2.7f</span>) * FMath::<span class="fn">Cos</span>(t * <span class="num">0.9f</span>) * <span class="num">0.5f</span>;
+    <span class="kw">float</span> Chaos3 = FMath::<span class="fn">Sin</span>(t * <span class="num">3.1f</span>) * FMath::<span class="fn">Cos</span>(t * <span class="num">2.3f</span>) * <span class="num">0.7f</span>;
+
+    FVector ChaoticDir = BaseDirection
+        + (SideDirection                                          * Chaos1)
+        + (ToTarget.<span class="fn">GetSafeNormal</span>()                            * Chaos2)
+        + (FVector::<span class="fn">CrossProduct</span>(SideDirection, FVector::UpVector) * Chaos3);
+
+    Character-><span class="fn">AddMovementInput</span>(ChaoticDir.<span class="fn">GetSafeNormal</span>(), <span class="num">2.0f</span>);
+
+    <span class="kw">if</span> (FMath::<span class="fn">Fmod</span>(t, <span class="num">0.7f</span>) &lt; <span class="num">0.1f</span>)
+        <span class="fn">RecievedIntent</span>(FName(<span class="str">"Input.Fire"</span>));
+}</pre></div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       OPTIMIZATION TABLE
+  ══════════════════════════════════ -->
+  <div class="sec-label">자료구조 최적화</div>
+  <div class="opt-table-wrap">
+    <table class="opt-table">
+      <thead>
+        <tr>
+          <th>문제 유형</th>
+          <th>Before</th>
+          <th></th>
+          <th>After</th>
+          <th>성과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>반복 판정 로직</td>
+          <td class="before">TArray 선형 탐색</td>
+          <td class="arrow">→</td>
+          <td class="after">TSet 해시 조회</td>
+          <td>O(n) → <strong>O(1)</strong></td>
+        </tr>
+        <tr>
+          <td>중복 이벤트 처리</td>
+          <td class="before">중복 허용 구조</td>
+          <td class="arrow">→</td>
+          <td class="after">TSet 기반 중복 제거</td>
+          <td>불필요 연산 제거</td>
+        </tr>
+        <tr>
+          <td>데이터 탐색</td>
+          <td class="before">O(n×m) 중첩 탐색</td>
+          <td class="arrow">→</td>
+          <td class="after">TMap Key 직접 접근</td>
+          <td>O(n×m) → <strong>O(n+m)</strong></td>
+        </tr>
+        <tr>
+          <td>공격성 레벨 조회</td>
+          <td class="before">if-else 분기 O(n)</td>
+          <td class="arrow">→</td>
+          <td class="after">static TMap O(1)</td>
+          <td>분기 비용 제거</td>
+        </tr>
+        <tr>
+          <td>충돌 결과 버퍼</td>
+          <td class="before">매 호출 동적 TArray 할당</td>
+          <td class="arrow">→</td>
+          <td class="after">멤버 캐시 버퍼 재사용</td>
+          <td>GC·할당 비용 절감</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>InfinityFighter · 2025.09 · Cho Eun Jung</footer>
+</div>
+
+</body>
+</html>
