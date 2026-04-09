@@ -8,16 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:       #0d1117;
-      --surface:  #161b22;
-      --surface2: #1c2330;
-      --border:   #30363d;
-      --accent:   #2f81f7;
-      --accent2:  #56d364;
-      --accent3:  #e3b341;
-      --text:     #e6edf3;
-      --muted:    #8b949e;
-      --red:      #f85149;
+      --bg:       #ffffff;
+      --surface:  #f6f8fa;
+      --surface2: #f0f2f5;
+      --border:   #d0d7de;
+      --accent:   #0969da;
+      --accent2:  #1a7f37;
+      --accent3:  #9a6700;
+      --text:     #1f2328;
+      --muted:    #656d76;
+      --red:      #d1242f;
       --radius:   12px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,7 +49,8 @@
     ════════════════════════════════ */
     .hero-banner {
       border-radius: var(--radius) var(--radius) 0 0;
-      background: linear-gradient(135deg, #1565c0 0%, #1976d2 40%, #0d47a1 100%);
+      background: linear-gradient(135deg, #f0f7ff 0%, #e1efff 100%);
+      border: 1px solid var(--border);
       padding: 18px 24px;
       display: flex;
       align-items: center;
@@ -60,14 +61,13 @@
     .hero-banner h1 {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--accent);
       letter-spacing: .02em;
-      text-shadow: 0 2px 8px rgba(0,0,0,.3);
     }
 
     /* character image strip */
     .char-strip {
-      background: linear-gradient(180deg, #1565c040 0%, var(--surface) 100%);
+      background: linear-gradient(180deg, #f0f7ff 0%, var(--surface) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -78,7 +78,6 @@
     .char-strip img {
       height: 110px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
     }
     .char-placeholder {
       display: flex; gap: 16px; padding-bottom: 8px;
@@ -101,8 +100,8 @@
       font-size: 11px; font-weight: 500; text-decoration: none; transition: all .2s;
     }
     .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #1a6fd8; }
-    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-primary:hover { background: #085cc5; }
+    .btn-outline { background: #fff; border: 1px solid var(--border); color: var(--text); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ════════════════════════════════
@@ -138,7 +137,7 @@
 
     /* compact table inside overview */
     .ov-table { width: 100%; border-collapse: collapse; }
-    .ov-table tr { border-bottom: 1px solid var(--border)55; }
+    .ov-table tr { border-bottom: 1px solid var(--border); }
     .ov-table tr:last-child { border-bottom: none; }
     .ov-table th {
       width: 72px; padding: 6px 8px 6px 0;
@@ -161,18 +160,18 @@
     .role-val { font-size: 12px; color: var(--text); }
     .role-val ul { list-style: disc; padding-left: 18px; }
     .role-val ul li { font-size: 11px; color: var(--text); margin-bottom: 2px; }
-    .role-divider { height: 1px; background: var(--border)55; margin: 4px 0; }
+    .role-divider { height: 1px; background: var(--border); margin: 4px 0; }
 
     .contrib-badge {
       display: inline-block;
       padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
-      background: var(--accent)22; color: var(--accent);
-      border: 1px solid var(--accent)44;
+      background: #0969da15; color: var(--accent);
+      border: 1px solid #0969da30;
     }
 
     /* tech table */
     .tech-table { width: 100%; border-collapse: collapse; }
-    .tech-table tr { border-bottom: 1px solid var(--border)55; }
+    .tech-table tr { border-bottom: 1px solid var(--border); }
     .tech-table tr:last-child { border-bottom: none; }
     .tech-table th {
       width: 72px; padding: 6px 8px 6px 0;
@@ -190,7 +189,7 @@
     .ps-item { background: var(--surface2); border-radius: 8px; padding: 10px 12px; }
     .ps-item-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
     .ps-item-content { display: flex; gap: 8px; align-items: flex-start; font-size: 11px; }
-    .ps-item-prob { color: #ff7b72; }
+    .ps-item-prob { color: #cf222e; }
     .ps-arrow { color: var(--accent); font-weight: 700; flex-shrink: 0; }
     .ps-item-sol  { color: var(--accent2); }
 
@@ -241,11 +240,11 @@
     }
     .fsm-name { font-size: 11px; font-weight: 600; margin-top: 2px; }
     .fsm-cond { font-size: 10px; color: var(--muted); text-align: center; }
-    .s-idle   { background: #30363d33; border-color: #8b949e; }
-    .s-chase  { background: #2f81f722; border-color: var(--accent); }
-    .s-attack { background: #f8514922; border-color: var(--red); }
-    .s-cover  { background: #e3b34122; border-color: var(--accent3); }
-    .s-skill  { background: #d2a8ff22; border-color: #d2a8ff; }
+    .s-idle   { background: #afb8c133; border-color: #656d76; }
+    .s-chase  { background: #0969da15; border-color: var(--accent); }
+    .s-attack { background: #d1242f15; border-color: var(--red); }
+    .s-cover  { background: #9a670015; border-color: var(--accent3); }
+    .s-skill  { background: #8250df15; border-color: #8250df; }
 
     /* ════════════════════════════════
        IMPL CARDS
@@ -266,13 +265,13 @@
     .card-title { font-size: 14px; font-weight: 600; margin-bottom: 1px; }
     .card-badge {
       padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
-      background: var(--accent)22; color: var(--accent); border: 1px solid var(--accent)44;
+      background: #0969da15; color: var(--accent); border: 1px solid #0969da30;
       white-space: nowrap; flex-shrink: 0;
     }
     .ps-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .ps-box { border-radius: 7px; padding: 9px 11px; font-size: 11px; }
-    .ps-box.prob { background: #f851491a; border: 1px solid #f8514930; }
-    .ps-box.sol  { background: #56d3641a; border: 1px solid #56d36430; }
+    .ps-box.prob { background: #d1242f0d; border: 1px solid #d1242f20; }
+    .ps-box.sol  { background: #1a7f370d; border: 1px solid #1a7f3720; }
     .ps-box h5 {
       font-size: 9px; font-weight: 700; text-transform: uppercase;
       letter-spacing:.06em; margin-bottom: 3px;
@@ -297,25 +296,25 @@
        CODE BLOCK
     ════════════════════════════════ */
     .code-card {
-      background: #010409; border: 1px solid var(--border);
+      background: #f6f8fa; border: 1px solid var(--border);
       border-radius: var(--radius); overflow: hidden; margin-bottom: 32px;
     }
     .code-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 9px 16px; background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 9px 16px; background: #eaeff2; border-bottom: 1px solid var(--border);
     }
     .code-header span { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
     .code-lang { font-size: 10px; font-weight: 600; color: var(--accent); }
     .code-body { padding: 14px 18px; overflow-x: auto; }
     .code-body pre {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px; line-height: 1.7; color: #e6edf3; white-space: pre;
+      font-size: 11.5px; line-height: 1.7; color: var(--text); white-space: pre;
     }
-    .kw  { color: #ff7b72; }
-    .fn  { color: #d2a8ff; }
-    .str { color: #a5d6ff; }
-    .cm  { color: #8b949e; font-style: italic; }
-    .num { color: #79c0ff; }
+    .kw  { color: #cf222e; }
+    .fn  { color: #8250df; }
+    .str { color: #0a3069; }
+    .cm  { color: #6e7781; font-style: italic; }
+    .num { color: #0550ae; }
 
     /* ════════════════════════════════
        OPTIMIZATION TABLE
@@ -328,7 +327,7 @@
       color: var(--muted); font-size: 10px; text-transform: uppercase;
       letter-spacing:.05em; border-bottom: 1px solid var(--border);
     }
-    .opt-table td { padding: 9px 13px; border-bottom: 1px solid var(--border)55; vertical-align: middle; }
+    .opt-table td { padding: 9px 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     .opt-table tr:hover td { background: var(--surface); }
     .before { color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
     .after  { color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
@@ -339,9 +338,9 @@
     .tag {
       padding: 2px 9px; border-radius: 20px; font-size: 10px; font-weight: 500; border: 1px solid;
     }
-    .tag-blue  { color: #79c0ff; border-color: #1f6feb; background: #1f6feb1a; }
-    .tag-green { color: #56d364; border-color: #388bfd30; background: #56d3641a; }
-    .tag-orange{ color: #ffa657; border-color: #db6d281a; background: #db6d281a; }
+    .tag-blue  { color: #0969da; border-color: #54aeff; background: #ddf4ff; }
+    .tag-green { color: #1a7f37; border-color: #4ac26b; background: #dafbe1; }
+    .tag-orange{ color: #9a6700; border-color: #d4a72c; background: #fff8c5; }
     .tag-gray  { color: var(--muted); border-color: var(--border); background: var(--surface); }
 
     /* ── FOOTER ── */
@@ -353,6 +352,332 @@
       .impl-grid     { grid-template-columns: 1fr; }
       .ps-row        { grid-template-columns: 1fr; }
       .fsm-states    { flex-wrap: wrap; }
+    }
+    .aabb-showcase {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .viz-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    }
+    .viz-card h3 { font-size: 20px; margin-bottom: 6px; }
+    .viz-sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+    .aabb-canvas-wrap {
+      border-radius: 16px;
+      border: 1px solid #dbe3ec;
+      background:
+        radial-gradient(circle at top left, rgba(9, 105, 218, 0.08), transparent 30%),
+        linear-gradient(180deg, #fbfcfe 0%, #eef3f8 100%);
+      padding: 12px;
+    }
+    .aabb-canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      background:
+        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+      background-size: 32px 32px, 32px 32px, auto;
+    }
+    .viz-caption { margin-top: 10px; text-align: center; font-size: 11px; color: var(--muted); }
+    .formula-stack { display: grid; gap: 12px; }
+    .formula-box {
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid #dbe3ec;
+      background: #fbfdff;
+    }
+    .formula-box h4 {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .formula { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; }
+    .formula .min { color: #d1242f; font-weight: 600; }
+    .formula .max { color: #1a7f37; font-weight: 600; }
+    .formula .origin { color: #0969da; font-weight: 600; }
+    .formula .extent { color: #9a6700; font-weight: 600; }
+    .mini-chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .mini-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #d0d7de;
+      background: #fff;
+      font-size: 11px;
+      color: var(--text);
+    }
+    .viz-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .viz-node {
+      position: relative;
+      border-radius: 14px;
+      padding: 12px 10px;
+      background: linear-gradient(180deg, #fff 0%, #f3f6fa 100%);
+      border: 1px solid #dbe3ec;
+      font-size: 11px;
+      text-align: center;
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .viz-node::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .viz-node:last-child::after { content: none; }
+    .viz-legend {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .viz-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #dbe3ec;
+      border-radius: 12px;
+      padding: 9px 10px;
+    }
+    .legend-dot { width: 12px; height: 12px; border-radius: 999px; flex-shrink: 0; }
+    .aabb-template-visual {
+      margin-top: 14px;
+      border: 1px solid #dbe3ec;
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(180deg, #fff 0%, #f6f9fc 100%);
+    }
+    .bounds-stage {
+      position: relative;
+      height: 170px;
+      border-radius: 12px;
+      overflow: hidden;
+      background:
+        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+      background-size: 28px 28px, 28px 28px, auto;
+    }
+    .bounds-aabb, .bounds-obb {
+      position: absolute;
+      border: 2px solid;
+      border-radius: 8px;
+      transform-origin: center center;
+    }
+    .bounds-aabb {
+      left: 42px;
+      top: 28px;
+      width: 180px;
+      height: 104px;
+      border-color: rgba(255, 140, 0, 0.95);
+      background: rgba(255, 140, 0, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+    }
+    .bounds-obb {
+      left: 88px;
+      top: 38px;
+      width: 126px;
+      height: 74px;
+      border-color: rgba(59, 130, 246, 0.95);
+      background: rgba(59, 130, 246, 0.12);
+      transform: rotate(-16deg);
+    }
+    .bounds-point {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #0969da;
+      left: 126px;
+      top: 78px;
+      box-shadow: 0 0 0 6px rgba(9, 105, 218, 0.12);
+    }
+    .bounds-label {
+      position: absolute;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid #dbe3ec;
+      font-size: 10px;
+      color: var(--text);
+    }
+    .projectile-visual {
+      margin-top: 14px;
+      border: 1px solid #dbe3ec;
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(180deg, #fff 0%, #f6f9fc 100%);
+    }
+    .projectile-stage {
+      position: relative;
+      height: 164px;
+      border-radius: 12px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(59,130,246,0.12), transparent 22%),
+        linear-gradient(to right, rgba(148,163,184,0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148,163,184,0.12) 1px, transparent 1px),
+        linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+      background-size: auto, 28px 28px, 28px 28px, auto;
+    }
+    .proj-owner, .proj-target, .proj-hit, .proj-sweep, .proj-projectile {
+      position: absolute;
+    }
+    .proj-owner, .proj-target {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.14);
+    }
+    .proj-owner {
+      left: 22px;
+      top: 64px;
+      background: #0969da;
+    }
+    .proj-target {
+      right: 28px;
+      top: 56px;
+      background: #d1242f;
+    }
+    .proj-projectile {
+      left: 102px;
+      top: 76px;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #9a6700;
+      box-shadow: 0 0 0 8px rgba(154,103,0,0.12);
+      animation: projectileTravel 1.8s ease-in-out infinite;
+    }
+    .proj-sweep {
+      left: 92px;
+      top: 71px;
+      width: 236px;
+      height: 24px;
+      border-radius: 999px;
+      border: 2px dashed rgba(154,103,0,0.55);
+      background: linear-gradient(90deg, rgba(154,103,0,0.10), rgba(154,103,0,0.02));
+    }
+    .proj-hit {
+      right: 62px;
+      top: 52px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 2px solid rgba(209,36,47,0.55);
+      background: rgba(209,36,47,0.10);
+      animation: hitPulse 1.8s ease-in-out infinite;
+    }
+    .proj-line {
+      position: absolute;
+      left: 58px;
+      top: 81px;
+      width: 282px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(9,105,218,0.3), rgba(154,103,0,0.8), rgba(209,36,47,0.2));
+    }
+    .proj-label {
+      position: absolute;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid #dbe3ec;
+      font-size: 10px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .proj-flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .proj-node {
+      position: relative;
+      border-radius: 12px;
+      padding: 10px 8px;
+      min-height: 66px;
+      background: linear-gradient(180deg, #fff 0%, #f3f6fa 100%);
+      border: 1px solid #dbe3ec;
+      font-size: 10px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .proj-node::after {
+      content: "→";
+      position: absolute;
+      right: -11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .proj-node:last-child::after {
+      content: none;
+    }
+    @keyframes projectileTravel {
+      0% { transform: translateX(0); opacity: 0.95; }
+      70% { transform: translateX(192px); opacity: 1; }
+      100% { transform: translateX(192px); opacity: 0.85; }
+    }
+    @keyframes hitPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.45; }
+      50% { transform: scale(1.08); opacity: 0.95; }
+    }
+    @media (max-width: 640px) {
+      .aabb-showcase { grid-template-columns: 1fr; }
+      .viz-flow { grid-template-columns: 1fr; }
+      .viz-node::after {
+        content: "↓";
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -16px;
+        transform: translateX(-50%);
+      }
+      .viz-legend { grid-template-columns: 1fr; }
+      .proj-flow { grid-template-columns: 1fr; }
+      .proj-node::after {
+        content: "↓";
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -16px;
+        transform: translateX(-50%);
+      }
     }
   </style>
 </head>
@@ -655,35 +980,6 @@
   </div>
 
 
-  <!-- ══════════════════════════════════
-       CODE BLOCK
-  ══════════════════════════════════ -->
-  <div class="sec-label">코드 하이라이트 — AI Chaos 이동</div>
-  <div class="code-card">
-    <div class="code-header">
-      <span>UAiBrainComponent.cpp</span>
-      <span class="code-lang">C++</span>
-    </div>
-    <div class="code-body"><pre><span class="cm">// Sin·Cos 다주파수 조합으로 불규칙 이동 벡터 생성</span>
-<span class="kw">void</span> <span class="fn">UAiBrainComponent</span>::<span class="fn">ChaoticChase</span>()
-{
-    <span class="kw">float</span> t = GetWorld()-><span class="fn">GetTimeSeconds</span>();
-
-    <span class="kw">float</span> Chaos1 = FMath::<span class="fn">Sin</span>(t * <span class="num">1.3f</span>) * <span class="num">0.8f</span>;
-    <span class="kw">float</span> Chaos2 = FMath::<span class="fn">Sin</span>(t * <span class="num">2.7f</span>) * FMath::<span class="fn">Cos</span>(t * <span class="num">0.9f</span>) * <span class="num">0.5f</span>;
-    <span class="kw">float</span> Chaos3 = FMath::<span class="fn">Sin</span>(t * <span class="num">3.1f</span>) * FMath::<span class="fn">Cos</span>(t * <span class="num">2.3f</span>) * <span class="num">0.7f</span>;
-
-    FVector ChaoticDir = BaseDirection
-        + (SideDirection                                          * Chaos1)
-        + (ToTarget.<span class="fn">GetSafeNormal</span>()                            * Chaos2)
-        + (FVector::<span class="fn">CrossProduct</span>(SideDirection, FVector::UpVector) * Chaos3);
-
-    Character-><span class="fn">AddMovementInput</span>(ChaoticDir.<span class="fn">GetSafeNormal</span>(), <span class="num">2.0f</span>);
-
-    <span class="kw">if</span> (FMath::<span class="fn">Fmod</span>(t, <span class="num">0.7f</span>) &lt; <span class="num">0.1f</span>)
-        <span class="fn">RecievedIntent</span>(FName(<span class="str">"Input.Fire"</span>));
-}</pre></div>
-  </div>
 
 
   <!-- ══════════════════════════════════
@@ -741,8 +1037,334 @@
     </table>
   </div>
 
+  <div class="sec-label">AABB Bounding Box Visualization</div>
+  <div class="aabb-showcase">
+    <div class="viz-card">
+      <h3>AABB 계산 시각화</h3>
+      <div class="viz-sub">텍스트보다 Origin, Extent, Min, Max 관계가 먼저 보이도록 도형 중심으로 재구성한 카드</div>
+      <div class="aabb-canvas-wrap">
+        <canvas id="aabb-canvas" class="aabb-canvas" width="520" height="420"></canvas>
+      </div>
+      <div class="viz-caption">회전 중인 박스를 2D 투영해 AABB 계산 구조를 한 화면에서 확인</div>
+      <div class="viz-legend">
+        <div class="viz-legend-item"><span class="legend-dot" style="background:#0969da"></span>Origin 중심점</div>
+        <div class="viz-legend-item"><span class="legend-dot" style="background:#9a6700"></span>Extent 반경 벡터</div>
+        <div class="viz-legend-item"><span class="legend-dot" style="background:#d1242f"></span>Min 좌표</div>
+        <div class="viz-legend-item"><span class="legend-dot" style="background:#1a7f37"></span>Max 좌표</div>
+      </div>
+    </div>
+    <div class="viz-card">
+      <h3>구현 핵심</h3>
+      <div class="formula-stack">
+        <div class="formula-box">
+          <h4>핵심 수식</h4>
+          <div class="formula">
+            <span class="min">Min</span> = <span class="origin">Origin</span> - <span class="extent">Extent</span><br/>
+            <span class="max">Max</span> = <span class="origin">Origin</span> + <span class="extent">Extent</span>
+          </div>
+          <div class="mini-chip-row">
+            <span class="mini-chip">Axis-Aligned</span>
+            <span class="mini-chip">Origin / Extent</span>
+            <span class="mini-chip">Min / Max</span>
+          </div>
+        </div>
+        <div class="formula-box">
+          <h4>처리 흐름</h4>
+          <div class="viz-flow">
+            <div class="viz-node">Bounds Origin / Extent 확보</div>
+            <div class="viz-node">Min / Max 좌표 계산</div>
+            <div class="viz-node">UI 좌표계로 투영</div>
+            <div class="viz-node">범위 표시 및 검증</div>
+          </div>
+        </div>
+        <div class="formula-box">
+          <h4>OBB 확장 방향</h4>
+          <div class="aabb-template-visual">
+            <div class="bounds-stage">
+              <div class="bounds-aabb"></div>
+              <div class="bounds-obb"></div>
+              <div class="bounds-point"></div>
+              <div class="bounds-label" style="left:16px; top:18px;">AABB</div>
+              <div class="bounds-label" style="left:236px; top:46px;">OBB</div>
+              <div class="bounds-label" style="left:138px; top:96px;">Origin</div>
+            </div>
+          </div>
+          <div class="viz-sub" style="margin-top:10px; margin-bottom:0;">
+            현재 프로젝트 근거는 AABB 범위 계산이며, OBB 는 회전 축이 포함되는 정밀 충돌 확장 방향으로 분리해 설명한다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">Constraint-based Swing Physics</div>
+  <div class="physics-showcase">
+    <div class="physics-card">
+      <h3>Spider-Man Swing</h3>
+      <div class="physics-steps">
+        <div class="physics-step">
+          <strong>1. 문제의 본질 규명</strong>
+          단순 중력만 적용하면 캐릭터가 앵커 포인트에서 계속 멀어진다. 스윙의 핵심은 낙하가 아니라 로프 길이를 유지하는 구속 조건을 매 프레임 만족시키는 것이다.
+        </div>
+        <div class="physics-step">
+          <strong>2. 전략 고도화</strong>
+          속도를 반지름 방향과 접선 방향으로 분해하고, 로프가 팽팽한 순간 반지름 성분만 제거했다. 여기에 위치 보정을 추가해 프레임 누적 오차로 로프 길이가 늘어나는 현상을 억제했다.
+        </div>
+        <div class="physics-step">
+          <strong>3. 실행 및 성과 증명</strong>
+          <code>CalculateSwingPhysics()</code> 에서 <code>DotProduct</code> 투영, 접선 속도 유지, 위치 보정, 감쇠를 구현했다. 결과적으로 앵커 중심 나선형 이탈을 줄이고 원운동에 가까운 스윙 궤적을 유지했다.
+        </div>
+      </div>
+      <div class="equation-card">v_r = (v · r̂) r̂
+v_t = v - v_r
+v_new = v_t
+
+if (Distance > RopeLength)
+{
+    Velocity = TangentialVelocity;
+    Position = Anchor - RopeDirection * RopeLength;
+}</div>
+    </div>
+    <div class="physics-card">
+      <div class="swing-diagram">
+        <div class="swing-anchor"></div>
+        <div class="swing-player"></div>
+        <div class="swing-rope"></div>
+        <div class="vec vec-radial"></div>
+        <div class="vec vec-tangent"></div>
+        <div class="vec vec-total"></div>
+        <div class="swing-note" style="left:182px; top:34px;">Anchor</div>
+        <div class="swing-note" style="left:185px; top:188px;">Player</div>
+        <div class="swing-note" style="left:52px; top:122px;">RopeDirection r̂</div>
+        <div class="swing-note" style="left:78px; top:220px; color:#ff7b72;">v_r 제거</div>
+        <div class="swing-note" style="left:270px; top:190px; color:#56d364;">v_t 유지</div>
+        <div class="swing-note" style="left:276px; top:126px; color:#d2a8ff;">원래 속도 v</div>
+      </div>
+      <p style="margin-top:12px;color:var(--muted)">
+        로프가 팽팽해질 때는 반지름 방향 속도를 제거하고, 접선 방향 속도만 유지한다. 위치 보정은 수치 오차 누적을 억제하는 역할을 한다.
+      </p>
+    </div>
+  </div>
+
+  <div class="sec-label">Physics / Collision Templates</div>
+  <div class="template-grid">
+    <div class="template-card">
+      <span class="template-badge live">실구현 기반</span>
+      <h4>Projectile Collision</h4>
+      <p>투사체 시스템은 단순 이동보다 self-hit 차단, sweep 우선 처리, damageable 대상 필터링, 서버 전용 데미지 적용 흐름을 안정적으로 묶는 것이 핵심이었다.</p>
+      <div class="projectile-visual">
+        <div class="projectile-stage">
+          <div class="proj-owner">OWN</div>
+          <div class="proj-target">HIT</div>
+          <div class="proj-line"></div>
+          <div class="proj-sweep"></div>
+          <div class="proj-projectile"></div>
+          <div class="proj-hit"></div>
+          <div class="proj-label" style="left:12px; top:18px;">Owner / Instigator Ignore</div>
+          <div class="proj-label" style="left:128px; top:18px;">SweepResult 우선</div>
+          <div class="proj-label" style="left:112px; top:118px;">Damageable Filter</div>
+          <div class="proj-label" style="right:12px; top:18px;">Server Damage Apply</div>
+        </div>
+        <div class="proj-flow">
+          <div class="proj-node">Spawn</div>
+          <div class="proj-node">Move</div>
+          <div class="proj-node">Overlap / Hit</div>
+          <div class="proj-node">Owner Filter</div>
+          <div class="proj-node">Damage</div>
+          <div class="proj-node">Destroy</div>
+        </div>
+      </div>
+    </div>
+    <div class="template-card">
+      <span class="template-badge plan">템플릿</span>
+      <h4>AABB / OBB</h4>
+      <p>AABB 는 실제 범위 계산과 UI 투영 기준으로 정리하고, OBB 는 회전된 메시의 정밀 충돌 확장 방향으로 분리했다.</p>
+      <div class="aabb-template-visual">
+        <div class="bounds-stage">
+          <div class="bounds-aabb"></div>
+          <div class="bounds-obb"></div>
+          <div class="bounds-point"></div>
+          <div class="bounds-label" style="left:16px; top:18px;">AABB</div>
+          <div class="bounds-label" style="left:236px; top:46px;">OBB</div>
+          <div class="bounds-label" style="left:138px; top:96px;">Origin</div>
+        </div>
+      </div>
+    </div>
+    <div class="template-card">
+      <span class="template-badge plan">템플릿</span>
+      <h4>Octree</h4>
+      <p>현재 Infinity 에 직접 구현 근거는 없으므로, 대규모 후보 탐색 최적화를 위한 공간 분할 설계 템플릿으로만 제시한다.</p>
+      <pre>[ World Space ]
+   -> [ Octree Partition ]
+   -> [ Candidate Query ]
+   -> [ Narrow Phase ]</pre>
+    </div>
+  </div>
+
   <footer>InfinityFighter · 2025.09 · Cho Eun Jung</footer>
 </div>
 
+<script>
+  (function () {
+    const canvas = document.getElementById('aabb-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let frameId = 0;
+    let rotation = 0;
+
+    function project(x, y, z, centerX, centerY, scale) {
+      const rotatedX = x * Math.cos(rotation) - z * Math.sin(rotation);
+      const rotatedZ = x * Math.sin(rotation) + z * Math.cos(rotation);
+      const perspective = 400 / (400 + rotatedZ * scale);
+      return {
+        x: centerX + rotatedX * scale * perspective,
+        y: centerY - y * scale * perspective
+      };
+    }
+
+    function drawArrow(from, to, color, label) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 5]);
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const angle = Math.atan2(to.y - from.y, to.x - from.x);
+      const size = 11;
+      ctx.beginPath();
+      ctx.moveTo(to.x, to.y);
+      ctx.lineTo(to.x - size * Math.cos(angle - Math.PI / 6), to.y - size * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(to.x - size * Math.cos(angle + Math.PI / 6), to.y - size * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.font = "12px 'JetBrains Mono', monospace";
+      ctx.fillText(label, to.x + 10, to.y - 6);
+      ctx.restore();
+    }
+
+    function drawPoint(point, color, label, offsetX, offsetY) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.font = "12px 'JetBrains Mono', monospace";
+      ctx.fillText(label, point.x + offsetX, point.y + offsetY);
+      ctx.restore();
+    }
+
+    function drawBox(min, max, color, alpha, centerX, centerY, scale) {
+      const corners = [
+        project(min.x, min.y, min.z, centerX, centerY, scale),
+        project(max.x, min.y, min.z, centerX, centerY, scale),
+        project(max.x, max.y, min.z, centerX, centerY, scale),
+        project(min.x, max.y, min.z, centerX, centerY, scale),
+        project(min.x, min.y, max.z, centerX, centerY, scale),
+        project(max.x, min.y, max.z, centerX, centerY, scale),
+        project(max.x, max.y, max.z, centerX, centerY, scale),
+        project(min.x, max.y, max.z, centerX, centerY, scale)
+      ];
+
+      const faces = [
+        [0, 1, 2, 3],
+        [4, 5, 6, 7],
+        [0, 1, 5, 4],
+        [2, 3, 7, 6],
+        [0, 3, 7, 4],
+        [1, 2, 6, 5]
+      ];
+      const edges = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7]
+      ];
+
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.globalAlpha = alpha * 0.15;
+      faces.forEach((face) => {
+        ctx.beginPath();
+        ctx.moveTo(corners[face[0]].x, corners[face[0]].y);
+        for (let i = 1; i < face.length; i += 1) {
+          ctx.lineTo(corners[face[i]].x, corners[face[i]].y);
+        }
+        ctx.closePath();
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.2;
+      edges.forEach(([start, end]) => {
+        ctx.beginPath();
+        ctx.moveTo(corners[start].x, corners[start].y);
+        ctx.lineTo(corners[end].x, corners[end].y);
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+
+    function draw() {
+      const width = canvas.width;
+      const height = canvas.height;
+      const centerX = width / 2;
+      const centerY = height / 2 + 10;
+      const scale = 82;
+
+      rotation += 0.006;
+      ctx.clearRect(0, 0, width, height);
+
+      const origin = { x: 0, y: 0, z: 0 };
+      const extent = { x: 1.5, y: 1.0, z: 1.5 };
+      const min = { x: origin.x - extent.x, y: origin.y - extent.y, z: origin.z - extent.z };
+      const max = { x: origin.x + extent.x, y: origin.y + extent.y, z: origin.z + extent.z };
+
+      drawBox(min, max, '#ff8c00', 0.85, centerX, centerY, scale);
+
+      const originProj = project(origin.x, origin.y, origin.z, centerX, centerY, scale);
+      const extentXProj = project(origin.x + extent.x, origin.y, origin.z, centerX, centerY, scale);
+      const extentYProj = project(origin.x, origin.y + extent.y, origin.z, centerX, centerY, scale);
+      const minProj = project(min.x, min.y, min.z, centerX, centerY, scale);
+      const maxProj = project(max.x, max.y, max.z, centerX, centerY, scale);
+
+      drawArrow(originProj, extentXProj, '#9a6700', 'Extent.X');
+      drawArrow(originProj, extentYProj, '#2da44e', 'Extent.Y');
+      drawPoint(originProj, '#0969da', 'Origin', 10, 4);
+      drawPoint(minProj, '#d1242f', 'Min', -30, -8);
+      drawPoint(maxProj, '#1a7f37', 'Max', 10, -8);
+
+      ctx.save();
+      ctx.strokeStyle = 'rgba(9,105,218,0.2)';
+      ctx.beginPath();
+      ctx.moveTo(originProj.x, 36);
+      ctx.lineTo(originProj.x, height - 24);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(28, originProj.y);
+      ctx.lineTo(width - 28, originProj.y);
+      ctx.stroke();
+      ctx.restore();
+
+      frameId = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener('beforeunload', function () {
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+    });
+  })();
+</script>
 </body>
 </html>
