@@ -15,7 +15,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
   <tr>
     <td width="50%" valign="top">
       <a href="https://github.com/jjonjung/CitRush">
-        <img src="./ProjectUnreal/CitRush/teeth.png" alt="CitRush" width="100%">
+        <img src="./ProjectUnreal/CitRush/teeth.png" alt="CitRush" width="100%" height="250">
       </a>
       <h3>🌆 CitRush</h3>
       <p><strong>전략형 레이싱 게임</strong><br>UE 5.6.1 / C++ / GAS / Steam</p>
@@ -26,19 +26,20 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
     </td>
     <td width="50%" valign="top">
       <a href="https://github.com/jjonjung/Infinity">
-        <img src="./ProjectUnreal/Infinity/image.png" alt="Infinity" width="100%">
+        <img src="./ProjectUnreal/Infinity/infinity_썸네일.png" alt="Infinity" width="100%" height="250">
       </a>
       <h3>🏹 Infinity</h3>
       <p><strong>전략 레이싱 슈팅</strong><br>UE 5.6.1 / FSM / C++ / Android / 물리 기반 전투 스킬 구현</p>
       <p><strong>Key Achievement</strong>: FSM을 활용한 확장성 있는 물리 기반 스킬 시스템 구축</p>
       <p><strong>Technical Focus</strong>: 컴포넌트 기반 아키텍처, Android 연동</p>
       <p><strong>Keywords</strong>: <code>GAS</code> <code>Steam OSS</code> <code>Component-based</code> <code>Strategy</code></p>
+      <p>Git: <a href="https://github.com/jjonjung/Infinity">https://github.com/jjonjung/Infinity</a></p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <a href="https://github.com/jjonjung/ThirdMotion">
-        <img src="./ProjectUnreal/ThirdMotion/ThirdMotion.png" alt="ThirdMotion" width="100%">
+        <img src="./ProjectUnreal/ThirdMotion/ThirdMotion.png" alt="ThirdMotion" width="100%" height="250">
       </a>
       <h3>🎨 ThirdMotion</h3>
       <p><strong>Unreal 3D 에디팅 툴</strong><br>UE / C++ / UMG / MVC / TOOL</p>
@@ -49,7 +50,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
     </td>
     <td width="50%" valign="top">
       <a href="https://github.com/jjonjung/AiNextIdol">
-        <img src="./ProjectUnreal/NextIdol/NextIdol.png" alt="AiNextIdol" width="100%">
+        <img src="./ProjectUnreal/NextIdol/NextIdol.png" alt="AiNextIdol" width="100%" height="250">
       </a>
       <h3>🕺 AiNextIdol</h3>
       <p><strong>AI 기반 버추얼 아이돌 공연 플랫폼</strong></p>
@@ -62,7 +63,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
   <tr>
     <td width="50%" valign="top">
       <a href="https://github.com/jjonjung/LucioBall">
-        <img src="./ProjectUnreal/Lucio/image.png" alt="LucioBall" width="100%">
+        <img src="./ProjectUnreal/Lucio/스크린샷_2025-12-16_034935.png" alt="LucioBall" width="100%" height="250">
       </a>
       <h3>⚽ LucioBall</h3>
       <p><strong>오버워치 루시우볼 구현</strong><br>UE / C++</p>
@@ -73,7 +74,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
     </td>
     <td width="50%" valign="top">
       <a href="https://github.com/jjonjung/BlackWukong">
-        <img src="./ProjectUnreal/WuKong/image 14.png" alt="BlackWukong" width="100%">
+        <img src="./ProjectUnreal/WuKong/image 14.png" alt="BlackWukong" width="100%" height="250">
       </a>
       <h3>🐵 BlackWukong</h3>
       <p><strong>검은신화: 오공 호선봉 전투 구현</strong><br>UE / Blueprint</p>
