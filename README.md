@@ -21,7 +21,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
       <p><strong>전략형 레이싱 게임</strong><br>UE 5.6.1 / C++ / GAS / Steam</p>
       <p><strong>Key Achievement</strong>: 불필요한 연산을 최적화하여 <strong>CPU 사용률 약 40% 절감</strong></p>
       <p><strong>Technical Focus</strong>: AI LLM 사용 서버 동기화, GAS, 서버 장애 대응 로직, JIRA 자동화 API 구현</p>
-      <p><strong>Keywords</strong>: <code>C++</code> <code>Network Replication</code> <code>Optimization</code> <code>Http API</code></p>
+      <p><strong>Keywords</strong>: <code>C++</code> <code>Network Replication</code> <code>GAS</code> <code>Http API</code></p>
       <p>Git: <a href="https://github.com/jjonjung/CitRush">https://github.com/jjonjung/CitRush</a></p>
     </td>
     <td width="50%" valign="top">
@@ -32,7 +32,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
       <p><strong>전략 레이싱 슈팅</strong><br>UE 5.6.1 / FSM / C++ / Android / 물리 기반 전투 스킬 구현</p>
       <p><strong>Key Achievement</strong>: FSM을 활용한 확장성 있는 물리 기반 스킬 시스템 구축</p>
       <p><strong>Technical Focus</strong>: 컴포넌트 기반 아키텍처, Android 연동</p>
-      <p><strong>Keywords</strong>: <code>GAS</code> <code>Steam OSS</code> <code>Component-based</code> <code>Strategy</code></p>
+      <p><strong>Keywords</strong>: <code>FSM</code> <code>Steam OSS</code> <code>Component-based</code> <code>Strategy</code></p>
       <p>Git: <a href="https://github.com/jjonjung/Infinity">https://github.com/jjonjung/Infinity</a></p>
     </td>
   </tr>
@@ -45,7 +45,7 @@ Unreal 프로젝트, Server & Database 프로젝트, 이력 및 기술 스택을
       <p><strong>Unreal 3D 에디팅 툴</strong><br>UE / C++ / UMG / MVC / TOOL</p>
       <p><strong>Key Achievement</strong>: 실시간 협업을 위한 <strong>Listen Server Actor 동기화</strong> 구현</p>
       <p><strong>Technical Focus</strong>: 유저 리스트 및 메모 영속화, TwinMotion 모티브 UMG 시스템, 음성/텍스트 동기화, UI</p>
-      <p><strong>Keywords</strong>: <code>Tool Development</code> <code>Actor Sync</code> <code>Data Persistence</code> <code>UMG</code></p>
+      <p><strong>Keywords</strong>: <code>Tool Development</code> <code>Actor Sync</code> <code>Data Persistence</code> <code>UMG</code> <code>MVC</code></p>
       <p>Git: <a href="https://github.com/jjonjung/ThirdMotion">https://github.com/jjonjung/ThirdMotion</a></p>
     </td>
     <td width="50%" valign="top">
