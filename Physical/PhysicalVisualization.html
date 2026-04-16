@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AABB Bounding Box Visualization</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #f1f5f9 0%, #eff6ff 50%, #faf5ff 100%);
+    min-height: 100vh;
+    padding: 48px 16px;
+    color: #111827;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown .6s ease both;
+  }
+  header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  header p { font-size: 1.1rem; color: #4b5563; margin-bottom: 16px; }
+  .badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    background: #fff;
+    padding: 6px 18px;
+    border-radius: 9999px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    font-size: .85rem;
+    color: #6b7280;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 64px; animation: fadeUp .6s ease both; }
+  .section-header {
+    padding: 24px 28px;
+    border-radius: 16px 16px 0 0;
+    color: #fff;
+  }
+  .section-header.orange { background: linear-gradient(135deg, #f97316, #ef4444); }
+  .section-header h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 4px; }
+  .section-header p { opacity: .85; font-size: .95rem; }
+  .section-body {
+    background: #fff;
+    border-radius: 0 0 16px 16px;
+    padding: 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .icon-wrap.orange { background: #ffedd5; }
+  .icon-wrap.purple { background: #f3e8ff; }
+  .icon-wrap.amber  { background: #fef3c7; }
+  .icon-wrap.green  { background: #dcfce7; }
+
+  .card-header h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 2px; }
+  .card-header p  { font-size: .8rem; color: #6b7280; }
+
+  /* ── Grid ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 768px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* ── Canvas ── */
+  canvas {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    display: block;
+  }
+  .canvas-note {
+    font-size: .75rem;
+    color: #9ca3af;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* ── Info panels ── */
+  .info-stack { display: flex; flex-direction: column; gap: 16px; }
+  .panel {
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid;
+  }
+  .panel h3 { font-weight: 700; margin-bottom: 10px; font-size: .95rem; }
+  .panel.blue   { background: #eff6ff; border-color: #bfdbfe; }
+  .panel.blue   h3 { color: #1e40af; }
+  .panel.purple { background: #faf5ff; border-color: #e9d5ff; }
+  .panel.purple h3 { color: #6b21a8; }
+  .panel.amber  { background: #fffbeb; border-color: #fde68a; }
+  .panel.amber  h3 { color: #92400e; }
+  .panel.green  { background: #f0fdf4; border-color: #bbf7d0; }
+  .panel.green  h3 { color: #14532d; }
+  .panel.gray   { background: #f9fafb; border-color: #e5e7eb; }
+  .panel.gray   h3 { color: #111827; }
+
+  .formula-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid;
+    font-family: 'Courier New', monospace;
+    font-size: .85rem;
+  }
+  .formula-box.blue   { border-color: #93c5fd; }
+  .formula-box.purple { border-color: #c4b5fd; }
+  .formula-box.amber  { border-color: #fcd34d; }
+  .formula-box.green  { border-color: #86efac; }
+  .formula-box sub-note {
+    display: block;
+    font-size: .75rem;
+    color: #6b7280;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
+  }
+  .formula-box .sub { display: block; font-size: .75rem; color: #6b7280; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e7eb; }
+
+  .clr-red    { color: #dc2626; font-weight: 700; }
+  .clr-green  { color: #16a34a; font-weight: 700; }
+  .clr-blue   { color: #2563eb; }
+  .clr-purple { color: #7c3aed; font-weight: 700; }
+  .clr-amber  { color: #d97706; font-weight: 700; }
+
+  /* Sliders */
+  .slider-group { display: flex; flex-direction: column; gap: 14px; }
+  .slider-label { font-size: .875rem; font-weight: 500; color: #374151; margin-bottom: 6px; display: block; }
+  input[type=range] {
+    width: 100%;
+    accent-color: #3b82f6;
+    cursor: pointer;
+  }
+
+  /* Bullet list */
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: .9rem; color: #374151; }
+  .bullet-list li::before { content: "• "; color: #2563eb; font-weight: 700; }
+
+  /* Code block */
+  .code-block {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: .78rem;
+    line-height: 1.6;
+  }
+  .code-block.purple { border: 1px solid #c4b5fd; }
+  .code-block.green  { border: 1px solid #86efac; }
+  .code-block .c-gray   { color: #6b7280; }
+  .code-block .c-blue   { color: #2563eb; }
+  .code-block .c-purple { color: #7c3aed; }
+
+  /* Footer */
+  footer {
+    margin-top: 64px;
+    text-align: center;
+    animation: fadeUp .6s ease .8s both;
+  }
+  footer .footer-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+  }
+  footer .footer-box p:first-child { font-weight: 700; color: #374151; margin-bottom: 6px; }
+  footer .footer-box p:last-child  { font-size: .75rem; color: #9ca3af; }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ── Header ── -->
+  <header>
+    <h1>게임 물리 시스템 시각화</h1>
+    <p>Unreal Engine Physics System Visualization</p>
+    <div class="badges">
+      <span class="badge">3D 시각화</span>
+      <span class="badge">실시간 계산</span>
+      <span class="badge">인터랙티브</span>
+    </div>
+  </header>
+
+  <!-- ── Part 1: AABB ── -->
+  <section class="section" style="animation-delay:.2s">
+    <div class="section-header orange">
+      <h2>Part 1: AABB 바운딩 박스 시스템</h2>
+      <p>Axis-Aligned Bounding Box Coordinate Transformation</p>
+    </div>
+    <div class="section-body">
+
+      <!-- 1-1. AABBCalculation -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap orange">📐</div>
+          <div>
+            <h2>AABB 바운딩 박스 계산</h2>
+            <p>AABB Bounding Box Calculation</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasAABB" width="400" height="400"
+              style="background: linear-gradient(135deg,#f9fafb,#f3f4f6)"></canvas>
+            <p class="canvas-note">UBoxComponent (반투명 주황색)</p>
+          </div>
+          <div class="info-stack">
+            <div class="panel blue">
+              <h3>핵심 수식</h3>
+              <div class="formula-box blue" style="margin-bottom:8px">
+                <span class="clr-red">Min</span> =
+                <span class="clr-blue"> Origin</span> -
+                <span class="clr-green"> Extent</span>
+              </div>
+              <div class="formula-box blue">
+                <span class="clr-green">Max</span> =
+                <span class="clr-blue"> Origin</span> +
+                <span class="clr-green"> Extent</span>
+              </div>
+            </div>
+            <div class="panel purple">
+              <h3>함수명</h3>
+              <div class="formula-box purple">GetXYBounds()</div>
+            </div>
+            <div class="panel gray">
+              <h3>설명</h3>
+              <p style="font-size:.875rem;line-height:1.6;color:#374151">
+                AABB (Axis-Aligned Bounding Box)는 객체를 감싸는 축 정렬 경계 상자입니다.
+                Origin(중심점)과 Extent(반경)를 사용하여 Min과 Max 좌표를 계산합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1-2. UVToWorldXY -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap purple">🗺️</div>
+          <div>
+            <h2>UV (0~1) → 월드 XY 좌표</h2>
+            <p>UV to World XY Transformation</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasUVtoWorld" width="500" height="400"
+              style="background: linear-gradient(135deg,#f9fafb,#f3f4f6)"></canvas>
+            <p class="canvas-note">UV 공간에서 월드 공간으로의 선형 보간</p>
+          </div>
+          <div class="info-stack">
+            <div class="panel purple">
+              <h3>핵심 수식</h3>
+              <div class="formula-box purple">
+                WorldXY = <span class="clr-green">Lerp</span>(Min, Max, ClampedUV)
+                <span class="sub">
+                  X = Min.X + (Max.X - Min.X) × UV.X<br>
+                  Y = Min.Y + (Max.Y - Min.Y) × UV.Y
+                </span>
+              </div>
+            </div>
+            <div class="panel blue">
+              <h3>함수명</h3>
+              <div class="formula-box blue">UVToWorldXY()</div>
+            </div>
+            <div class="panel gray">
+              <h3>설명</h3>
+              <p style="font-size:.875rem;line-height:1.6;color:#374151">
+                정규화된 UV 좌표(0~1)를 실제 월드 공간의 XY 좌표로 변환합니다.
+                FMath::Lerp를 사용하여 바운딩 박스의 Min과 Max 사이를 선형 보간합니다.
+              </p>
+            </div>
+            <div class="panel green">
+              <h3>사용 예시</h3>
+              <div class="code-block green">
+                <span class="c-gray">// UV (0.5, 0.5) → 월드 중심점</span><br>
+                <span class="c-blue">FVector2D</span> worldPos =<br>
+                &nbsp;&nbsp;UVToWorldXY(<span class="c-purple">0.5f, 0.5f</span>);
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1-3. WorldXYToUV -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap amber">🎚️</div>
+          <div>
+            <h2>월드 XY → UV (0~1)</h2>
+            <p>World XY to UV Transformation</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasWorldToUV" width="500" height="400"
+              style="background: linear-gradient(135deg,#f9fafb,#f3f4f6)"></canvas>
+            <p class="canvas-note">월드 공간에서 UV 공간으로의 범위 매핑</p>
+          </div>
+          <div class="info-stack">
+            <div class="panel amber">
+              <h3>핵심 수식</h3>
+              <div class="formula-box amber">
+                UV = <span class="clr-amber">MapRangeClamped</span>(Min, Max, 0, 1, WorldXY)
+                <span class="sub">
+                  U = (WorldX - Min.X) / (Max.X - Min.X)<br>
+                  V = (WorldY - Min.Y) / (Max.Y - Min.Y)
+                </span>
+              </div>
+            </div>
+            <div class="panel purple">
+              <h3>함수명</h3>
+              <div class="formula-box purple">WorldXYToUV()</div>
+            </div>
+            <div class="panel gray">
+              <h3>설명</h3>
+              <p style="font-size:.875rem;line-height:1.6;color:#374151">
+                월드 공간의 XY 좌표를 정규화된 UV 좌표(0~1)로 역변환합니다.
+                FMath::GetMappedRangeValueClamped를 사용하여 바운딩 박스 내에서의 상대적 위치를 계산합니다.
+              </p>
+            </div>
+            <div class="panel blue">
+              <h3>사용 예시</h3>
+              <div class="code-block green">
+                <span class="c-gray">// 플레이어 위치 → 미니맵 UV</span><br>
+                <span class="c-blue">FVector2D</span> uv =<br>
+                &nbsp;&nbsp;WorldXYToUV(<span class="c-purple">PlayerLocation</span>);
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1-4. DynamicBounds -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap green">⚙️</div>
+          <div>
+            <h2>동적 경계 변환</h2>
+            <p>Dynamic Bounds Transformation</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasDynamic" width="600" height="400"
+              style="background: linear-gradient(135deg,#111827,#1f2937)"></canvas>
+            <p class="canvas-note">런타임 경계 변경과 미니맵 실시간 업데이트</p>
+          </div>
+          <div class="info-stack">
+            <div class="panel green">
+              <h3>경계 제어</h3>
+              <div class="slider-group">
+                <div>
+                  <span class="slider-label">BoundsBox 크기: <span id="lblSize">1.5</span></span>
+                  <input type="range" id="sliderSize" min="0.5" max="2.5" step="0.1" value="1.5">
+                </div>
+                <div>
+                  <span class="slider-label">X 오프셋: <span id="lblOffsetX">0.0</span></span>
+                  <input type="range" id="sliderOffsetX" min="-1" max="1" step="0.1" value="0">
+                </div>
+                <div>
+                  <span class="slider-label">Y 오프셋: <span id="lblOffsetY">0.0</span></span>
+                  <input type="range" id="sliderOffsetY" min="-1" max="1" step="0.1" value="0">
+                </div>
+              </div>
+            </div>
+            <div class="panel blue">
+              <h3>동적 계산</h3>
+              <ul class="bullet-list">
+                <li>BoundsBox 위치+Extent 기반 동적 계산</li>
+                <li>맵 경계 런타임 변동 지원</li>
+                <li>실시간 플레이어 위치 추적</li>
+              </ul>
+            </div>
+            <div class="panel gray">
+              <h3>설명</h3>
+              <p style="font-size:.875rem;line-height:1.6;color:#374151">
+                런타임에 BoundsBox의 크기나 위치가 변경될 때, 시스템이 실시간으로
+                AABB Bounds를 다시 계산하여 플레이어 위치를 미니맵 UI에 정확하게 반영합니다.
+              </p>
+            </div>
+            <div class="panel purple">
+              <h3>적용 사례</h3>
+              <div class="code-block purple">
+                <span class="c-gray">// 경계 변경 시 업데이트</span><br>
+                <span class="c-blue">void</span> UpdateMinimap() {<br>
+                &nbsp;&nbsp;<span class="c-gray">// AABB 재계산</span><br>
+                &nbsp;&nbsp;GetXYBounds();<br>
+                &nbsp;&nbsp;<span class="c-gray">// UV 좌표 업데이트</span><br>
+                &nbsp;&nbsp;WorldXYToUV(PlayerPos);<br>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ Part 2: Rope Physics ══ -->
+  <section class="section" style="animation-delay:.4s">
+    <div class="section-header" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+      <h2>Part 2: 로프 구속 물리 시스템</h2>
+      <p>Constraint-based Physics for Spider-Man Swing</p>
+    </div>
+    <div class="section-body">
+
+      <!-- SwingProblemsOverview -->
+      <div style="background:linear-gradient(135deg,#4338ca,#7c3aed);border-radius:14px;padding:32px;color:#fff">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px">
+          <div style="background:rgba(255,255,255,.15);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0">⚠️</div>
+          <div>
+            <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:4px">스윙 물리 시스템 4가지 문제와 해결</h2>
+            <p style="opacity:.8;font-size:.95rem">Constraint-based Physics Problems and Solutions</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:20px;border:1px solid rgba(255,255,255,.2)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div style="background:#ef4444;color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">1</div>
+              <h3 style="font-weight:700;font-size:1rem">단순 중력 적용</h3>
+            </div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;margin-bottom:6px;font-size:.85rem"><span style="color:#fca5a5">❌ 문제:</span> 로프 제약이 없어 무한히 멀어짐</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;font-size:.85rem"><span style="color:#86efac">✅ 해결:</span> 거리 제약 + 위치 보정 적용</div>
+          </div>
+          <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:20px;border:1px solid rgba(255,255,255,.2)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div style="background:#f97316;color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">2</div>
+              <h3 style="font-weight:700;font-size:1rem">반지름 속도 미제거</h3>
+            </div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;margin-bottom:6px;font-size:.85rem"><span style="color:#fca5a5">❌ 문제:</span> 나선형으로 바깥으로 퍼짐</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;font-size:.85rem"><span style="color:#86efac">✅ 해결:</span> 벡터 분해로 반지름 성분 제거</div>
+          </div>
+          <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:20px;border:1px solid rgba(255,255,255,.2)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div style="background:#eab308;color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">3</div>
+              <h3 style="font-weight:700;font-size:1rem">위치 보정 미적용</h3>
+            </div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;margin-bottom:6px;font-size:.85rem"><span style="color:#fca5a5">❌ 문제:</span> 오차 누적으로 로프 길이 증가</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;font-size:.85rem"><span style="color:#86efac">✅ 해결:</span> 매 프레임 위치 강제 보정</div>
+          </div>
+          <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:20px;border:1px solid rgba(255,255,255,.2)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div style="background:#06b6d4;color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">4</div>
+              <h3 style="font-weight:700;font-size:1rem">감쇠 미적용</h3>
+            </div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;margin-bottom:6px;font-size:.85rem"><span style="color:#fca5a5">❌ 문제:</span> 에너지 보존으로 무한 스윙</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:8px;font-size:.85rem"><span style="color:#86efac">✅ 해결:</span> 감쇠 계수로 에너지 감소</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;background:rgba(255,255,255,.1);border-radius:10px;padding:20px;border:1px solid rgba(255,255,255,.2)">
+          <h3 style="font-weight:700;font-size:1.05rem;margin-bottom:12px">🎯 최종 통합 솔루션</h3>
+          <pre style="background:#0f172a;border-radius:8px;padding:16px;font-family:'Courier New',monospace;font-size:.78rem;color:#e2e8f0;overflow-x:auto;line-height:1.65;margin:0">void UpdateSwingPhysics(float DeltaTime)
+{
+    Velocity.Z -= Gravity * DeltaTime;        // 1. 중력
+    Position   += Velocity * DeltaTime;       // 2. 위치 업데이트
+
+    FVector ToAnchor = Position - AnchorPoint;
+    float   Distance = ToAnchor.Size();
+
+    if (Distance > RopeLength)
+    {
+        FVector RopeDir  = ToAnchor / Distance;
+        float   RadialVel = FVector::DotProduct(Velocity, RopeDir);
+        if (RadialVel > 0)
+            Velocity -= RadialVel * RopeDir;    // 3. 반지름 속도 제거
+        Position = AnchorPoint + RopeDir * RopeLength; // 4. 위치 보정
+    }
+    Velocity *= SwingDamping;                  // 5. 감쇠
+}</pre>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;font-size:.8rem;text-align:center">
+          <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px"><b>거리 제약</b><br><span style="opacity:.7">Distance Control</span></div>
+          <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px"><b>속도 제어</b><br><span style="opacity:.7">Velocity Constraint</span></div>
+          <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px"><b>위치 보정</b><br><span style="opacity:.7">Position Correction</span></div>
+          <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px"><b>에너지 감쇠</b><br><span style="opacity:.7">Energy Damping</span></div>
+        </div>
+      </div>
+
+      <!-- 2-1. Gravity Only -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap" style="background:#fee2e2">🚨</div>
+          <div><h2>문제 1: 단순 중력 적용</h2><p>로프 제약이 없어 무한히 멀어지는 문제</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasGravity" width="600" height="400" style="background:linear-gradient(135deg,#f9fafb,#f3f4f6)"></canvas>
+            <div style="margin-top:12px;display:flex;justify-content:center">
+              <button id="btnGravity" onclick="toggleGravitySolution()" style="padding:10px 24px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer;font-size:.95rem;transition:background .2s">해결책 보기</button>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel" style="background:#fef2f2;border-color:#fecaca"><h3 style="color:#991b1b">❌ 문제 상황</h3>
+              <ul class="bullet-list"><li>중력만 적용하면 캐릭터가 계속 아래로 가속</li><li>앵커와의 거리 제한이 없어 무한히 멀어짐</li><li>로프가 존재하지 않는 것처럼 동작</li><li>빨간 점선 = 로프가 늘어남</li></ul>
+            </div>
+            <div class="panel green"><h3>✅ 해결 방법</h3>
+              <pre style="background:#111827;border-radius:8px;padding:12px;font-size:.75rem;color:#f1f5f9;overflow-x:auto;line-height:1.6;margin:0">float Dist = (Pos - Anchor).Size();
+if (Dist > RopeLength) {
+    FVector Dir = (Pos - Anchor) / Dist;
+    float RV = Dot(Velocity, Dir);
+    if (RV > 0) Velocity -= RV * Dir;
+    Pos = Anchor + Dir * RopeLength;
+}</pre>
+            </div>
+            <div class="panel blue"><h3>핵심 개념</h3>
+              <div class="formula-box blue" style="margin-bottom:6px"><b style="color:#1e40af">거리 제약:</b> 항상 RopeLength 유지</div>
+              <div class="formula-box blue" style="margin-bottom:6px"><b style="color:#1e40af">위치 보정:</b> 거리 초과 시 강제 이동</div>
+              <div class="formula-box blue"><b style="color:#1e40af">속도 제한:</b> 바깥 방향 속도 제거</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-2. Radial Velocity -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap" style="background:#ffedd5">📈</div>
+          <div><h2>문제 2: 반지름 방향 속도 미제거</h2><p>나선형으로 바깥으로 퍼지는 문제</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasRadial" width="600" height="450" style="background:#fff;border:1px solid #e5e7eb;border-radius:10px"></canvas>
+            <div style="margin-top:12px;display:flex;justify-content:center">
+              <button id="btnRadial" onclick="toggleRadialSolution()" style="padding:10px 24px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer;font-size:.95rem">해결책 보기</button>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel" style="background:#fff7ed;border-color:#fed7aa"><h3 style="color:#7c2d12">❌ 문제 상황</h3>
+              <ul class="bullet-list"><li>로프가 팽팽해져도 속도 벡터를 그대로 유지</li><li>앵커 방향(반지름) 속도 성분이 계속 누적</li><li>원운동이 아니라 나선형으로 바깥으로 퍼짐</li><li>빨간 벡터 = 반지름 방향 속도 (제거 필요)</li></ul>
+            </div>
+            <div class="panel green"><h3>✅ 해결: 벡터 분해</h3>
+              <pre style="background:#111827;border-radius:8px;padding:12px;font-size:.75rem;color:#f1f5f9;overflow-x:auto;line-height:1.6;margin:0">FVector Dir = (Pos-Anchor).GetSafeNormal();
+float RV = Dot(Velocity, Dir);
+FVector RadialComp  = RV * Dir;
+FVector TangentComp = Velocity - RadialComp;
+if (RV > 0) Velocity = TangentComp;</pre>
+            </div>
+            <div class="panel blue"><h3>벡터 분해 원리</h3>
+              <div style="background:#fff;border-radius:6px;padding:10px;border-left:4px solid #ef4444;margin-bottom:8px;font-size:.85rem"><b style="color:#7f1d1d">반지름 성분 (Radial)</b><br><span style="color:#6b7280;font-size:.78rem">앵커 방향으로의 속도 — 제거해야 원운동 유지</span></div>
+              <div style="background:#fff;border-radius:6px;padding:10px;border-left:4px solid #2563eb;font-size:.85rem"><b style="color:#1e3a8a">접선 성분 (Tangent)</b><br><span style="color:#6b7280;font-size:.78rem">스윙 방향 속도 — 유지해야 함</span></div>
+            </div>
+            <div class="panel" style="background:#faf5ff;border-color:#e9d5ff"><h3 style="color:#6b21a8">왜 내적(Dot Product)?</h3>
+              <p style="font-size:.85rem;color:#374151;margin-bottom:8px">내적은 한 벡터를 다른 벡터에 투영(projection)한 크기를 계산합니다.</p>
+              <div class="formula-box" style="border-color:#c4b5fd;font-size:.8rem">A · B = |A| × |B| × cos(θ)<br><span style="color:#7c3aed">= A를 B 방향으로 투영한 길이 × |B|</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-3. Position Correction -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap" style="background:#fef3c7">🎯</div>
+          <div><h2>문제 3: 위치 보정 미적용</h2><p>프레임마다 오차 누적으로 로프가 늘어나는 문제</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasPosCorrProblem" width="600" height="400" style="background:#fff;border:1px solid #e5e7eb;border-radius:10px"></canvas>
+            <div style="margin-top:12px;display:flex;justify-content:center">
+              <button id="btnPosCorr" onclick="togglePosCorrSolution()" style="padding:10px 24px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer;font-size:.95rem">해결책 보기</button>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel" style="background:#fffbeb;border-color:#fde68a"><h3 style="color:#78350f">❌ 문제 상황</h3>
+              <ul class="bullet-list"><li>속도만 수정하고 위치는 보정하지 않음</li><li>프레임마다 미세한 수치 오차가 누적됨</li><li>로프 길이가 시간이 지날수록 점점 늘어남</li><li>"Constraint Drift" 현상이라고 함</li></ul>
+            </div>
+            <div class="panel green"><h3>✅ 해결: 위치 강제 보정</h3>
+              <pre style="background:#111827;border-radius:8px;padding:12px;font-size:.75rem;color:#f1f5f9;overflow-x:auto;line-height:1.6;margin:0">// 위치 강제 보정 (핵심!)
+Position = Anchor + Direction * RopeLength;
+// → 항상 정확히 RopeLength 유지</pre>
+            </div>
+            <div class="panel blue"><h3>왜 위치 보정이 필요한가?</h3>
+              <div class="formula-box blue" style="margin-bottom:6px"><b style="color:#1e40af">수치 오차:</b> 부동소수점 연산은 완벽하지 않음</div>
+              <div class="formula-box blue" style="margin-bottom:6px"><b style="color:#1e40af">오차 누적:</b> 60FPS × 10초 = 600번 누적</div>
+              <div class="formula-box blue"><b style="color:#1e40af">제약 이완:</b> 로프가 늘어나는 비현실적 동작</div>
+            </div>
+            <div class="panel" style="background:#faf5ff;border-color:#e9d5ff"><h3 style="color:#6b21a8">위치 보정 vs 속도 보정</h3>
+              <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:8px;margin-bottom:6px;font-size:.8rem"><b style="color:#991b1b">❌ 속도만 보정:</b><br><span style="color:#374151">이미 벗어난 위치는 그대로 → 오차 누적 → Drift</span></div>
+              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px;font-size:.8rem"><b style="color:#14532d">✅ 위치도 보정:</b><br><span style="color:#374151">매 프레임 정확한 위치로 강제 이동 → 안정적</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-4. Damping Problem -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap" style="background:#cffafe">💨</div>
+          <div><h2>문제 4: 감쇠 미적용</h2><p>에너지가 보존되어 무한히 스윙하는 문제</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasDampingProblem" width="600" height="400" style="background:#fff;border:1px solid #e5e7eb;border-radius:10px"></canvas>
+            <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:12px">
+              <button id="btnDampingProb" onclick="toggleDampingComparison()" style="padding:10px 24px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer;font-size:.95rem">비교 보기</button>
+              <div id="dampSliderWrap" style="display:none;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:16px;width:100%">
+                <span class="slider-label">감쇠 계수: <span id="lblDampFactor">0.995</span></span>
+                <input type="range" id="sliderDampFactor" min="0.98" max="0.999" step="0.001" value="0.995" oninput="updateDampFactor(this.value)">
+                <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#6b7280;margin-top:4px"><span>빠른 (0.98)</span><span>느린 (0.999)</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel" style="background:#ecfeff;border-color:#a5f3fc"><h3 style="color:#164e63">❌ 문제 상황</h3>
+              <ul class="bullet-list"><li>마찰이나 공기 저항이 없는 이상적인 상태</li><li>에너지가 보존되어 영원히 같은 속도로 스윙</li><li>현실적이지 않은 물리 동작</li><li>플레이어가 제어하기 어려움</li></ul>
+            </div>
+            <div class="panel green"><h3>✅ 해결: 감쇠 적용</h3>
+              <pre style="background:#111827;border-radius:8px;padding:12px;font-size:.75rem;color:#f1f5f9;overflow-x:auto;line-height:1.6;margin:0">// 매 프레임 속도에 감쇠 적용
+Velocity *= SwingDamping; // 0.995
+// 매 프레임 0.5% 에너지 손실
+// → 자연스럽게 멈춤</pre>
+            </div>
+            <div class="panel blue"><h3>감쇠 계수 가이드</h3>
+              <div class="formula-box blue" style="margin-bottom:6px"><b>0.99~0.995:</b> 무거운 로프, 빠르게 멈춤</div>
+              <div class="formula-box blue" style="margin-bottom:6px"><b>0.995~0.998:</b> 일반적인 스윙 (권장)</div>
+              <div class="formula-box blue"><b>0.998~0.999:</b> 가벼운 로프, 오래 스윙</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-5. Vector Decomposition -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap purple">↔️</div>
+          <div><h2>속도 벡터 분해</h2><p>Velocity Vector Decomposition</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasVector" width="500" height="450" style="background:linear-gradient(135deg,#f9fafb,#f3f4f6)"></canvas>
+            <div style="margin-top:10px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.8rem">
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:20px;height:3px;background:#8b5cf6;display:inline-block"></span>v (원래)</span>
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:20px;height:3px;background:#ef4444;display:inline-block"></span>v_r (반지름)</span>
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:20px;height:3px;background:#10b981;display:inline-block"></span>v_t (접선)</span>
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:20px;height:3px;background:#6366f1;display:inline-block"></span>r̂ (로프)</span>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel purple"><h3>핵심 수식</h3>
+              <div class="formula-box purple" style="margin-bottom:6px"><span class="clr-purple">r̂</span> = (Anchor - Player) / Distance</div>
+              <div class="formula-box purple" style="margin-bottom:6px"><span style="color:#dc2626;font-weight:700">v_r</span> = (v · r̂) × r̂</div>
+              <div class="formula-box purple"><span style="color:#16a34a;font-weight:700">v_t</span> = v − v_r</div>
+            </div>
+            <div class="panel blue"><h3>Dot Product 투영</h3>
+              <pre style="background:#fff;border:1px solid #93c5fd;border-radius:6px;padding:10px;font-size:.75rem;color:#1e3a8a;overflow-x:auto;margin:0">FVector RopeDir =
+  (SwingAnchorPoint - PlayerLocation)
+  .GetSafeNormal();
+
+float DotProduct =
+  FVector::DotProduct(
+    SwingVelocity, RopeDir);
+
+FVector RadialVelocity =
+  DotProduct * RopeDir;</pre>
+            </div>
+            <div class="panel green"><h3>물리적 의미</h3>
+              <ul class="bullet-list">
+                <li><b style="color:#dc2626">v_r:</b> 로프를 따라 움직이는 속도 (제거 대상)</li>
+                <li><b style="color:#16a34a">v_t:</b> 로프에 수직인 속도 (유지하여 스윙)</li>
+                <li><b style="color:#7c3aed">v = v_r + v_t:</b> 벡터 합성</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-6. Interactive Swing -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap amber">⚡</div>
+          <div><h2>인터랙티브 스윙 시뮬레이션</h2><p>Interactive Swing Physics Simulation</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasSwing" width="600" height="500" style="background:linear-gradient(135deg,#f0f9ff,#e0e7ff)"></canvas>
+            <div style="margin-top:12px;display:flex;justify-content:center">
+              <button id="btnSwing" onclick="toggleSwing()" style="padding:10px 24px;border-radius:8px;border:none;background:#22c55e;color:#fff;font-weight:700;cursor:pointer;font-size:.95rem">▶ 스윙 시작</button>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel blue"><h3>물리 파라미터</h3>
+              <div class="slider-group">
+                <div>
+                  <span class="slider-label">중력 (Gravity): <span id="lblSwingGravity">980</span> px/s²</span>
+                  <input type="range" id="sliderSwingGravity" min="100" max="2000" step="10" value="980" oninput="updateSwingParam('gravity',this.value)">
+                </div>
+                <div>
+                  <span class="slider-label">감쇠 (Damping): <span id="lblSwingDamping">0.995</span></span>
+                  <input type="range" id="sliderSwingDamping" min="0.95" max="1" step="0.001" value="0.995" oninput="updateSwingParam('damping',this.value)">
+                </div>
+                <div>
+                  <span class="slider-label">로프 길이: <span id="lblRopeLen">200</span>px</span>
+                  <input type="range" id="sliderRopeLen" min="100" max="300" step="10" value="200" oninput="updateSwingParam('rope',this.value)">
+                </div>
+              </div>
+            </div>
+            <div class="panel green"><h3>상태 표시</h3>
+              <ul class="bullet-list">
+                <li><b style="color:#6366f1">파란 로프:</b> 느슨함 (SLACK)</li>
+                <li><b style="color:#22c55e">초록 로프:</b> 팽팽함 (TAUT) — 구속 활성</li>
+                <li><b style="color:#8b5cf6">보라 화살표:</b> 현재 속도 벡터</li>
+                <li><b style="color:#22c55e">에너지 바:</b> 운동 에너지</li>
+              </ul>
+            </div>
+            <div class="panel" style="background:#faf5ff;border-color:#e9d5ff"><h3 style="color:#6b21a8">시뮬레이션 팁</h3>
+              <ul class="bullet-list">
+                <li>중력을 높이면 더 빠르게 스윙합니다</li>
+                <li>감쇠를 낮추면 에너지가 빨리 소실됩니다</li>
+                <li>로프 길이를 바꾸면 스윙 범위가 변합니다</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ Part 3: AI ══ -->
+  <section class="section" style="animation-delay:.6s">
+    <div class="section-header" style="background:linear-gradient(135deg,#22c55e,#0d9488)">
+      <h2>Part 3: AI 시스템</h2>
+      <p>Artificial Intelligence for Game Mechanics</p>
+    </div>
+    <div class="section-body">
+
+      <!-- 3-1. Sin/Cos Movement -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap purple">〰️</div>
+          <div><h2>Sin/Cos 복합 함수 Movement</h2><p>저비용 고효율 연산을 이용한 AI 이동 패턴</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasSinCos" width="600" height="400" style="background:linear-gradient(135deg,#f9fafb,#f3f4f6)"></canvas>
+            <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+              <button id="btnSin" onclick="setSinCosMode('sin')" style="padding:8px 16px;border-radius:8px;border:none;background:#d1d5db;color:#374151;font-weight:700;cursor:pointer">Sin 이동</button>
+              <button id="btnCos" onclick="setSinCosMode('cos')" style="padding:8px 16px;border-radius:8px;border:none;background:#d1d5db;color:#374151;font-weight:700;cursor:pointer">Cos 이동</button>
+              <button id="btnCombined" onclick="setSinCosMode('combined')" style="padding:8px 16px;border-radius:8px;border:none;background:#8b5cf6;color:#fff;font-weight:700;cursor:pointer">복합 이동</button>
+            </div>
+          </div>
+          <div class="info-stack">
+            <div class="panel purple"><h3>핵심 코드</h3>
+              <pre style="background:#111827;border-radius:8px;padding:12px;font-size:.75rem;color:#f1f5f9;overflow-x:auto;line-height:1.6;margin:0">void AMoveAction::Execute()
+{
+    float Time = GetWorld()->GetTimeSeconds();
+    bool bUseSin = FMath::RandBool();
+
+    if (bUseSin)
+        NewLoc.Y += FMath::Sin(Time * Speed)
+                    * Amplitude;
+    else
+        NewLoc.X += FMath::Cos(Time * Speed)
+                    * Amplitude;
+
+    Owner->SetActorLocation(NewLoc);
+}</pre>
+            </div>
+            <div class="panel blue"><h3>파라미터 제어</h3>
+              <div class="slider-group">
+                <div>
+                  <span class="slider-label">속도 (Speed): <span id="lblSinSpeed">2.0</span></span>
+                  <input type="range" id="sliderSinSpeed" min="0.5" max="5" step="0.5" value="2" oninput="updateSinCosParam('speed',this.value)">
+                </div>
+                <div>
+                  <span class="slider-label">진폭 (Amplitude): <span id="lblAmplitude">50</span>px</span>
+                  <input type="range" id="sliderAmplitude" min="20" max="100" step="10" value="50" oninput="updateSinCosParam('amp',this.value)">
+                </div>
+              </div>
+            </div>
+            <div class="panel green"><h3>장점</h3>
+              <ul class="bullet-list">
+                <li>CPU 연산 비용이 매우 낮음 (하드웨어 최적화)</li>
+                <li>부드럽고 자연스러운 움직임</li>
+                <li>예측 가능한 패턴으로 디버깅 용이</li>
+                <li>다수의 AI가 동시에 사용해도 성능 저하 없음</li>
+              </ul>
+            </div>
+            <div class="panel amber"><h3>실전 활용</h3>
+              <ul class="bullet-list">
+                <li>회피 패턴: 플레이어 공격을 피하면서 이동</li>
+                <li>순찰 경로: 일정 범위 내에서 웨이브 움직임</li>
+                <li>공중 유닛: 비행 패턴 시뮬레이션</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-2. Raycasting -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon-wrap green">📡</div>
+          <div><h2>Raycasting</h2><p>200 유닛 범위 내 실시간 지형지물(장애물) 탐색</p></div>
+        </div>
+        <div class="grid2">
+          <div>
+            <canvas id="canvasRaycast" width="600" height="450" style="background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:10px;cursor:crosshair"></canvas>
+            <p class="canvas-note">마우스를 움직여 AI의 시야 방향을 조정하세요</p>
+          </div>
+          <div class="info-stack">
+            <div class="panel green"><h3>핵심 코드</h3>
+              <pre style="background:#111827;border-radius:8px;padding:12px;font-size:.75rem;color:#f1f5f9;overflow-x:auto;line-height:1.6;margin:0">bool AEnemyAI::RaycastObstacles()
+{
+    for (int i = 0; i < 8; i++) {
+        float Angle = (i / 8.0f) * TWO_PI;
+        FVector Dir = FVector(
+            FMath::Cos(Angle),
+            FMath::Sin(Angle), 0);
+
+        FVector End = Start + Dir * 200.0f;
+
+        FHitResult Hit;
+        bool bHit = GetWorld()
+            ->LineTraceSingleByChannel(
+                Hit, Start, End,
+                ECC_Visibility);
+
+        if (bHit) HandleObstacle(Hit);
+    }
+}</pre>
+            </div>
+            <div class="panel blue"><h3>파라미터 제어</h3>
+              <div class="slider-group">
+                <div>
+                  <span class="slider-label">레이 개수: <span id="lblRayCount">8</span></span>
+                  <input type="range" id="sliderRayCount" min="4" max="16" step="1" value="8" oninput="updateRayParam('count',this.value)">
+                </div>
+                <div>
+                  <span class="slider-label">탐지 거리: <span id="lblRayDist">200</span>px</span>
+                  <input type="range" id="sliderRayDist" min="100" max="300" step="10" value="200" oninput="updateRayParam('dist',this.value)">
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+                  <input type="checkbox" id="checkDebug" checked onchange="updateRayParam('debug',this.checked)" style="width:16px;height:16px;cursor:pointer">
+                  <label for="checkDebug" style="font-size:.875rem;font-weight:500;color:#374151;cursor:pointer">디버그 시각화 표시</label>
+                </div>
+              </div>
+            </div>
+            <div class="panel" style="background:#faf5ff;border-color:#e9d5ff"><h3 style="color:#6b21a8">활용 사례</h3>
+              <ul class="bullet-list">
+                <li><b>커버 찾기:</b> 가장 가까운 cover 오브젝트로 이동</li>
+                <li><b>길찾기:</b> 장애물 회피 경로 계산</li>
+                <li><b>시야 체크:</b> 플레이어와 사이에 벽이 있는지 확인</li>
+                <li><b>전술 판단:</b> 열린 공간 vs 좁은 통로 판별</li>
+              </ul>
+            </div>
+            <div class="panel amber"><h3>최적화 팁</h3>
+              <ul class="bullet-list">
+                <li>매 프레임이 아닌 0.1초마다 레이캐스트</li>
+                <li>가까운 AI끼리 그룹화하여 레이 공유</li>
+                <li>콜리전 채널 필터링으로 불필요한 체크 제거</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-box">
+      <p>Unreal Engine 게임 물리 시스템 통합 시각화</p>
+      <p>AABB Bounds · UV Mapping · World Coordinates · Rope Constraint · Vector Decomposition · Swing Physics · AI Systems</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   1. AABB Bounding Box Calculation (3D rotating)
+════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('canvasAABB');
+  const ctx = canvas.getContext('2d');
+  let rotation = 0;
+  let raf;
+
+  function project(x, y, z) {
+    const cos = Math.cos(rotation), sin = Math.sin(rotation);
+    const rx = x * cos - z * sin;
+    const rz = x * sin + z * cos;
+    const p = 400 / (400 + rz * 80);
+    return { x: canvas.width / 2 + rx * 80 * p, y: canvas.height / 2 - y * 80 * p, z: rz };
+  }
+
+  function drawBox(ctx, min, max, color, alpha) {
+    const c = [
+      project(min.x, min.y, min.z), project(max.x, min.y, min.z),
+      project(max.x, max.y, min.z), project(min.x, max.y, min.z),
+      project(min.x, min.y, max.z), project(max.x, min.y, max.z),
+      project(max.x, max.y, max.z), project(min.x, max.y, max.z)
+    ];
+    const faces = [[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[0,3,7,4],[1,2,6,5]];
+    const edges = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+
+    ctx.globalAlpha = alpha * 0.15;
+    ctx.fillStyle = color;
+    faces.forEach(f => {
+      ctx.beginPath();
+      ctx.moveTo(c[f[0]].x, c[f[0]].y);
+      for (let i = 1; i < f.length; i++) ctx.lineTo(c[f[i]].x, c[f[i]].y);
+      ctx.closePath(); ctx.fill();
+    });
+
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    edges.forEach(([a, b]) => {
+      ctx.beginPath(); ctx.moveTo(c[a].x, c[a].y); ctx.lineTo(c[b].x, c[b].y); ctx.stroke();
+    });
+  }
+
+  function drawArrow(ctx, from, to, color, label) {
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
+    ctx.setLineDash([]);
+    const angle = Math.atan2(to.y - from.y, to.x - from.x);
+    const len = 10;
+    ctx.beginPath();
+    ctx.moveTo(to.x, to.y);
+    ctx.lineTo(to.x - len * Math.cos(angle - Math.PI / 6), to.y - len * Math.sin(angle - Math.PI / 6));
+    ctx.moveTo(to.x, to.y);
+    ctx.lineTo(to.x - len * Math.cos(angle + Math.PI / 6), to.y - len * Math.sin(angle + Math.PI / 6));
+    ctx.stroke();
+    ctx.fillStyle = color; ctx.font = '12px monospace';
+    ctx.fillText(label, to.x + 10, to.y - 5);
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    rotation += 0.005;
+
+    const origin = { x: 0, y: 0, z: 0 };
+    const extent = { x: 1.5, y: 1, z: 1.5 };
+    const min = { x: origin.x - extent.x, y: origin.y - extent.y, z: origin.z - extent.z };
+    const max = { x: origin.x + extent.x, y: origin.y + extent.y, z: origin.z + extent.z };
+
+    drawBox(ctx, min, max, '#ff8c00', 0.8);
+
+    // Origin dot
+    ctx.globalAlpha = 1;
+    const op = project(0, 0, 0);
+    ctx.fillStyle = '#3b82f6';
+    ctx.beginPath(); ctx.arc(op.x, op.y, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Extent vectors
+    drawArrow(ctx, op, project(extent.x, 0, 0), '#10b981', 'Extent.X');
+    drawArrow(ctx, op, project(0, extent.y, 0), '#10b981', 'Extent.Y');
+
+    // Min / Max dots
+    const minP = project(min.x, min.y, min.z);
+    const maxP = project(max.x, max.y, max.z);
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(minP.x, minP.y, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.font = '12px monospace'; ctx.fillText('Min', minP.x - 30, minP.y);
+
+    ctx.fillStyle = '#22c55e';
+    ctx.beginPath(); ctx.arc(maxP.x, maxP.y, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText('Max', maxP.x + 10, maxP.y);
+
+    ctx.fillStyle = '#3b82f6';
+    ctx.fillText('Origin', op.x + 10, op.y + 5);
+
+    raf = requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   2. UV → World XY
+════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('canvasUVtoWorld');
+  const ctx = canvas.getContext('2d');
+  let time = 0, raf;
+
+  function drawGrid(x, y, w, h, divs, strokeColor, fillColor) {
+    ctx.fillStyle = fillColor || 'transparent';
+    if (fillColor) ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1;
+    for (let i = 0; i <= divs; i++) {
+      const ox = (w / divs) * i, oy = (h / divs) * i;
+      ctx.beginPath(); ctx.moveTo(x + ox, y); ctx.lineTo(x + ox, y + h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, y + oy); ctx.lineTo(x + w, y + oy); ctx.stroke();
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    time += 0.01;
+
+    // UV space (left)
+    const uvX0 = 50, uvY0 = 150, uvS = 100;
+    ctx.strokeStyle = '#9333ea'; ctx.lineWidth = 2;
+    ctx.strokeRect(uvX0, uvY0, uvS, uvS);
+    drawGrid(uvX0, uvY0, uvS, uvS, 4, '#e9d5ff');
+    ctx.fillStyle = '#9333ea'; ctx.font = '12px monospace';
+    ctx.fillText('UV Space', uvX0, uvY0 - 10);
+    ctx.fillText('(0,0)', uvX0 - 30, uvY0 + 15);
+    ctx.fillText('(1,1)', uvX0 + uvS + 5, uvY0 + uvS + 5);
+
+    // World space (right)
+    const wX0 = 250, wY0 = 100, wW = 200, wH = 200;
+    ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 3;
+    ctx.fillStyle = 'rgba(59,130,246,.05)';
+    ctx.fillRect(wX0, wY0, wW, wH);
+    ctx.strokeRect(wX0, wY0, wW, wH);
+    drawGrid(wX0, wY0, wW, wH, 4, '#bfdbfe');
+    ctx.fillStyle = '#3b82f6'; ctx.font = '12px monospace';
+    ctx.fillText('World Space', wX0, wY0 - 10);
+    ctx.fillText('Min', wX0 - 30, wY0 + 15);
+    ctx.fillText('Max', wX0 + wW + 5, wY0 + wH + 5);
+
+    // Animated point
+    const uvNX = (Math.sin(time) + 1) / 2;
+    const uvNY = (Math.cos(time * 0.7) + 1) / 2;
+    const uvPx = uvX0 + uvNX * uvS, uvPy = uvY0 + uvNY * uvS;
+
+    // UV dot
+    ctx.fillStyle = '#9333ea';
+    ctx.beginPath(); ctx.arc(uvPx, uvPy, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Arrow
+    ctx.strokeStyle = '#10b981'; ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(uvX0 + uvS + 10, uvY0 + uvS / 2);
+    ctx.lineTo(wX0 - 10, wY0 + wH / 2); ctx.stroke();
+    ctx.setLineDash([]);
+    const aX = wX0 - 10, aY = wY0 + wH / 2;
+    ctx.beginPath();
+    ctx.moveTo(aX, aY); ctx.lineTo(aX - 10, aY - 5);
+    ctx.moveTo(aX, aY); ctx.lineTo(aX - 10, aY + 5); ctx.stroke();
+    ctx.fillStyle = '#10b981'; ctx.font = 'bold 14px monospace';
+    ctx.fillText('Lerp', 170, 210);
+
+    // World dot
+    const wPx = wX0 + uvNX * wW, wPy = wY0 + uvNY * wH;
+    ctx.fillStyle = '#3b82f6';
+    ctx.beginPath(); ctx.arc(wPx, wPy, 8, 0, Math.PI * 2); ctx.fill();
+
+    // Connection line
+    ctx.strokeStyle = 'rgba(16,185,129,.3)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(uvPx, uvPy); ctx.lineTo(wPx, wPy); ctx.stroke();
+
+    // Labels
+    ctx.fillStyle = '#9333ea'; ctx.font = '10px monospace';
+    ctx.fillText(`(${uvNX.toFixed(2)}, ${uvNY.toFixed(2)})`, uvPx + 10, uvPy - 10);
+    ctx.fillStyle = '#3b82f6';
+    ctx.fillText('World XY', wPx + 10, wPy - 10);
+
+    raf = requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   3. World XY → UV
+════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('canvasWorldToUV');
+  const ctx = canvas.getContext('2d');
+  let time = 0, raf;
+
+  function drawGrid(x, y, w, h, divs, color) {
+    ctx.strokeStyle = color; ctx.lineWidth = 1;
+    for (let i = 0; i <= divs; i++) {
+      const ox = (w / divs) * i, oy = (h / divs) * i;
+      ctx.beginPath(); ctx.moveTo(x + ox, y); ctx.lineTo(x + ox, y + h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, y + oy); ctx.lineTo(x + w, y + oy); ctx.stroke();
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    time += 0.01;
+
+    // World space (left)
+    const wX0 = 50, wY0 = 100, wW = 200, wH = 200;
+    ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 3;
+    ctx.fillStyle = 'rgba(59,130,246,.05)';
+    ctx.fillRect(wX0, wY0, wW, wH);
+    ctx.strokeRect(wX0, wY0, wW, wH);
+    drawGrid(wX0, wY0, wW, wH, 4, '#bfdbfe');
+    ctx.fillStyle = '#3b82f6'; ctx.font = '12px monospace';
+    ctx.fillText('World Space', wX0, wY0 - 10);
+    ctx.fillText('Min', wX0 - 30, wY0 + 15);
+    ctx.fillText('Max', wX0 + wW + 5, wY0 + wH + 5);
+
+    // UV space (right)
+    const uvX0 = 350, uvY0 = 150, uvS = 100;
+    ctx.strokeStyle = '#9333ea'; ctx.lineWidth = 2;
+    ctx.strokeRect(uvX0, uvY0, uvS, uvS);
+    drawGrid(uvX0, uvY0, uvS, uvS, 4, '#e9d5ff');
+    ctx.fillStyle = '#9333ea'; ctx.font = '12px monospace';
+    ctx.fillText('UV Space', uvX0, uvY0 - 10);
+    ctx.fillText('(0,0)', uvX0 - 30, uvY0 + 15);
+    ctx.fillText('(1,1)', uvX0 + uvS + 5, uvY0 + uvS + 5);
+
+    // Animated world point
+    const nX = (Math.sin(time) + 1) / 2;
+    const nY = (Math.cos(time * 0.7) + 1) / 2;
+    const wPx = wX0 + nX * wW, wPy = wY0 + nY * wH;
+
+    ctx.fillStyle = '#3b82f6';
+    ctx.beginPath(); ctx.arc(wPx, wPy, 8, 0, Math.PI * 2); ctx.fill();
+
+    // Arrow
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(wX0 + wW + 10, wY0 + wH / 2);
+    ctx.lineTo(uvX0 - 10, uvY0 + uvS / 2); ctx.stroke();
+    ctx.setLineDash([]);
+    const aX = uvX0 - 10, aY = uvY0 + uvS / 2;
+    ctx.beginPath();
+    ctx.moveTo(aX, aY); ctx.lineTo(aX - 10, aY - 5);
+    ctx.moveTo(aX, aY); ctx.lineTo(aX - 10, aY + 5); ctx.stroke();
+    ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 12px monospace';
+    ctx.fillText('MapRange', 270, 210);
+
+    // UV dot
+    const uvPx = uvX0 + nX * uvS, uvPy = uvY0 + nY * uvS;
+    ctx.fillStyle = '#9333ea';
+    ctx.beginPath(); ctx.arc(uvPx, uvPy, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Connection
+    ctx.strokeStyle = 'rgba(245,158,11,.3)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(wPx, wPy); ctx.lineTo(uvPx, uvPy); ctx.stroke();
+
+    // Labels
+    ctx.fillStyle = '#3b82f6'; ctx.font = '10px monospace';
+    ctx.fillText('World XY', wPx - 50, wPy - 10);
+    ctx.fillStyle = '#9333ea';
+    ctx.fillText(`(${nX.toFixed(2)}, ${nY.toFixed(2)})`, uvPx + 10, uvPy - 10);
+
+    // Gauge
+    const gX = 50, gY = 350, gW = 400;
+    ctx.fillStyle = '#e5e7eb'; ctx.fillRect(gX, gY, gW, 30);
+    ctx.fillStyle = '#f59e0b'; ctx.fillRect(gX, gY, gW * nX, 30);
+    ctx.strokeStyle = '#9ca3af'; ctx.lineWidth = 2; ctx.strokeRect(gX, gY, gW, 30);
+    ctx.fillStyle = '#374151'; ctx.font = '12px monospace';
+    ctx.fillText('0%', gX, gY - 5);
+    ctx.fillText('100%', gX + gW - 30, gY - 5);
+    ctx.fillText(`${(nX * 100).toFixed(0)}%`, gX + gW / 2 - 15, gY + 20);
+
+    raf = requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   4. Dynamic Bounds
+════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('canvasDynamic');
+  const ctx = canvas.getContext('2d');
+  let time = 0, raf;
+
+  // Slider state
+  let boundsSize = 1.5, offsetX = 0, offsetY = 0;
+
+  document.getElementById('sliderSize').addEventListener('input', e => {
+    boundsSize = parseFloat(e.target.value);
+    document.getElementById('lblSize').textContent = boundsSize.toFixed(1);
+  });
+  document.getElementById('sliderOffsetX').addEventListener('input', e => {
+    offsetX = parseFloat(e.target.value);
+    document.getElementById('lblOffsetX').textContent = offsetX.toFixed(1);
+  });
+  document.getElementById('sliderOffsetY').addEventListener('input', e => {
+    offsetY = parseFloat(e.target.value);
+    document.getElementById('lblOffsetY').textContent = offsetY.toFixed(1);
+  });
+
+  function project(x, y, z, rot) {
+    const cos = Math.cos(rot), sin = Math.sin(rot);
+    const rx = x * cos - z * sin;
+    const rz = x * sin + z * cos;
+    const scale = 60;
+    const p = 400 / (400 + rz * scale);
+    return { x: 200 + rx * scale * p, y: 200 - y * scale * p };
+  }
+
+  function drawBox3D(min, max, color, alpha, rot) {
+    const c = [
+      project(min.x, min.y, min.z, rot), project(max.x, min.y, min.z, rot),
+      project(max.x, max.y, min.z, rot), project(min.x, max.y, min.z, rot),
+      project(min.x, min.y, max.z, rot), project(max.x, min.y, max.z, rot),
+      project(max.x, max.y, max.z, rot), project(min.x, max.y, max.z, rot)
+    ];
+    const faces = [[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[0,3,7,4],[1,2,6,5]];
+    const edges = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+
+    ctx.globalAlpha = alpha * 0.15;
+    ctx.fillStyle = color;
+    faces.forEach(f => {
+      ctx.beginPath();
+      ctx.moveTo(c[f[0]].x, c[f[0]].y);
+      for (let i = 1; i < f.length; i++) ctx.lineTo(c[f[i]].x, c[f[i]].y);
+      ctx.closePath(); ctx.fill();
+    });
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    edges.forEach(([a, b]) => {
+      ctx.beginPath(); ctx.moveTo(c[a].x, c[a].y); ctx.lineTo(c[b].x, c[b].y); ctx.stroke();
+    });
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    time += 0.01;
+    const rot = time * 0.3;
+
+    const origin = { x: offsetX, y: 0, z: offsetY };
+    const extent = { x: boundsSize, y: boundsSize * 0.7, z: boundsSize };
+    const min = { x: origin.x - extent.x, y: origin.y - extent.y, z: origin.z - extent.z };
+    const max = { x: origin.x + extent.x, y: origin.y + extent.y, z: origin.z + extent.z };
+
+    drawBox3D(min, max, '#ff8c00', 0.8, rot);
+
+    // Origin
+    ctx.globalAlpha = 1;
+    const op = project(origin.x, origin.y, origin.z, rot);
+    ctx.fillStyle = '#3b82f6';
+    ctx.beginPath(); ctx.arc(op.x, op.y, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Player
+    const pUVX = (Math.sin(time * 1.5) + 1) / 2;
+    const pUVY = (Math.cos(time * 1.2) + 1) / 2;
+    const pWX = min.x + (max.x - min.x) * pUVX;
+    const pWZ = min.z + (max.z - min.z) * pUVY;
+    const pp = project(pWX, max.y, pWZ, rot);
+
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(pp.x, pp.y, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+    // Minimap
+    const mmX = 450, mmY = 50, mmS = 120;
+    ctx.fillStyle = '#1f2937'; ctx.fillRect(mmX, mmY, mmS, mmS);
+    ctx.strokeStyle = '#4b5563'; ctx.lineWidth = 2; ctx.strokeRect(mmX, mmY, mmS, mmS);
+    ctx.strokeStyle = '#ff8c00'; ctx.lineWidth = 1;
+    ctx.strokeRect(mmX + 10, mmY + 10, mmS - 20, mmS - 20);
+
+    const mmPx = mmX + 10 + (mmS - 20) * pUVX;
+    const mmPy = mmY + 10 + (mmS - 20) * pUVY;
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(mmPx, mmPy, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
+
+    ctx.fillStyle = '#fff'; ctx.font = '10px monospace';
+    ctx.fillText('Minimap', mmX, mmY - 5);
+    ctx.fillStyle = '#10b981'; ctx.font = '9px monospace';
+    ctx.fillText(`UV: (${pUVX.toFixed(2)}, ${pUVY.toFixed(2)})`, mmX, mmY + mmS + 15);
+
+    // Labels
+    ctx.fillStyle = '#3b82f6'; ctx.font = '11px monospace';
+    ctx.fillText('Origin', op.x + 10, op.y - 5);
+    ctx.fillStyle = '#ef4444';
+    ctx.fillText('Player', pp.x + 10, pp.y - 10);
+
+    // Pulse indicator
+    const pulse = Math.sin(time * 3) * 0.3 + 0.7;
+    ctx.globalAlpha = pulse;
+    ctx.fillStyle = '#10b981';
+    ctx.beginPath(); ctx.arc(mmX + mmS - 10, mmY + 10, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+
+    raf = requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   Shared state for interactive simulations
+════════════════════════════════════════ */
+let showGravitySolution  = false;
+let showRadialSolution   = false;
+let showPosCorrSolution  = false;
+let showDampComparison   = false;
+let dampFactorVal        = 0.995;
+let swingRunning         = false;
+let swingGravityVal      = 980;
+let swingDampVal         = 0.995;
+let swingRopeLenVal      = 200;
+let sinCosMode           = 'combined';
+let sinSpeedVal          = 2;
+let ampVal               = 50;
+let rayCountVal          = 8;
+let rayDistVal           = 200;
+let showRayDebug         = true;
+
+function toggleGravitySolution() {
+  showGravitySolution = !showGravitySolution;
+  const b = document.getElementById('btnGravity');
+  b.style.background = showGravitySolution ? '#22c55e' : '#3b82f6';
+  b.textContent = showGravitySolution ? '✅ 해결책 표시 중' : '해결책 보기';
+}
+function toggleRadialSolution() {
+  showRadialSolution = !showRadialSolution;
+  const b = document.getElementById('btnRadial');
+  b.style.background = showRadialSolution ? '#22c55e' : '#3b82f6';
+  b.textContent = showRadialSolution ? '✅ 해결책 표시 중' : '해결책 보기';
+}
+function togglePosCorrSolution() {
+  showPosCorrSolution = !showPosCorrSolution;
+  const b = document.getElementById('btnPosCorr');
+  b.style.background = showPosCorrSolution ? '#22c55e' : '#3b82f6';
+  b.textContent = showPosCorrSolution ? '✅ 해결책 표시 중' : '해결책 보기';
+}
+function toggleDampingComparison() {
+  showDampComparison = !showDampComparison;
+  const b = document.getElementById('btnDampingProb');
+  b.style.background = showDampComparison ? '#22c55e' : '#3b82f6';
+  b.textContent = showDampComparison ? '✅ 비교 표시 중' : '비교 보기';
+  document.getElementById('dampSliderWrap').style.display = showDampComparison ? 'block' : 'none';
+}
+function updateDampFactor(v) {
+  dampFactorVal = parseFloat(v);
+  document.getElementById('lblDampFactor').textContent = dampFactorVal.toFixed(3);
+}
+function toggleSwing() {
+  swingRunning = !swingRunning;
+  const b = document.getElementById('btnSwing');
+  b.style.background = swingRunning ? '#ef4444' : '#22c55e';
+  b.textContent = swingRunning ? '⏸ 일시정지' : '▶ 스윙 시작';
+}
+function updateSwingParam(k, v) {
+  if (k === 'gravity') { swingGravityVal = parseInt(v); document.getElementById('lblSwingGravity').textContent = v; }
+  if (k === 'damping') { swingDampVal = parseFloat(v);   document.getElementById('lblSwingDamping').textContent = parseFloat(v).toFixed(3); }
+  if (k === 'rope')    { swingRopeLenVal = parseInt(v);  document.getElementById('lblRopeLen').textContent = v; }
+}
+function setSinCosMode(m) {
+  sinCosMode = m;
+  ['sin','cos','combined'].forEach(id => {
+    const b = document.getElementById('btn' + id.charAt(0).toUpperCase() + id.slice(1));
+    const active = id === m;
+    b.style.background = active ? (id==='sin'?'#ef4444':id==='cos'?'#3b82f6':'#8b5cf6') : '#d1d5db';
+    b.style.color = active ? '#fff' : '#374151';
+  });
+}
+function updateSinCosParam(k, v) {
+  if (k === 'speed') { sinSpeedVal = parseFloat(v); document.getElementById('lblSinSpeed').textContent = parseFloat(v).toFixed(1); }
+  if (k === 'amp')   { ampVal = parseInt(v); document.getElementById('lblAmplitude').textContent = v; }
+}
+function updateRayParam(k, v) {
+  if (k === 'count') { rayCountVal = parseInt(v); document.getElementById('lblRayCount').textContent = v; }
+  if (k === 'dist')  { rayDistVal  = parseInt(v); document.getElementById('lblRayDist').textContent  = v; }
+  if (k === 'debug') { showRayDebug = v; }
+}
+
+/* ════════════════════════════════════════
+   5. Gravity Only Problem
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasGravity');
+  const ctx = canvas.getContext('2d');
+  const anchor = { x: 300, y: 100 };
+  const ROPE = 50, G = 980, DT = 1/60;
+  let pp = { x: 300, y: 150 }, pv = { x: 150, y: 0 };
+  let sp = { x: 300, y: 150 }, sv = { x: 150, y: 0 };
+
+  function arrowHead(x, y, ang) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 10*Math.cos(ang-0.3), y - 10*Math.sin(ang-0.3));
+    ctx.lineTo(x - 10*Math.cos(ang+0.3), y - 10*Math.sin(ang+0.3));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Problem (left)
+    ctx.fillStyle = '#1f2937'; ctx.font = 'bold 15px sans-serif';
+    ctx.fillText('❌ 문제: 중력만 적용', 40, 30);
+    pv.y += G * DT; pp.x += pv.x * DT; pp.y += pv.y * DT;
+    if (pp.y > canvas.height || pp.x > 290 || pp.x < 10) { pp={x:300,y:150}; pv={x:150,y:0}; }
+
+    const pd = Math.hypot(pp.x - anchor.x, pp.y - anchor.y);
+    ctx.fillStyle = '#374151'; ctx.beginPath(); ctx.arc(anchor.x, anchor.y, 8, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = pd > ROPE ? '#ef4444' : '#9ca3af';
+    ctx.lineWidth = 3; ctx.setLineDash(pd > ROPE ? [10,5] : []);
+    ctx.beginPath(); ctx.moveTo(anchor.x, anchor.y); ctx.lineTo(pp.x, pp.y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(pp.x, pp.y, 12, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    const pvx = pv.x*.1, pvy = pv.y*.1;
+    ctx.strokeStyle='#fbbf24'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(pp.x,pp.y); ctx.lineTo(pp.x+pvx, pp.y+pvy); ctx.stroke();
+    ctx.fillStyle='#fbbf24'; arrowHead(pp.x+pvx, pp.y+pvy, Math.atan2(pv.y, pv.x));
+    ctx.fillStyle='#ef4444'; ctx.font='12px monospace';
+    ctx.fillText(`거리: ${pd.toFixed(0)}px`, 40, 58);
+    ctx.fillText(`로프 길이: ${ROPE}px`, 40, 76);
+    ctx.fillText(`차이: +${Math.max(0,pd-ROPE).toFixed(0)}px`, 40, 94);
+
+    // Solution (right)
+    if (showGravitySolution) {
+      ctx.fillStyle='#1f2937'; ctx.font='bold 15px sans-serif';
+      ctx.fillText('✅ 해결: 거리 제약 적용', 340, 30);
+      sv.y += G*DT; sp.x += sv.x*DT; sp.y += sv.y*DT;
+      const dx=sp.x-anchor.x, dy=sp.y-anchor.y, dist=Math.hypot(dx,dy);
+      if (dist > ROPE) {
+        const nx=dx/dist, ny=dy/dist;
+        const rv=sv.x*nx+sv.y*ny;
+        if(rv>0){sv.x-=rv*nx; sv.y-=rv*ny;}
+        sp.x=anchor.x+nx*ROPE; sp.y=anchor.y+ny*ROPE;
+      }
+      sv.x*=0.995; sv.y*=0.995;
+      if(sv.x**2+sv.y**2<10){sp={x:300,y:150};sv={x:150,y:0};}
+      ctx.fillStyle='#374151'; ctx.beginPath(); ctx.arc(anchor.x,anchor.y,8,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#22c55e'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(sp.x,sp.y); ctx.stroke();
+      ctx.fillStyle='#22c55e'; ctx.beginPath(); ctx.arc(sp.x,sp.y,12,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+      const svx=sv.x*.1, svy=sv.y*.1;
+      ctx.strokeStyle='#fbbf24'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(sp.x,sp.y); ctx.lineTo(sp.x+svx,sp.y+svy); ctx.stroke();
+      ctx.fillStyle='#fbbf24'; arrowHead(sp.x+svx, sp.y+svy, Math.atan2(sv.y,sv.x));
+      const sd=Math.hypot(sp.x-anchor.x, sp.y-anchor.y);
+      ctx.fillStyle='#22c55e'; ctx.font='12px monospace';
+      ctx.fillText(`거리: ${sd.toFixed(0)}px`, 340, 58);
+      ctx.fillText(`로프 길이: ${ROPE}px`, 340, 76);
+      ctx.fillText(`차이: ${(sd-ROPE).toFixed(1)}px`, 340, 94);
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   6. Radial Velocity Problem
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasRadial');
+  const ctx = canvas.getContext('2d');
+  const anchor = { x: 300, y: 200 };
+  const ROPE = 80, G = 500, DT = 1/60;
+  let pp = {x:350,y:200}, pv = {x:0,y:150};
+  let sp = {x:350,y:200}, sv = {x:0,y:150};
+  const pTrail=[], sTrail=[];
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // Reference circle
+    ctx.strokeStyle='#d1d5db'; ctx.lineWidth=2; ctx.setLineDash([5,5]);
+    ctx.beginPath(); ctx.arc(anchor.x, anchor.y, ROPE, 0, Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Problem label
+    ctx.fillStyle='#1f2937'; ctx.font='bold 13px sans-serif';
+    ctx.fillText('❌ 반지름 속도 유지', 20, 28);
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif';
+    ctx.fillText('(나선형 발산)', 20, 46);
+
+    // Problem physics (position only correction, no velocity removal)
+    pv.y += G*DT; pp.x += pv.x*DT; pp.y += pv.y*DT;
+    const pdx=pp.x-anchor.x, pdy=pp.y-anchor.y, pdist=Math.hypot(pdx,pdy);
+    if(pdist>ROPE){const nx=pdx/pdist,ny=pdy/pdist; pp.x=anchor.x+nx*ROPE; pp.y=anchor.y+ny*ROPE;}
+    pTrail.push({x:pp.x,y:pp.y}); if(pTrail.length>100) pTrail.shift();
+    if(Math.abs(pv.x)>300){pp={x:350,y:200};pv={x:0,y:150};pTrail.length=0;}
+
+    // Draw problem trail
+    for(let i=1;i<pTrail.length;i++){
+      const a=i/pTrail.length;
+      ctx.strokeStyle=`rgba(239,68,68,${a*0.6})`; ctx.lineWidth=a*3;
+      ctx.beginPath(); ctx.moveTo(pTrail[i-1].x,pTrail[i-1].y); ctx.lineTo(pTrail[i].x,pTrail[i].y); ctx.stroke();
+    }
+    ctx.fillStyle='#374151'; ctx.beginPath(); ctx.arc(anchor.x,anchor.y,8,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#ef4444'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(pp.x,pp.y); ctx.stroke();
+    ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(pp.x,pp.y,12,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+
+    // Velocity decomposition visualization (problem)
+    const prd={x:pdx/Math.max(pdist,1),y:pdy/Math.max(pdist,1)};
+    const prv=pv.x*prd.x+pv.y*prd.y;
+    const pRadVec={x:prv*prd.x,y:prv*prd.y};
+    const pTanVec={x:pv.x-pRadVec.x,y:pv.y-pRadVec.y};
+    ctx.strokeStyle='#dc2626'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(pp.x,pp.y); ctx.lineTo(pp.x+pRadVec.x*.15,pp.y+pRadVec.y*.15); ctx.stroke();
+    ctx.strokeStyle='#2563eb'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(pp.x,pp.y); ctx.lineTo(pp.x+pTanVec.x*.15,pp.y+pTanVec.y*.15); ctx.stroke();
+    ctx.fillStyle='#dc2626'; ctx.font='10px monospace'; ctx.fillText('반지름', pp.x+20, pp.y-15);
+    ctx.fillStyle='#2563eb'; ctx.fillText('접선', pp.x+20, pp.y+5);
+
+    // Solution (right side)
+    if (showRadialSolution) {
+      ctx.fillStyle='#1f2937'; ctx.font='bold 13px sans-serif';
+      ctx.fillText('✅ 반지름 속도 제거', 330, 28);
+      ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif';
+      ctx.fillText('(원운동 유지)', 330, 46);
+
+      sv.y += G*DT; sp.x += sv.x*DT; sp.y += sv.y*DT;
+      const sdx=sp.x-anchor.x, sdy=sp.y-anchor.y, sdist=Math.hypot(sdx,sdy);
+      if(sdist>ROPE){
+        const nx=sdx/sdist, ny=sdy/sdist;
+        const rv=sv.x*nx+sv.y*ny;
+        if(rv>0){sv.x-=rv*nx; sv.y-=rv*ny;}
+        sp.x=anchor.x+nx*ROPE; sp.y=anchor.y+ny*ROPE;
+      }
+      sv.x*=0.998; sv.y*=0.998;
+      sTrail.push({x:sp.x,y:sp.y}); if(sTrail.length>100) sTrail.shift();
+      if(sv.x**2+sv.y**2<100){sp={x:350,y:200};sv={x:0,y:150};sTrail.length=0;}
+
+      for(let i=1;i<sTrail.length;i++){
+        const a=i/sTrail.length;
+        ctx.strokeStyle=`rgba(34,197,94,${a*0.6})`; ctx.lineWidth=a*3;
+        ctx.beginPath(); ctx.moveTo(sTrail[i-1].x,sTrail[i-1].y); ctx.lineTo(sTrail[i].x,sTrail[i].y); ctx.stroke();
+      }
+      ctx.strokeStyle='#22c55e'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(sp.x,sp.y); ctx.stroke();
+      ctx.fillStyle='#22c55e'; ctx.beginPath(); ctx.arc(sp.x,sp.y,12,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+      const srd={x:sdx/Math.max(sdist,1),y:sdy/Math.max(sdist,1)};
+      const sTanVec={x:sv.x-sv.x*srd.x*srd.x-sv.y*srd.x*srd.y, y:sv.y-sv.x*srd.x*srd.y-sv.y*srd.y*srd.y};
+      // compute properly
+      const srv=sv.x*srd.x+sv.y*srd.y;
+      const sTan={x:sv.x-srv*srd.x, y:sv.y-srv*srd.y};
+      ctx.strokeStyle='#2563eb'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(sp.x,sp.y); ctx.lineTo(sp.x+sTan.x*.15,sp.y+sTan.y*.15); ctx.stroke();
+      ctx.fillStyle='#2563eb'; ctx.font='10px monospace'; ctx.fillText('접선만', sp.x+20, sp.y);
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   7. Position Correction Problem
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasPosCorrProblem');
+  const ctx = canvas.getContext('2d');
+  const anchor = {x:300, y:200};
+  const ROPE_ORIG = 80, G = 500, DT = 1/60;
+  let pp={x:380,y:200}, pv={x:-100,y:100}, pRopeLen=80;
+  let sp={x:380,y:200}, sv={x:-100,y:100};
+  let simTime=0;
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    simTime+=DT;
+
+    // Reference circle
+    ctx.strokeStyle='#d1d5db'; ctx.lineWidth=2; ctx.setLineDash([5,5]);
+    ctx.beginPath(); ctx.arc(anchor.x,anchor.y,ROPE_ORIG,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle='#1f2937'; ctx.font='bold 13px sans-serif';
+    ctx.fillText('❌ 위치 보정 없음', 20, 28);
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif';
+    ctx.fillText('(Constraint Drift)', 20, 46);
+
+    // Problem physics
+    pv.y+=G*DT; pp.x+=pv.x*DT; pp.y+=pv.y*DT;
+    const pdx=pp.x-anchor.x, pdy=pp.y-anchor.y, pdist=Math.hypot(pdx,pdy);
+    if(pdist>0.1){
+      const nx=pdx/pdist, ny=pdy/pdist;
+      const rv=pv.x*nx+pv.y*ny;
+      if(rv>0 && pdist>pRopeLen){pv.x-=rv*nx; pv.y-=rv*ny;}
+    }
+    pRopeLen=pdist; // drift grows!
+    pv.x*=0.995; pv.y*=0.995;
+    const stretch=Math.max(0,pRopeLen-ROPE_ORIG);
+    if(pRopeLen>150||simTime>10){pp={x:380,y:200};pv={x:-100,y:100};pRopeLen=80;simTime=0;}
+
+    ctx.fillStyle='#374151'; ctx.beginPath(); ctx.arc(anchor.x,anchor.y,8,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle=stretch>5?'#ef4444':'#f59e0b'; ctx.lineWidth=3;
+    ctx.setLineDash(stretch>5?[8,4]:[]);
+    ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(pp.x,pp.y); ctx.stroke();
+    ctx.setLineDash([]);
+    if(stretch>1){
+      ctx.strokeStyle='#ef4444'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.arc(anchor.x,anchor.y,pRopeLen,0,Math.PI*2); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle='#f59e0b'; ctx.beginPath(); ctx.arc(pp.x,pp.y,12,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle=stretch>5?'#ef4444':'#f59e0b'; ctx.font='bold 12px monospace';
+    ctx.fillText(`현재 길이: ${pRopeLen.toFixed(1)}px`, 20, 78);
+    ctx.fillText(`원래 길이: ${ROPE_ORIG}.0px`, 20, 96);
+    ctx.fillStyle='#ef4444'; ctx.fillText(`오차: +${stretch.toFixed(1)}px`, 20, 114);
+
+    // Solution side
+    if(showPosCorrSolution){
+      ctx.fillStyle='#1f2937'; ctx.font='bold 13px sans-serif';
+      ctx.fillText('✅ 위치 보정 적용', 330, 28);
+      ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif';
+      ctx.fillText('(Position Correction)', 330, 46);
+
+      sv.y+=G*DT; sp.x+=sv.x*DT; sp.y+=sv.y*DT;
+      const sdx=sp.x-anchor.x, sdy=sp.y-anchor.y, sdist=Math.hypot(sdx,sdy);
+      if(sdist>ROPE_ORIG&&sdist>0.1){
+        const nx=sdx/sdist, ny=sdy/sdist;
+        const rv=sv.x*nx+sv.y*ny;
+        if(rv>0){sv.x-=rv*nx; sv.y-=rv*ny;}
+        sp.x=anchor.x+nx*ROPE_ORIG; sp.y=anchor.y+ny*ROPE_ORIG;
+      }
+      sv.x*=0.995; sv.y*=0.995;
+      if(sv.x**2+sv.y**2<100){sp={x:380,y:200};sv={x:-100,y:100};}
+
+      ctx.strokeStyle='#22c55e'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(sp.x,sp.y); ctx.stroke();
+      ctx.fillStyle='#22c55e'; ctx.beginPath(); ctx.arc(sp.x,sp.y,12,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+      const actualDist=Math.hypot(sp.x-anchor.x,sp.y-anchor.y);
+      ctx.fillStyle='#22c55e'; ctx.font='bold 12px monospace';
+      ctx.fillText(`현재 길이: ${actualDist.toFixed(1)}px`, 330, 78);
+      ctx.fillText(`원래 길이: ${ROPE_ORIG}.0px`, 330, 96);
+      ctx.fillText(`오차: ${Math.abs(actualDist-ROPE_ORIG).toFixed(3)}px`, 330, 114);
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   8. Damping Problem
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasDampingProblem');
+  const ctx = canvas.getContext('2d');
+  const anchor={x:300,y:200};
+  const ROPE=80, G=500, DT=1/60;
+  let np={x:380,y:200}, nv={x:-120,y:80};   // no-damp
+  let dp={x:380,y:200}, dv={x:-120,y:80};   // damp
+
+  function applyConstraint(pos, vel) {
+    const dx=pos.x-anchor.x, dy=pos.y-anchor.y, dist=Math.hypot(dx,dy);
+    if(dist>ROPE&&dist>0.1){
+      const nx=dx/dist, ny=dy/dist;
+      const rv=vel.x*nx+vel.y*ny;
+      if(rv>0){vel.x-=rv*nx; vel.y-=rv*ny;}
+      pos.x=anchor.x+nx*ROPE; pos.y=anchor.y+ny*ROPE;
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle='#d1d5db'; ctx.lineWidth=2; ctx.setLineDash([5,5]);
+    ctx.beginPath(); ctx.arc(anchor.x,anchor.y,ROPE,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // No damping
+    ctx.fillStyle='#1f2937'; ctx.font='bold 13px sans-serif';
+    ctx.fillText('❌ 감쇠 없음', 20, 28);
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif'; ctx.fillText('(무한 스윙)', 20, 46);
+    nv.y+=G*DT; np.x+=nv.x*DT; np.y+=nv.y*DT;
+    applyConstraint(np, nv);
+    // NO damping applied
+    const nSpeed=Math.hypot(nv.x,nv.y);
+    ctx.fillStyle='#374151'; ctx.beginPath(); ctx.arc(anchor.x,anchor.y,8,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#ef4444'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(np.x,np.y); ctx.stroke();
+    ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(np.x,np.y,12,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#ef4444'; ctx.font='bold 11px monospace';
+    ctx.fillText(`속도: ${nSpeed.toFixed(0)} px/s`, 20, 76);
+    ctx.fillText('에너지: 보존됨', 20, 94);
+    const maxE=200;
+    ctx.fillStyle='#fee2e2'; ctx.fillRect(20,104,150,12);
+    ctx.fillStyle='#ef4444'; ctx.fillRect(20,104,Math.min(nSpeed/maxE*150,150),12);
+    ctx.strokeStyle='#dc2626'; ctx.lineWidth=1; ctx.strokeRect(20,104,150,12);
+
+    // With damping
+    if(showDampComparison){
+      ctx.fillStyle='#1f2937'; ctx.font='bold 13px sans-serif';
+      ctx.fillText('✅ 감쇠 적용', 330, 28);
+      ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif';
+      ctx.fillText(`계수: ${dampFactorVal.toFixed(3)}`, 330, 46);
+      dv.y+=G*DT; dp.x+=dv.x*DT; dp.y+=dv.y*DT;
+      applyConstraint(dp, dv);
+      dv.x*=dampFactorVal; dv.y*=dampFactorVal;
+      const dSpeed=Math.hypot(dv.x,dv.y);
+      if(dSpeed<10){dp={x:380,y:200};dv={x:-120,y:80};}
+
+      // Air resistance lines
+      if(dSpeed>20){
+        const velAng=Math.atan2(dv.y,dv.x);
+        for(let i=0;i<3;i++){
+          const off=i*8;
+          ctx.strokeStyle=`rgba(34,197,94,${0.4-i*0.1})`; ctx.lineWidth=2;
+          const lx=dp.x-Math.cos(velAng)*(15+off), ly=dp.y-Math.sin(velAng)*(15+off);
+          ctx.beginPath(); ctx.moveTo(lx-5,ly); ctx.lineTo(lx+5,ly); ctx.stroke();
+        }
+      }
+      ctx.strokeStyle='#22c55e'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(anchor.x,anchor.y); ctx.lineTo(dp.x,dp.y); ctx.stroke();
+      ctx.fillStyle='#22c55e'; ctx.beginPath(); ctx.arc(dp.x,dp.y,12,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+      ctx.fillStyle='#22c55e'; ctx.font='bold 11px monospace';
+      ctx.fillText(`속도: ${dSpeed.toFixed(0)} px/s`, 330, 76);
+      ctx.fillText('에너지: 감소 중', 330, 94);
+      ctx.fillStyle='#dcfce7'; ctx.fillRect(330,104,150,12);
+      ctx.fillStyle='#22c55e'; ctx.fillRect(330,104,Math.min(dSpeed/maxE*150,150),12);
+      ctx.strokeStyle='#16a34a'; ctx.lineWidth=1; ctx.strokeRect(330,104,150,12);
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   9. Vector Decomposition
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasVector');
+  const ctx = canvas.getContext('2d');
+  let time=0;
+
+  function drawArrow(x,y,vx,vy,color,label,scale=1) {
+    const ex=x+vx*scale, ey=y+vy*scale;
+    ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(ex,ey); ctx.stroke();
+    const ang=Math.atan2(vy,vx), hl=12;
+    ctx.beginPath();
+    ctx.moveTo(ex,ey);
+    ctx.lineTo(ex-hl*Math.cos(ang-Math.PI/6), ey-hl*Math.sin(ang-Math.PI/6));
+    ctx.lineTo(ex-hl*Math.cos(ang+Math.PI/6), ey-hl*Math.sin(ang+Math.PI/6));
+    ctx.closePath(); ctx.fill();
+    ctx.font='bold 13px monospace'; ctx.fillText(label, ex+10, ey-5);
+  }
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    time+=0.015;
+    const ax=250, ay=150, RL=180;
+    const angle=Math.sin(time)*0.5+Math.PI/4;
+    const px=ax+Math.cos(angle)*RL, py=ay+Math.sin(angle)*RL;
+    const rd={x:(ax-px)/RL, y:(ay-py)/RL};
+    const velAng=angle+Math.PI/2+Math.sin(time*2)*0.3;
+    const vel={x:Math.cos(velAng)*100, y:Math.sin(velAng)*100+30};
+    const dot=vel.x*rd.x+vel.y*rd.y;
+    const rv={x:dot*rd.x, y:dot*rd.y};
+    const tv={x:vel.x-rv.x, y:vel.y-rv.y};
+
+    // Constraint circle
+    ctx.strokeStyle='rgba(156,163,175,.3)'; ctx.lineWidth=1; ctx.setLineDash([5,5]);
+    ctx.beginPath(); ctx.arc(ax,ay,RL,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Rope
+    ctx.strokeStyle='#6366f1'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px,py); ctx.stroke();
+
+    // Anchor
+    ctx.fillStyle='#dc2626'; ctx.beginPath(); ctx.arc(ax,ay,8,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#dc2626'; ctx.font='12px monospace'; ctx.fillText('Anchor',ax-25,ay-15);
+
+    // Player
+    ctx.fillStyle='#3b82f6'; ctx.beginPath(); ctx.arc(px,py,15,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fbbf24'; ctx.beginPath(); ctx.arc(px,py-5,6,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#3b82f6'; ctx.font='11px monospace'; ctx.fillText('Player',px+20,py);
+
+    // Arrows
+    drawArrow(px,py,vel.x,vel.y,'#8b5cf6','v',0.8);
+    drawArrow(px,py,rv.x,rv.y,'#ef4444','v_r',0.8);
+    drawArrow(px,py,tv.x,tv.y,'#10b981','v_t',0.8);
+    drawArrow(px,py,rd.x*60,rd.y*60,'#6366f1','r̂',1);
+
+    // Right angle indicator
+    const vrNorm=Math.hypot(rv.x,rv.y), tvNorm=Math.hypot(tv.x,tv.y);
+    if(vrNorm>10&&tvNorm>10){
+      const vu={x:rv.x/vrNorm,y:rv.y/vrNorm}, tu={x:tv.x/tvNorm,y:tv.y/tvNorm};
+      const ps=15;
+      ctx.strokeStyle='rgba(0,0,0,.25)'; ctx.lineWidth=1;
+      ctx.beginPath();
+      ctx.moveTo(px+vu.x*ps, py+vu.y*ps);
+      ctx.lineTo(px+vu.x*ps+tu.x*ps, py+vu.y*ps+tu.y*ps);
+      ctx.lineTo(px+tu.x*ps, py+tu.y*ps);
+      ctx.stroke();
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   10. Interactive Swing
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasSwing');
+  const ctx = canvas.getContext('2d');
+  const ancX=canvas.width/2, ancY=100;
+  let px=ancX+200*.6, py=ancY+200*.8;
+  let vx=0, vy=0;
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    if(swingRunning){
+      const DT=0.016;
+      vy+=swingGravityVal*DT;
+      px+=vx*DT; py+=vy*DT;
+      const toX=ancX-px, toY=ancY-py;
+      const dist=Math.hypot(toX,toY);
+      if(dist>swingRopeLenVal){
+        const rx=toX/dist, ry=toY/dist;
+        const dot=vx*rx+vy*ry;
+        const rvx=dot*rx, rvy=dot*ry;
+        vx-=rvx; vy-=rvy;
+        px=ancX-rx*swingRopeLenVal; py=ancY-ry*swingRopeLenVal;
+      }
+      vx*=swingDampVal; vy*=swingDampVal;
+    }
+
+    const curDist=Math.hypot(ancX-px,ancY-py);
+    const isTaut=curDist>=swingRopeLenVal-1;
+
+    // Constraint circle
+    ctx.strokeStyle='rgba(99,102,241,.2)'; ctx.lineWidth=2; ctx.setLineDash([8,8]);
+    ctx.beginPath(); ctx.arc(ancX,ancY,swingRopeLenVal,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Rope
+    ctx.strokeStyle=isTaut?'#10b981':'#6366f1'; ctx.lineWidth=isTaut?4:3;
+    ctx.beginPath(); ctx.moveTo(ancX,ancY); ctx.lineTo(px,py); ctx.stroke();
+
+    // Anchor mount
+    ctx.fillStyle='#9ca3af'; ctx.fillRect(ancX-20,ancY-10,40,10);
+    ctx.fillStyle='#dc2626'; ctx.beginPath(); ctx.arc(ancX,ancY,10,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='12px monospace'; ctx.fillText('Anchor',ancX-25,ancY-18);
+
+    // Player
+    ctx.fillStyle='#3b82f6'; ctx.beginPath(); ctx.arc(px,py,16,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fbbf24'; ctx.beginPath(); ctx.arc(px-3,py-6,7,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1f2937';
+    ctx.beginPath(); ctx.arc(px-5,py-8,2,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(px-1,py-8,2,0,Math.PI*2); ctx.fill();
+
+    // Velocity arrow
+    if(swingRunning){
+      const sc=0.3, vmag=Math.hypot(vx,vy)*sc;
+      ctx.strokeStyle='#8b5cf6'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px+vx*sc,py+vy*sc); ctx.stroke();
+      if(vmag>5){
+        const vAng=Math.atan2(vy,vx), ax2=px+vx*sc, ay2=py+vy*sc;
+        ctx.fillStyle='#8b5cf6';
+        ctx.beginPath(); ctx.moveTo(ax2,ay2);
+        ctx.lineTo(ax2-12*Math.cos(vAng-Math.PI/6),ay2-12*Math.sin(vAng-Math.PI/6));
+        ctx.lineTo(ax2-12*Math.cos(vAng+Math.PI/6),ay2-12*Math.sin(vAng+Math.PI/6));
+        ctx.closePath(); ctx.fill();
+      }
+    }
+
+    // Info
+    ctx.fillStyle='#1f2937'; ctx.font='12px monospace';
+    ctx.fillText(`Distance: ${curDist.toFixed(1)}px`, 20,30);
+    ctx.fillText(`Rope Length: ${swingRopeLenVal}px`, 20,50);
+    ctx.fillText(`Velocity: (${vx.toFixed(0)}, ${vy.toFixed(0)})`, 20,70);
+    ctx.fillText(`Status: ${isTaut?'TAUT ✓':'SLACK'}`, 20,90);
+    const ke=0.5*(vx**2+vy**2);
+    ctx.fillStyle='#10b981'; ctx.fillRect(20,100,Math.min(ke/100,150),8);
+    ctx.strokeStyle='#6b7280'; ctx.strokeRect(20,100,150,8);
+    ctx.fillStyle='#6b7280'; ctx.font='10px monospace'; ctx.fillText('Energy',20,118);
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   11. Sin/Cos Movement
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasSinCos');
+  const ctx = canvas.getContext('2d');
+  let time=0;
+  const trail=[];
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    time+=0.02*sinSpeedVal;
+    const cx=canvas.width/2, cy=canvas.height/2;
+
+    // Grid
+    ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1;
+    for(let i=0;i<canvas.width;i+=50){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,canvas.height);ctx.stroke();}
+    for(let i=0;i<canvas.height;i+=50){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(canvas.width,i);ctx.stroke();}
+    ctx.strokeStyle='#9ca3af'; ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(canvas.width,cy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,0);ctx.lineTo(cx,canvas.height);ctx.stroke();
+
+    // Position
+    let ex=cx, ey=cy;
+    if(sinCosMode==='sin'){ex=cx+time*30; ey=cy+Math.sin(time)*ampVal;}
+    else if(sinCosMode==='cos'){ex=cx+Math.cos(time)*ampVal; ey=cy+time*30;}
+    else{ex=cx+Math.cos(time)*ampVal*1.5; ey=cy+Math.sin(time*1.3)*ampVal;}
+    if(ex>canvas.width) ex=0; if(ey>canvas.height) ey=0;
+    if(ex<0) ex=canvas.width; if(ey<0) ey=canvas.height;
+
+    trail.push({x:ex,y:ey}); if(trail.length>150) trail.shift();
+
+    // Trail
+    for(let i=1;i<trail.length;i++){
+      const a=i/trail.length;
+      ctx.strokeStyle=`rgba(139,92,246,${a*.5})`; ctx.lineWidth=a*3;
+      ctx.beginPath(); ctx.moveTo(trail[i-1].x,trail[i-1].y); ctx.lineTo(trail[i].x,trail[i].y); ctx.stroke();
+    }
+
+    // Mini wave graphs
+    const gX=20, gY=20, gW=150, gH=60;
+    ctx.fillStyle='rgba(239,68,68,.1)'; ctx.fillRect(gX,gY,gW,gH);
+    ctx.strokeStyle='#ef4444'; ctx.lineWidth=2; ctx.beginPath();
+    for(let x=0;x<=gW;x++){const t=(x/gW)*Math.PI*4; const y=gY+gH/2+Math.sin(t+time)*(gH/2-5); x===0?ctx.moveTo(gX+x,y):ctx.lineTo(gX+x,y);}
+    ctx.stroke();
+    ctx.fillStyle='#ef4444'; ctx.font='bold 11px monospace'; ctx.fillText('Sin(t)',gX+5,gY+15);
+    const gY2=gY+gH+10;
+    ctx.fillStyle='rgba(59,130,246,.1)'; ctx.fillRect(gX,gY2,gW,gH);
+    ctx.strokeStyle='#3b82f6'; ctx.lineWidth=2; ctx.beginPath();
+    for(let x=0;x<=gW;x++){const t=(x/gW)*Math.PI*4; const y=gY2+gH/2+Math.cos(t+time)*(gH/2-5); x===0?ctx.moveTo(gX+x,y):ctx.lineTo(gX+x,y);}
+    ctx.stroke();
+    ctx.fillStyle='#3b82f6'; ctx.font='bold 11px monospace'; ctx.fillText('Cos(t)',gX+5,gY2+15);
+
+    // Enemy character
+    ctx.save(); ctx.translate(ex,ey);
+    ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(0,0,20,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-7,-5,4,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(7,-5,4,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(-7,-5,2,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(7,-5,2,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fbbf24'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(15,5); ctx.lineTo(25,10); ctx.stroke();
+    ctx.restore();
+
+    // Formula
+    ctx.fillStyle='#1f2937'; ctx.font='bold 13px monospace';
+    let formula='';
+    if(sinCosMode==='sin') formula='Y = Sin(t) × Amplitude';
+    else if(sinCosMode==='cos') formula='X = Cos(t) × Amplitude';
+    else formula='X=Cos(t)×A, Y=Sin(1.3t)×A';
+    ctx.fillText(formula, canvas.width-300, canvas.height-20);
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ════════════════════════════════════════
+   12. Raycasting
+════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvasRaycast');
+  const ctx = canvas.getContext('2d');
+  let time=0, mouseX=canvas.width/2, mouseY=canvas.height/2;
+
+  const obstacles=[
+    {x:150,y:100,w:80,h:100,type:'wall'},
+    {x:400,y:150,w:60,h:120,type:'wall'},
+    {x:250,y:300,w:100,h:40,type:'cover'},
+    {x:500,y:280,w:70,h:90,type:'wall'},
+  ];
+
+  canvas.addEventListener('mousemove', e=>{
+    const r=canvas.getBoundingClientRect();
+    mouseX=(e.clientX-r.left)*(canvas.width/r.width);
+    mouseY=(e.clientY-r.top)*(canvas.height/r.height);
+  });
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    time+=0.02;
+    const ex=canvas.width/2, ey=canvas.height/2;
+
+    // Obstacles
+    obstacles.forEach(o=>{
+      const g=ctx.createLinearGradient(o.x,o.y,o.x,o.y+o.h);
+      if(o.type==='wall'){g.addColorStop(0,'#64748b');g.addColorStop(1,'#475569');}
+      else{g.addColorStop(0,'#7c3aed');g.addColorStop(1,'#6d28d9');}
+      ctx.fillStyle=g; ctx.fillRect(o.x,o.y,o.w,o.h);
+      ctx.strokeStyle='#1e293b'; ctx.lineWidth=2; ctx.strokeRect(o.x,o.y,o.w,o.h);
+      ctx.fillStyle='#fff'; ctx.font='10px monospace'; ctx.fillText(o.type,o.x+5,o.y+15);
+    });
+
+    // Raycasting
+    const hitPoints=[];
+    const rCount=rayCountVal, rDist=rayDistVal;
+    for(let i=0;i<rCount;i++){
+      const ang=(i/rCount)*Math.PI*2;
+      const dx=Math.cos(ang), dy=Math.sin(ang);
+      let minDist=rDist, closestHit=null;
+      obstacles.forEach(o=>{
+        const t1=(o.x-ex)/dx, t2=(o.x+o.w-ex)/dx;
+        const t3=(o.y-ey)/dy, t4=(o.y+o.h-ey)/dy;
+        const tMin=Math.max(Math.min(t1,t2),Math.min(t3,t4));
+        const tMax=Math.min(Math.max(t1,t2),Math.max(t3,t4));
+        if(tMax>=0&&tMin<=tMax&&tMin<minDist&&tMin>0){
+          minDist=tMin;
+          closestHit={x:ex+dx*tMin,y:ey+dy*tMin,distance:tMin};
+        }
+      });
+      const endX=closestHit?closestHit.x:ex+dx*rDist;
+      const endY=closestHit?closestHit.y:ey+dy*rDist;
+
+      if(showRayDebug){
+        ctx.strokeStyle=closestHit?'rgba(239,68,68,.6)':'rgba(34,197,94,.3)';
+        ctx.lineWidth=closestHit?2:1;
+        ctx.beginPath(); ctx.moveTo(ex,ey); ctx.lineTo(endX,endY); ctx.stroke();
+        if(closestHit){
+          ctx.fillStyle='#ef4444';
+          ctx.beginPath(); ctx.arc(endX,endY,4,0,Math.PI*2); ctx.fill();
+        }
+      }
+      hitPoints.push({x:endX,y:endY,hit:!!closestHit,distance:closestHit?closestHit.distance:rDist});
+    }
+
+    // Detection circle
+    if(showRayDebug){
+      ctx.strokeStyle='rgba(59,130,246,.3)'; ctx.lineWidth=2; ctx.setLineDash([10,5]);
+      ctx.beginPath(); ctx.arc(ex,ey,rDist,0,Math.PI*2); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Enemy
+    ctx.save(); ctx.translate(ex,ey);
+    ctx.rotate(Math.atan2(mouseY-ey,mouseX-ex));
+    ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(0,0,25,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-8,-8,5,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(8,-8,5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(-8,-8,2,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(8,-8,2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1f2937'; ctx.fillRect(15,-5,20,10);
+    ctx.fillStyle='#fbbf24'; ctx.fillRect(35,-3,8,6);
+    ctx.restore();
+
+    // Radar
+    const rx=canvas.width-120, ry=20, rr=60;
+    ctx.fillStyle='rgba(15,23,42,.9)';
+    ctx.beginPath(); ctx.arc(rx,ry+rr,rr,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#22c55e'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(rx,ry+rr,rr,0,Math.PI*2); ctx.stroke();
+    const sweepAng=time*2;
+    ctx.strokeStyle=`rgba(34,197,94,${.5+Math.sin(time*4)*.3})`; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(rx,ry+rr);
+    ctx.lineTo(rx+Math.cos(sweepAng)*rr, ry+rr+Math.sin(sweepAng)*rr); ctx.stroke();
+    hitPoints.forEach((p,idx)=>{
+      if(p.hit){
+        const a=(idx/rCount)*Math.PI*2;
+        const d=(p.distance/rDist)*rr;
+        ctx.fillStyle='#ef4444';
+        ctx.beginPath(); ctx.arc(rx+Math.cos(a)*d, ry+rr+Math.sin(a)*d,3,0,Math.PI*2); ctx.fill();
+      }
+    });
+    ctx.fillStyle='#22c55e'; ctx.font='10px monospace'; ctx.fillText('RADAR',rx-20,ry+rr*2+15);
+
+    // Info
+    const hitCnt=hitPoints.filter(p=>p.hit).length;
+    ctx.fillStyle='#94a3b8'; ctx.font='12px monospace';
+    ctx.fillText(`Rays: ${rCount}`, 10,20);
+    ctx.fillText(`Range: ${rDist}px`, 10,40);
+    ctx.fillText(`Hits: ${hitCnt}`, 10,60);
+    ctx.fillText(`Clear: ${rCount-hitCnt}`, 10,80);
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
