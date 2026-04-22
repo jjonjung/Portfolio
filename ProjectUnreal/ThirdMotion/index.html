@@ -1331,6 +1331,24 @@ void ATempCameraActor::SmoothTransitionTo(FVector TargetLoc, FRotator TargetRot,
   }
 })();
 </script>
+<script>
+(function() {
+  var anchorMap = {
+    '네트워크 동기화': '#31e6dae7-af2e-8001-8ac7-daa8a86855ab',
+    '객체지향 설계': '#31e6dae7-af2e-80d2-b5d4-e004984b04cd',
+    '트러블 슈팅': '#31e6dae7-af2e-8039-9c8c-f4a229febd5a',
+    '상단으로': '#',
+    '구현 목차': '#31e6dae7-af2e-8034-9c8d-efc357c8e7d9'
+  };
+
+  document.querySelectorAll('a[href*="notion.so/ThirdMotion"]').forEach(function(anchor) {
+    var text = anchor.textContent.replace(/\s+/g, ' ').trim();
+    if (anchorMap[text]) {
+      anchor.setAttribute('href', anchorMap[text]);
+    }
+  });
+})();
+</script>
 
 
 </body></html>
